@@ -20,10 +20,16 @@ export function HomePage() {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 py-16 md:py-24">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1436491865332-7a61a109db05?w=1920')] bg-cover bg-center opacity-15" />
-        <div className="relative max-w-7xl mx-auto px-4">
+      {/* Hero Section with Aurora */}
+      <section className="relative overflow-hidden bg-primary-900 pt-24 pb-16 md:pt-32 md:pb-24">
+        {/* Aurora animated layer */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="aurora-bg absolute -inset-[10px] will-change-transform" />
+        </div>
+        {/* Radial mask for depth */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_20%,rgba(30,58,138,0.4)_80%)]" />
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4">
           <div className="text-center mb-10">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
               {t('home.heroTitle')}

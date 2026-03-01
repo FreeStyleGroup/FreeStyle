@@ -49,3 +49,48 @@ body {
 .animate-modal-in {
   animation: modal-in 0.2s ease-out;
 }
+
+/* Aurora Background */
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+.aurora-bg {
+  --aurora: repeating-linear-gradient(
+    100deg,
+    #3b82f6 10%,
+    #818cf8 15%,
+    #60a5fa 20%,
+    #a78bfa 25%,
+    #2563eb 30%
+  );
+  --overlay: repeating-linear-gradient(
+    100deg,
+    #1e3a8a 0%,
+    #1e3a8a 7%,
+    transparent 10%,
+    transparent 12%,
+    #1e3a8a 16%
+  );
+  background-image: var(--overlay), var(--aurora);
+  background-size: 300%, 200%;
+  background-position: 50% 50%, 50% 50%;
+  filter: blur(10px);
+  opacity: 0.6;
+}
+
+.aurora-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--overlay), var(--aurora);
+  background-size: 200%, 100%;
+  background-attachment: fixed;
+  mix-blend-mode: difference;
+  animation: aurora 15s linear infinite;
+}
