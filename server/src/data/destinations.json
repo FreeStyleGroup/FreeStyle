@@ -1,0 +1,195 @@
+[
+  {
+    "slug": "turkey",
+    "name": "Турция",
+    "nameEn": "Turkey",
+    "region": "europe",
+    "countryCode": "TR",
+    "iataCode": "IST",
+    "description": "Турция — страна на стыке Европы и Азии, популярное направление для пляжного отдыха, шопинга и знакомства с богатой историей. Здесь можно найти всё: от роскошных all-inclusive курортов до руин древних цивилизаций.",
+    "imageUrl": "https://images.unsplash.com/photo-1541432901042-2d8bd64b4a9b?w=800",
+    "visaInfo": "Безвизовый въезд для граждан РФ на срок до 60 дней",
+    "currency": "TRY (Турецкая лира)",
+    "language": "Турецкий",
+    "bestSeason": "Май — Октябрь",
+    "avgTemperature": "+25°C летом, +10°C зимой",
+    "popularCities": [
+      { "name": "Стамбул", "nameEn": "Istanbul", "iataCode": "IST", "description": "Город на двух континентах с тысячелетней историей", "imageUrl": "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600" },
+      { "name": "Анталья", "nameEn": "Antalya", "iataCode": "AYT", "description": "Главный курортный город Турецкой Ривьеры", "imageUrl": "https://images.unsplash.com/photo-1593238739364-18cfde865828?w=600" },
+      { "name": "Бодрум", "nameEn": "Bodrum", "iataCode": "BJV", "description": "Элитный курорт на Эгейском побережье", "imageUrl": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=600" }
+    ]
+  },
+  {
+    "slug": "thailand",
+    "name": "Таиланд",
+    "nameEn": "Thailand",
+    "region": "asia",
+    "countryCode": "TH",
+    "iataCode": "BKK",
+    "description": "Таиланд — страна улыбок с великолепными пляжами, древними храмами и невероятной кухней. Идеальное направление для тех, кто ищет тропический отдых по доступным ценам.",
+    "imageUrl": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=800",
+    "visaInfo": "Безвизовый въезд для граждан РФ на срок до 30 дней",
+    "currency": "THB (Тайский бат)",
+    "language": "Тайский",
+    "bestSeason": "Ноябрь — Март",
+    "avgTemperature": "+30°C круглый год",
+    "popularCities": [
+      { "name": "Бангкок", "nameEn": "Bangkok", "iataCode": "BKK", "description": "Столица с храмами, уличной едой и ночной жизнью", "imageUrl": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=600" },
+      { "name": "Пхукет", "nameEn": "Phuket", "iataCode": "HKT", "description": "Самый популярный остров с белоснежными пляжами", "imageUrl": "https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?w=600" },
+      { "name": "Паттайя", "nameEn": "Pattaya", "iataCode": "UTP", "description": "Курортный город с активной ночной жизнью", "imageUrl": "https://images.unsplash.com/photo-1565967511849-76a60a516170?w=600" }
+    ]
+  },
+  {
+    "slug": "egypt",
+    "name": "Египет",
+    "nameEn": "Egypt",
+    "region": "africa",
+    "countryCode": "EG",
+    "iataCode": "HRG",
+    "description": "Египет — страна фараонов, пирамид и Красного моря. Круглогодичный пляжный отдых, отличный дайвинг и богатая история привлекают миллионы туристов.",
+    "imageUrl": "https://images.unsplash.com/photo-1539768942893-daf53e736b68?w=800",
+    "visaInfo": "Виза оформляется по прилёту, стоимость $25",
+    "currency": "EGP (Египетский фунт)",
+    "language": "Арабский",
+    "bestSeason": "Октябрь — Апрель",
+    "avgTemperature": "+35°C летом, +22°C зимой",
+    "popularCities": [
+      { "name": "Хургада", "nameEn": "Hurghada", "iataCode": "HRG", "description": "Популярный курорт на Красном море", "imageUrl": "https://images.unsplash.com/photo-1539650116574-75c0c6d73f0e?w=600" },
+      { "name": "Шарм-эль-Шейх", "nameEn": "Sharm El Sheikh", "iataCode": "SSH", "description": "Элитный курорт с лучшим дайвингом", "imageUrl": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600" },
+      { "name": "Каир", "nameEn": "Cairo", "iataCode": "CAI", "description": "Столица с пирамидами Гизы и Египетским музеем", "imageUrl": "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=600" }
+    ]
+  },
+  {
+    "slug": "uae",
+    "name": "ОАЭ",
+    "nameEn": "UAE",
+    "region": "asia",
+    "countryCode": "AE",
+    "iataCode": "DXB",
+    "description": "Объединённые Арабские Эмираты — это роскошь, шопинг мирового класса, небоскрёбы и пустыня. Идеальное направление для зимнего пляжного отдыха.",
+    "imageUrl": "https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=800",
+    "visaInfo": "Безвизовый въезд для граждан РФ на срок до 90 дней",
+    "currency": "AED (Дирхам)",
+    "language": "Арабский, Английский",
+    "bestSeason": "Октябрь — Апрель",
+    "avgTemperature": "+40°C летом, +25°C зимой",
+    "popularCities": [
+      { "name": "Дубай", "nameEn": "Dubai", "iataCode": "DXB", "description": "Город будущего с Бурдж Халифой и пальмовым островом", "imageUrl": "https://images.unsplash.com/photo-1518684079-3c830dcef090?w=600" },
+      { "name": "Абу-Даби", "nameEn": "Abu Dhabi", "iataCode": "AUH", "description": "Столица с мечетью шейха Зайда и островом Яс", "imageUrl": "https://images.unsplash.com/photo-1611605698335-8b1569810432?w=600" }
+    ]
+  },
+  {
+    "slug": "italy",
+    "name": "Италия",
+    "nameEn": "Italy",
+    "region": "europe",
+    "countryCode": "IT",
+    "iataCode": "ROM",
+    "description": "Италия — страна искусства, моды, великолепной кухни и древней истории. От Рима и Венеции до побережья Амальфи — каждый уголок впечатляет.",
+    "imageUrl": "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800",
+    "visaInfo": "Шенгенская виза",
+    "currency": "EUR (Евро)",
+    "language": "Итальянский",
+    "bestSeason": "Апрель — Октябрь",
+    "avgTemperature": "+28°C летом, +8°C зимой",
+    "popularCities": [
+      { "name": "Рим", "nameEn": "Rome", "iataCode": "ROM", "description": "Вечный город с Колизеем и Ватиканом", "imageUrl": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=600" },
+      { "name": "Милан", "nameEn": "Milan", "iataCode": "MIL", "description": "Столица моды и дизайна", "imageUrl": "https://images.unsplash.com/photo-1520440229-6469a149ac59?w=600" },
+      { "name": "Венеция", "nameEn": "Venice", "iataCode": "VCE", "description": "Город на воде с каналами и гондолами", "imageUrl": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=600" }
+    ]
+  },
+  {
+    "slug": "spain",
+    "name": "Испания",
+    "nameEn": "Spain",
+    "region": "europe",
+    "countryCode": "ES",
+    "iataCode": "BCN",
+    "description": "Испания — страна фламенко, корриды и великолепных пляжей. Барселона, Мадрид, Коста-Брава и Канарские острова ждут путешественников.",
+    "imageUrl": "https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=800",
+    "visaInfo": "Шенгенская виза",
+    "currency": "EUR (Евро)",
+    "language": "Испанский",
+    "bestSeason": "Май — Сентябрь",
+    "avgTemperature": "+30°C летом, +12°C зимой",
+    "popularCities": [
+      { "name": "Барселона", "nameEn": "Barcelona", "iataCode": "BCN", "description": "Город Гауди с пляжами и ночной жизнью", "imageUrl": "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600" },
+      { "name": "Мадрид", "nameEn": "Madrid", "iataCode": "MAD", "description": "Столица с музеем Прадо и парком Ретиро", "imageUrl": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=600" }
+    ]
+  },
+  {
+    "slug": "maldives",
+    "name": "Мальдивы",
+    "nameEn": "Maldives",
+    "region": "asia",
+    "countryCode": "MV",
+    "iataCode": "MLE",
+    "description": "Мальдивы — это рай на земле: бирюзовые лагуны, белоснежные пляжи и водные виллы. Лучшее место для романтического отдыха и медового месяца.",
+    "imageUrl": "https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=800",
+    "visaInfo": "Бесплатная виза по прилёту на 30 дней",
+    "currency": "MVR (Руфия), принимают USD",
+    "language": "Дивехи, Английский",
+    "bestSeason": "Ноябрь — Апрель",
+    "avgTemperature": "+28-30°C круглый год",
+    "popularCities": [
+      { "name": "Мале", "nameEn": "Male", "iataCode": "MLE", "description": "Столица и ворота в мир островных курортов", "imageUrl": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=600" }
+    ]
+  },
+  {
+    "slug": "georgia",
+    "name": "Грузия",
+    "nameEn": "Georgia",
+    "region": "europe",
+    "countryCode": "GE",
+    "iataCode": "TBS",
+    "description": "Грузия — страна гостеприимства, вина, гор и древних храмов. Доступные цены, потрясающая кухня и невероятные пейзажи.",
+    "imageUrl": "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800",
+    "visaInfo": "Безвизовый въезд для граждан РФ на 1 год",
+    "currency": "GEL (Грузинский лари)",
+    "language": "Грузинский",
+    "bestSeason": "Май — Октябрь",
+    "avgTemperature": "+28°C летом, +5°C зимой",
+    "popularCities": [
+      { "name": "Тбилиси", "nameEn": "Tbilisi", "iataCode": "TBS", "description": "Колоритная столица с серными банями и крепостью Нарикала", "imageUrl": "https://images.unsplash.com/photo-1565008576549-57569a49371d?w=600" },
+      { "name": "Батуми", "nameEn": "Batumi", "iataCode": "BUS", "description": "Морской курорт на берегу Чёрного моря", "imageUrl": "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600" }
+    ]
+  },
+  {
+    "slug": "sri-lanka",
+    "name": "Шри-Ланка",
+    "nameEn": "Sri Lanka",
+    "region": "asia",
+    "countryCode": "LK",
+    "iataCode": "CMB",
+    "description": "Шри-Ланка — остров в Индийском океане с чайными плантациями, древними храмами, джунглями и прекрасными пляжами. Отличное сочетание природы и культуры.",
+    "imageUrl": "https://images.unsplash.com/photo-1586611292717-f828b167408c?w=800",
+    "visaInfo": "Электронная виза (ETA), стоимость $50",
+    "currency": "LKR (Ланкийская рупия)",
+    "language": "Сингальский, Тамильский",
+    "bestSeason": "Декабрь — Март (запад), Апрель — Сентябрь (восток)",
+    "avgTemperature": "+27-30°C круглый год",
+    "popularCities": [
+      { "name": "Коломбо", "nameEn": "Colombo", "iataCode": "CMB", "description": "Столица с колониальной архитектурой и храмами", "imageUrl": "https://images.unsplash.com/photo-1586611292717-f828b167408c?w=600" }
+    ]
+  },
+  {
+    "slug": "vietnam",
+    "name": "Вьетнам",
+    "nameEn": "Vietnam",
+    "region": "asia",
+    "countryCode": "VN",
+    "iataCode": "HAN",
+    "description": "Вьетнам — это потрясающие пейзажи бухты Халонг, вкуснейшая кухня, древние храмы и длинное побережье. Бюджетное направление с богатой культурой.",
+    "imageUrl": "https://images.unsplash.com/photo-1528127269322-539801943592?w=800",
+    "visaInfo": "Безвизовый въезд для граждан РФ на 15 дней",
+    "currency": "VND (Вьетнамский донг)",
+    "language": "Вьетнамский",
+    "bestSeason": "Ноябрь — Апрель (юг), Март — Май (север)",
+    "avgTemperature": "+25-33°C в зависимости от региона",
+    "popularCities": [
+      { "name": "Ханой", "nameEn": "Hanoi", "iataCode": "HAN", "description": "Столица с тысячелетней историей", "imageUrl": "https://images.unsplash.com/photo-1559592413-7cec4d0cae2b?w=600" },
+      { "name": "Нячанг", "nameEn": "Nha Trang", "iataCode": "CXR", "description": "Популярный курорт с красивой бухтой", "imageUrl": "https://images.unsplash.com/photo-1528127269322-539801943592?w=600" },
+      { "name": "Фукуок", "nameEn": "Phu Quoc", "iataCode": "PQC", "description": "Тропический остров с белоснежными пляжами", "imageUrl": "https://images.unsplash.com/photo-1537956965359-7573183d1f57?w=600" }
+    ]
+  }
+]
