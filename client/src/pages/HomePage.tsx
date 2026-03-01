@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SearchTabs } from '@/components/search/SearchTabs';
+import { CategoryBar } from '@/components/search/CategoryBar';
 import { DestinationCard } from '@/components/cards/DestinationCard';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { destinationsApi } from '@/api/destinations.api';
@@ -33,7 +33,7 @@ export function HomePage() {
             </p>
           </div>
           <div className="max-w-5xl mx-auto">
-            <SearchTabs />
+            <CategoryBar />
           </div>
         </div>
       </section>

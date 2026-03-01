@@ -9,6 +9,10 @@ import { ToursPage } from '@/pages/ToursPage';
 import { InsurancePage } from '@/pages/InsurancePage';
 import { DestinationsPage } from '@/pages/DestinationsPage';
 import { DestinationDetailPage } from '@/pages/DestinationDetailPage';
+import { TrainsPage } from '@/pages/TrainsPage';
+import { BusesPage } from '@/pages/BusesPage';
+import { AllTransportPage } from '@/pages/AllTransportPage';
+import { ExcursionsPage } from '@/pages/ExcursionsPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export default function App() {
@@ -22,6 +26,10 @@ export default function App() {
         <Route path="car-rental" element={<CarRentalPage />} />
         <Route path="tours" element={<ToursPage />} />
         <Route path="insurance" element={<InsurancePage />} />
+        <Route path="trains" element={<TrainsPage />} />
+        <Route path="buses" element={<BusesPage />} />
+        <Route path="all-transport" element={<AllTransportPage />} />
+        <Route path="excursions" element={<ExcursionsPage />} />
         <Route path="destinations" element={<DestinationsPage />} />
         <Route path="destinations/:slug" element={<DestinationDetailPage />} />
         <Route path="*" element={<NotFoundPage />} />
