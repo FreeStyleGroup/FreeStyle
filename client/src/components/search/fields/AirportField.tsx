@@ -10,13 +10,13 @@ import type { AutocompleteItem } from '@freestyle/shared';
  * При первом открытии — подсказывает популярные направления.
  */
 
-const POPULAR = [
-  { name: 'Москва',     code: 'MOW', sub: 'все аэропорты' },
-  { name: 'Санкт-Петербург', code: 'LED', sub: 'Пулково' },
-  { name: 'Стамбул',    code: 'IST', sub: 'все аэропорты' },
-  { name: 'Дубай',      code: 'DXB', sub: 'все аэропорты' },
-  { name: 'Пекин',      code: 'BJS', sub: '北京 · все аэропорты' },
-  { name: 'Тбилиси',    code: 'TBS', sub: 'Tbilisi Intl' },
+const POPULAR: AutocompleteItem[] = [
+  { type: 'city', code: 'MOW', name: 'Москва',           cityName: 'Москва',           countryName: 'Россия',     countryCode: 'RU' },
+  { type: 'city', code: 'LED', name: 'Санкт-Петербург',  cityName: 'Санкт-Петербург',  countryName: 'Россия',     countryCode: 'RU' },
+  { type: 'city', code: 'IST', name: 'Стамбул',          cityName: 'Стамбул',          countryName: 'Турция',     countryCode: 'TR' },
+  { type: 'city', code: 'DXB', name: 'Дубай',            cityName: 'Дубай',            countryName: 'ОАЭ',        countryCode: 'AE' },
+  { type: 'city', code: 'BJS', name: 'Пекин',            cityName: 'Пекин',            countryName: 'Китай · 北京', countryCode: 'CN' },
+  { type: 'city', code: 'TBS', name: 'Тбилиси',          cityName: 'Тбилиси',          countryName: 'Грузия',     countryCode: 'GE' },
 ];
 
 interface AirportFieldProps {
@@ -41,14 +41,7 @@ export function AirportField({ label, value, onChange, rightSlot, className }: A
   };
 
   // Что показать: реальные подсказки от API или fallback популярных городов
-  const showItems = query.length >= 2 ? suggestions : POPULAR.map((p) => ({
-    type: 'city' as const,
-    code: p.code,
-    name: p.name,
-    cityCode: p.code,
-    cityName: p.name,
-    countryName: p.sub,
-  } as AutocompleteItem));
+  const showItems = query.length >= 2 ? suggestions : POPULAR;
 
   return (
     <div data-field className={`relative ${className ?? ''}`}>
