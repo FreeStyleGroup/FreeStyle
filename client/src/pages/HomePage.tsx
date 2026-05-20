@@ -25,35 +25,42 @@ export function HomePage() {
 
   return (
     <div className="bg-surface-1">
-      {/* ═══════════ HERO — rounded card на светлом фоне ═══════════ */}
+      {/* ═══════════ HERO — светлый баннер с персонажами справа ═══════════ */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 pt-6 md:pt-8">
-        <div className="relative overflow-hidden rounded-[28px] hero-gradient min-h-[360px] md:min-h-[420px] flex items-center">
-          {/* Background image overlay (subtle) */}
+        <div className="relative overflow-hidden rounded-[28px] bg-[#faf6f0] min-h-[440px] md:min-h-[520px]">
+          {/* Картинка с персонажами — справа, на ~60% ширины */}
           <div
-            className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
-            style={{ backgroundImage: 'url(/hero/main.webp)' }}
+            className="absolute right-0 top-0 bottom-0 w-full md:w-[62%] bg-no-repeat opacity-30 md:opacity-100"
+            style={{
+              backgroundImage: 'url(https://freestyle.ru/images/17793208.png)',
+              backgroundSize: 'contain',
+              backgroundPosition: 'right bottom',
+            }}
+            aria-hidden="true"
           />
-          <div className="absolute inset-0 hero-overlay" />
 
-          {/* Big decorative letter behind */}
-          <div className="hero-deco hidden md:block">F</div>
+          {/* Gradient fade — на десктопе перекрывает левую часть, чтобы текст был на чистом фоне */}
+          <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-[#faf6f0] from-25% via-[#faf6f0]/85 via-45% to-transparent to-60%" />
+          {/* На мобильном — мягкая засветка снизу для читаемости текста */}
+          <div className="absolute inset-0 md:hidden bg-gradient-to-b from-[#faf6f0] via-[#faf6f0]/85 via-50% to-[#faf6f0]/60" />
 
-          <div className="relative z-10 w-full px-6 md:px-14 py-10 md:py-14 max-w-3xl animate-float-up">
-            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-pill text-white text-[11px] font-mono font-medium tracking-[.15em] uppercase mb-5">
+          {/* Текст слева */}
+          <div className="relative z-10 max-w-2xl px-6 md:px-14 py-10 md:py-16 animate-float-up">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-brand-600/8 border border-brand-600/20 text-brand-700 text-[11px] font-mono font-medium tracking-[.15em] uppercase mb-5">
               <span className="relative flex w-1.5 h-1.5">
-                <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse-amber" />
-                <span className="relative inline-flex w-full h-full rounded-full bg-amber-500" />
+                <span className="absolute inset-0 rounded-full bg-brand-500 animate-pulse-amber" />
+                <span className="relative inline-flex w-full h-full rounded-full bg-brand-500" />
               </span>
-              FreeStyle · с 2026
+              FreeStyle · премиум travel
             </div>
 
-            <h1 className="font-display text-white font-extrabold leading-[1.05] tracking-tight text-3xl md:text-[42px] lg:text-[50px] mb-4">
-              Путешествие <em className="not-italic text-amber-500">без компромиссов</em>
+            <h1 className="font-display text-ink-900 font-extrabold leading-[1.05] tracking-tight text-3xl md:text-[42px] lg:text-[50px] mb-4">
+              Путешествие <em className="not-italic text-brand-600">без компромиссов</em>
               <br />
               начинается здесь
             </h1>
 
-            <p className="text-white/85 text-base md:text-lg leading-relaxed max-w-xl">
+            <p className="text-ink-700 text-base md:text-lg leading-relaxed max-w-xl">
               Сравните цены сотен авиакомпаний, тысячи отелей и готовых туров в одном поиске. Без накруток, без скрытых сборов.
             </p>
           </div>
