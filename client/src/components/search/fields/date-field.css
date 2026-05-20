@@ -1,0 +1,90 @@
+/* react-day-picker — премиум-стилизация под FreeStyle brand */
+.rdp {
+  --rdp-cell-size: 38px;
+  --rdp-accent-color: var(--color-brand-600);
+  --rdp-background-color: var(--color-brand-50);
+  --rdp-accent-color-dark: var(--color-brand-700);
+  --rdp-background-color-dark: var(--color-brand-100);
+  --rdp-outline: 2px solid var(--color-brand-500);
+  --rdp-outline-selected: 2px solid var(--color-brand-600);
+  margin: 0;
+}
+
+.rdp-months { gap: 32px; }
+.rdp-month { margin: 0; }
+
+.rdp-caption {
+  padding: 0 6px 12px;
+}
+.rdp-caption_label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--color-ink-900);
+  text-transform: capitalize;
+}
+.rdp-nav_button {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: var(--color-surface-2);
+  color: var(--color-ink-700);
+  transition: all .2s;
+}
+.rdp-nav_button:hover:not([disabled]) {
+  background: var(--color-brand-600);
+  color: #fff;
+}
+
+.rdp-head_cell {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--color-ink-400);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding-bottom: 6px;
+}
+
+.rdp-day {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--color-ink-900);
+  border-radius: 10px;
+  transition: all .15s;
+}
+.rdp-day:hover:not(.rdp-day_selected):not([disabled]) {
+  background: var(--color-surface-2);
+}
+.rdp-day_today {
+  color: var(--color-brand-600);
+  font-weight: 700;
+}
+.rdp-day_selected,
+.rdp-day_selected:focus-visible,
+.rdp-day_selected:hover {
+  background: var(--color-brand-600) !important;
+  color: #fff !important;
+  font-weight: 700;
+}
+.rdp-day_range_middle {
+  background: var(--color-brand-50) !important;
+  color: var(--color-brand-700) !important;
+  border-radius: 0 !important;
+}
+.rdp-day_range_start {
+  border-radius: 10px 0 0 10px !important;
+}
+.rdp-day_range_end {
+  border-radius: 0 10px 10px 0 !important;
+}
+.rdp-day_range_start.rdp-day_range_end {
+  border-radius: 10px !important;
+}
+.rdp-day_disabled {
+  opacity: .35;
+  pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .rdp-months { gap: 16px; flex-direction: column; }
+}
