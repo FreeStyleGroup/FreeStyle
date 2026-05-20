@@ -15,6 +15,7 @@
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.28.2",
     "axios": "^1.7.9",
+    "lucide-react": "^0.469.0",
     "i18next": "^24.2.2",
     "react-i18next": "^15.4.1",
     "date-fns": "^4.1.0",

@@ -1,24 +1,34 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
+import {
+  Plane, BedDouble, Map, Car, Train, Bus,
+  Mountain, ShieldCheck, Phone, User2, Menu, X, Globe,
+} from 'lucide-react';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { cn } from '@/utils/cn';
 
+/**
+ * Header в стиле Travelask + China travel-v2.
+ * 8 категорий горизонтальной навигации, иконки lucide.
+ * На главной — transparent overlay поверх hero.
+ */
+
 const navLinks = [
-  { to: '/flights', key: 'flights' },
-  { to: '/hotels', key: 'hotels' },
-  { to: '/car-rental', key: 'carRental' },
-  { to: '/tours', key: 'tours' },
-  { to: '/insurance', key: 'insurance' },
-  { to: '/destinations', key: 'destinations' },
-] as const;
+  { to: '/flights',    label: 'Авиа',      Icon: Plane },
+  { to: '/hotels',     label: 'Отели',     Icon: BedDouble },
+  { to: '/tours',      label: 'Туры',      Icon: Map },
+  { to: '/car-rental', label: 'Авто',      Icon: Car },
+  { to: '/trains',     label: 'Ж/Д',       Icon: Train },
+  { to: '/buses',      label: 'Автобусы',  Icon: Bus },
+  { to: '/excursions', label: 'Экскурсии', Icon: Mountain },
+  { to: '/insurance',  label: 'Страховка', Icon: ShieldCheck },
+];
 
 interface HeaderProps {
   transparent?: boolean;
 }
 
 export function Header({ transparent }: HeaderProps) {
-  const { t } = useTranslation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<'login' | 'register'>('login');
@@ -30,190 +40,195 @@ export function Header({ transparent }: HeaderProps) {
   };
 
   return (
-    <header className={cn(
-      'z-50',
-      transparent
-        ? 'absolute top-0 left-0 right-0'
-        : 'bg-white shadow-sm sticky top-0',
-    )}>
-      <div className="max-w-7xl mx-auto px-4">
+    <header
+      className={cn(
+        'z-50 transition-colors',
+        transparent ? 'absolute top-0 left-0 right-0' : 'bg-white border-b border-ink-100 sticky top-0 shadow-sm',
+      )}
+    >
+      <div className="max-w-[1320px] mx-auto px-4 md:px-8">
+        {/* ─── Top row: logo + phone + auth ─── */}
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <div className={cn(
-              'w-8 h-8 rounded-lg flex items-center justify-center',
-              transparent ? 'bg-white/20' : 'bg-primary-600',
-            )}>
-              <span className="text-white font-bold text-lg">F</span>
-            </div>
-            <span className={cn(
-              'text-xl font-bold',
-              transparent ? 'text-white' : 'text-primary-700',
-            )}>FreeStyle</span>
-          </Link>
-
-          {/* Desktop Nav */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map(({ to, key }) => (
-              <NavLink
-                key={to}
-                to={to}
-                className={({ isActive }) =>
-                  cn(
-                    'px-3 py-2 rounded-lg text-sm font-medium transition-colors',
-                    transparent
-                      ? isActive
-                        ? 'bg-white/20 text-white'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
-                      : isActive
-                        ? 'bg-primary-50 text-primary-700'
-                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50',
-                  )
-                }
-              >
-                {t(`nav.${key}`)}
-              </NavLink>
-            ))}
-          </nav>
-
-          {/* Desktop Right Section */}
-          <div className="hidden lg:flex items-center gap-3">
-            {/* Support */}
-            <Link
-              to="#"
+          <Link to="/" className="flex items-center gap-2.5 shrink-0">
+            <div
               className={cn(
-                'flex items-center gap-1.5 px-3 py-2 text-sm font-medium transition-colors',
+                'w-10 h-10 rounded-xl grid place-items-center font-display font-extrabold text-lg shadow-md',
                 transparent
-                  ? 'text-white/80 hover:text-white'
-                  : 'text-gray-600 hover:text-gray-900',
+                  ? 'bg-white/15 text-white backdrop-blur-lg border border-white/25'
+                  : 'bg-gradient-to-br from-brand-500 to-brand-700 text-white',
               )}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              {t('header.support')}
-            </Link>
+              FS
+            </div>
+            <div className="hidden sm:block leading-tight">
+              <div
+                className={cn(
+                  'font-display font-extrabold text-xl tracking-tight',
+                  transparent ? 'text-white' : 'text-brand-700',
+                )}
+              >
+                FreeStyle
+              </div>
+              <div
+                className={cn(
+                  'text-[10px] uppercase tracking-[.18em] font-semibold',
+                  transparent ? 'text-white/65' : 'text-ink-500',
+                )}
+              >
+                Travel · Hotels · Tours
+              </div>
+            </div>
+          </Link>
 
-            {/* Auth Button */}
+          {/* Right side — phone + auth + lang */}
+          <div className="hidden lg:flex items-center gap-2">
+            <a
+              href="tel:+74951234567"
+              className={cn(
+                'flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-colors',
+                transparent
+                  ? 'text-white/90 hover:bg-white/10'
+                  : 'text-ink-700 hover:text-brand-600 hover:bg-brand-50',
+              )}
+            >
+              <Phone className="w-4 h-4" />
+              <span className="tabular-nums">+7 495 123-45-67</span>
+            </a>
+            <button
+              type="button"
+              className={cn(
+                'p-2 rounded-lg transition-colors',
+                transparent
+                  ? 'text-white/80 hover:bg-white/10 hover:text-white'
+                  : 'text-ink-500 hover:text-ink-700 hover:bg-surface-2',
+              )}
+              aria-label="Сменить язык"
+            >
+              <Globe className="w-5 h-5" />
+            </button>
             <button
               type="button"
               onClick={() => openAuth('login')}
               className={cn(
-                'flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-xl transition-colors cursor-pointer',
+                'flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-xl cursor-pointer transition-all',
                 transparent
-                  ? 'bg-white/20 text-white hover:bg-white/30 backdrop-blur-sm'
-                  : 'bg-accent-500 text-white hover:bg-accent-600',
+                  ? 'bg-white/15 text-white border border-white/25 backdrop-blur-lg hover:bg-white/25'
+                  : 'bg-gradient-to-br from-brand-500 to-brand-600 text-white hover:from-brand-600 hover:to-brand-700 shadow-md hover:shadow-lg',
               )}
             >
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              {t('auth.loginRegister')}
+              <User2 className="w-4 h-4" />
+              Войти
             </button>
           </div>
 
-          {/* Mobile: user + hamburger */}
+          {/* Mobile burger */}
           <div className="flex lg:hidden items-center gap-1">
             <button
               type="button"
-              className={cn(
-                'p-2 cursor-pointer',
-                transparent ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-gray-900',
-              )}
               onClick={() => openAuth('login')}
+              className={cn(
+                'p-2 rounded-lg cursor-pointer',
+                transparent ? 'text-white/90 hover:bg-white/10' : 'text-ink-700 hover:bg-surface-2',
+              )}
+              aria-label="Войти"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
+              <User2 className="w-5 h-5" />
             </button>
             <button
               type="button"
-              className={cn(
-                'p-2 cursor-pointer',
-                transparent ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-gray-900',
-              )}
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className={cn(
+                'p-2 rounded-lg cursor-pointer',
+                transparent ? 'text-white/90 hover:bg-white/10' : 'text-ink-700 hover:bg-surface-2',
+              )}
+              aria-label="Меню"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                )}
-              </svg>
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <nav className={cn(
-            'lg:hidden pb-4 pt-2',
-            transparent
-              ? 'bg-white/10 backdrop-blur-xl rounded-2xl mt-1 px-2 border border-white/10'
-              : 'border-t border-gray-100',
-          )}>
-            {navLinks.map(({ to, key }) => (
-              <NavLink
-                key={to}
-                to={to}
-                onClick={() => setMobileMenuOpen(false)}
-                className={({ isActive }) =>
-                  cn(
-                    'block px-3 py-2 rounded-lg text-sm font-medium',
-                    transparent
-                      ? isActive
-                        ? 'bg-white/20 text-white'
-                        : 'text-white/80 hover:bg-white/10'
-                      : isActive
-                        ? 'bg-primary-50 text-primary-700'
-                        : 'text-gray-600 hover:bg-gray-50',
-                  )
-                }
-              >
-                {t(`nav.${key}`)}
-              </NavLink>
-            ))}
+        {/* ─── Bottom row: horizontal category nav (desktop only) ─── */}
+        <nav
+          className={cn(
+            'hidden lg:flex items-center gap-1 -mt-1 pb-2 overflow-x-auto scrollbar-hide',
+            transparent && 'border-t border-white/10 pt-2',
+          )}
+        >
+          {navLinks.map(({ to, label, Icon }) => (
+            <NavLink
+              key={to}
+              to={to}
+              className={({ isActive }) =>
+                cn(
+                  'flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors',
+                  transparent
+                    ? isActive
+                      ? 'bg-white/20 text-white'
+                      : 'text-white/85 hover:bg-white/10 hover:text-white'
+                    : isActive
+                      ? 'bg-brand-50 text-brand-700'
+                      : 'text-ink-700 hover:bg-surface-2 hover:text-brand-600',
+                )
+              }
+            >
+              <Icon className="w-4 h-4" />
+              {label}
+            </NavLink>
+          ))}
+        </nav>
 
-            <div className={cn(
-              'mt-2 pt-2',
-              transparent ? 'border-t border-white/10' : 'border-t border-gray-100',
-            )}>
-              <a
-                href="#"
-                className={cn(
-                  'flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg',
-                  transparent ? 'text-white/80 hover:bg-white/10' : 'text-gray-600 hover:bg-gray-50',
-                )}
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                {t('header.support')}
-              </a>
-              <button
-                type="button"
-                onClick={() => openAuth('login')}
-                className={cn(
-                  'flex items-center gap-2 w-full px-3 py-2 text-sm font-medium rounded-lg cursor-pointer',
-                  transparent ? 'text-white hover:bg-white/10' : 'text-accent-600 hover:bg-gray-50',
-                )}
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                {t('auth.loginRegister')}
-              </button>
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <nav
+            className={cn(
+              'lg:hidden py-3',
+              transparent
+                ? 'bg-brand-950/70 backdrop-blur-xl rounded-2xl mb-3 px-2 border border-white/10'
+                : 'border-t border-ink-100',
+            )}
+          >
+            <a
+              href="tel:+74951234567"
+              className={cn(
+                'flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-semibold mb-1',
+                transparent ? 'text-white' : 'text-brand-700',
+              )}
+            >
+              <Phone className="w-4 h-4" />
+              <span className="tabular-nums">+7 495 123-45-67</span>
+            </a>
+
+            <div className="grid grid-cols-2 gap-1">
+              {navLinks.map(({ to, label, Icon }) => (
+                <NavLink
+                  key={to}
+                  to={to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    cn(
+                      'flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors',
+                      transparent
+                        ? isActive
+                          ? 'bg-white/20 text-white'
+                          : 'text-white/85 hover:bg-white/10'
+                        : isActive
+                          ? 'bg-brand-50 text-brand-700'
+                          : 'text-ink-700 hover:bg-surface-2',
+                    )
+                  }
+                >
+                  <Icon className="w-4 h-4" />
+                  {label}
+                </NavLink>
+              ))}
             </div>
           </nav>
         )}
       </div>
 
-      <AuthModal
-        isOpen={authModalOpen}
-        onClose={() => setAuthModalOpen(false)}
-        initialTab={authModalTab}
-      />
+      <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} initialTab={authModalTab} />
     </header>
   );
 }

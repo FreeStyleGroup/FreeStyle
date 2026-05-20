@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
-import { CategoryBar } from '@/components/search/CategoryBar';
+import { Search, CheckCircle2, Sparkles, Shield, Clock } from 'lucide-react';
+import { SearchTabs, type SearchTabKey } from '@/components/search/SearchTabs';
+import { FlightSearchForm } from '@/components/search/FlightSearchForm';
+import { HotelSearchForm } from '@/components/search/HotelSearchForm';
+import { NavTiles } from '@/components/home/NavTiles';
+import { HotDeals } from '@/components/home/HotDeals';
 import { DestinationCard } from '@/components/cards/DestinationCard';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { destinationsApi } from '@/api/destinations.api';
 import type { Destination } from '@freestyle/shared';
 
 export function HomePage() {
-  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState<SearchTabKey>('flights');
   const [destinations, setDestinations] = useState<Destination[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -20,44 +24,110 @@ export function HomePage() {
 
   return (
     <div>
-      {/* Hero Section with Aurora */}
-      <section className="relative overflow-hidden bg-primary-900 pt-24 pb-16 md:pt-32 md:pb-24">
-        {/* Aurora animated layer */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="aurora-bg absolute -inset-[10px] will-change-transform" />
-        </div>
-        {/* Radial mask for depth */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,transparent_20%,rgba(30,58,138,0.4)_80%)]" />
+      {/* ═══════════ HERO ═══════════ */}
+      <section className="relative min-h-[640px] hero-gradient overflow-hidden pt-28 pb-12 md:pt-32 md:pb-16">
+        {/* Background image overlay */}
+        <div
+          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity"
+          style={{ backgroundImage: 'url(/hero/main.webp)' }}
+        />
+        <div className="absolute inset-0 hero-overlay" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-3">
-              {t('home.heroTitle')}
+        {/* Decorative big letter behind text */}
+        <div className="hero-deco hidden md:block">F</div>
+
+        <div className="relative z-10 max-w-[1320px] mx-auto px-4 md:px-8">
+          {/* Hero header */}
+          <div className="max-w-3xl mb-8 md:mb-10 animate-float-up">
+            <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-pill text-white text-[11px] font-mono font-medium tracking-[.15em] uppercase mb-5">
+              <span className="relative flex w-1.5 h-1.5">
+                <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse-amber" />
+                <span className="relative inline-flex w-full h-full rounded-full bg-amber-500" />
+              </span>
+              FreeStyle · с 2026
+            </div>
+
+            <h1 className="font-display text-white font-extrabold leading-[1.05] tracking-tight text-4xl md:text-6xl mb-4">
+              Путешествие <em className="not-italic text-amber-500">без компромиссов</em>
+              <br />
+              начинается здесь
             </h1>
-            <p className="text-lg text-white/80">
-              {t('home.heroSubtitle')}
+
+            <p className="text-white/85 text-base md:text-lg leading-relaxed max-w-xl">
+              Сравните цены сотен авиакомпаний, тысячи отелей и готовых туров в одном поиске. Без накруток, без скрытых сборов.
             </p>
           </div>
-          <div className="max-w-5xl mx-auto">
-            <CategoryBar />
+
+          {/* ═══ GLASS SEARCH WIDGET ═══ */}
+          <div
+            className="glass rounded-[24px] p-2 shadow-[var(--shadow-hero)] max-w-[1180px] animate-float-up"
+            style={{ animationDelay: '120ms' }}
+          >
+            <div className="px-2 pt-2">
+              <SearchTabs active={activeTab} onChange={setActiveTab} />
+            </div>
+
+            <div className="p-3 md:p-4 pt-3">
+              {/* Динамическая форма по активному табу */}
+              {activeTab === 'flights' && <FlightSearchForm />}
+              {activeTab === 'hotels' && <HotelSearchForm />}
+              {activeTab !== 'flights' && activeTab !== 'hotels' && (
+                <ComingSoonForm tab={activeTab} />
+              )}
+            </div>
+          </div>
+
+          {/* Trust ribbon под формой */}
+          <div
+            className="flex flex-wrap gap-x-8 gap-y-3 mt-7 text-white/85 text-sm animate-float-up"
+            style={{ animationDelay: '220ms' }}
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-amber-500" />
+              <span>Цены без накруток</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Shield className="w-4 h-4 text-amber-500" />
+              <span>Безопасная оплата</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Кэшбэк до 5%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="w-4 h-4 text-amber-500" />
+              <span>Поддержка 24/7</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Popular Destinations */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">
-          {t('home.popularDestinations')}
-        </h2>
+      {/* ═══ NAV TILES — 8 категорий ═══ */}
+      <NavTiles />
+
+      {/* ═══ HOT DEALS ═══ */}
+      <HotDeals />
+
+      {/* ═══ POPULAR DESTINATIONS ═══ */}
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
+        <div className="mb-8 md:mb-10">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 text-brand-600 text-[11px] font-bold tracking-[.15em] uppercase mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-500" />
+            Популярные направления
+          </div>
+          <h2 className="font-display text-2xl md:text-4xl font-extrabold text-ink-900 tracking-tight">
+            Куда летят <span className="text-brand-600">этим сезоном</span>
+          </h2>
+        </div>
 
         {loading ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {Array.from({ length: 8 }).map((_, i) => (
-              <Skeleton key={i} className="h-72" />
+              <Skeleton key={i} className="h-72 rounded-2xl" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
             {destinations.slice(0, 8).map((dest) => (
               <DestinationCard key={dest.slug} destination={dest} />
             ))}
@@ -65,42 +135,81 @@ export function HomePage() {
         )}
       </section>
 
-      {/* Features */}
-      <section className="bg-white py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Лучшие цены</h3>
-              <p className="text-sm text-gray-500">Сравниваем цены сотен авиакомпаний и агентств</p>
+      {/* ═══ WHY US ═══ */}
+      <section className="bg-white py-14 md:py-20">
+        <div className="max-w-[1320px] mx-auto px-4 md:px-8">
+          <div className="text-center mb-10 md:mb-14">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-600 text-[11px] font-bold tracking-[.15em] uppercase mb-3">
+              Почему FreeStyle
             </div>
+            <h2 className="font-display text-2xl md:text-4xl font-extrabold text-ink-900 tracking-tight">
+              Один поиск — <span className="text-brand-600">сотни вариантов</span>
+            </h2>
+          </div>
 
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Безопасно</h3>
-              <p className="text-sm text-gray-500">Проверенные партнёры и надёжные системы оплаты</p>
-            </div>
-
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Весь мир</h3>
-              <p className="text-sm text-gray-500">Направления по всему миру — от Мальдив до Исландии</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            <FeatureCard
+              Icon={Search}
+              title="Лучшие цены"
+              text="Сравниваем цены десятков партнёров. Найдём то, что не найдёт никто другой."
+            />
+            <FeatureCard
+              Icon={Shield}
+              title="Безопасно"
+              text="Только проверенные партнёры. Эскроу-платежи, защита от мошенничества."
+            />
+            <FeatureCard
+              Icon={Sparkles}
+              title="Всё в одном"
+              text="От авиабилетов до экскурсий. Соберите идеальную поездку за минуту."
+            />
           </div>
         </div>
       </section>
+    </div>
+  );
+}
+
+// ─── Feature card ───
+interface FeatureCardProps {
+  Icon: typeof Search;
+  title: string;
+  text: string;
+}
+function FeatureCard({ Icon, title, text }: FeatureCardProps) {
+  return (
+    <div className="text-center p-6 rounded-2xl border border-ink-100 hover:border-brand-200 hover:shadow-[var(--shadow-hover)] transition-all">
+      <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white grid place-items-center shadow-md">
+        <Icon className="w-7 h-7" />
+      </div>
+      <h3 className="font-display font-bold text-lg text-ink-900 mb-1.5">{title}</h3>
+      <p className="text-sm text-ink-500 leading-relaxed">{text}</p>
+    </div>
+  );
+}
+
+// ─── Coming soon placeholder для табов где формы ещё не готовы ───
+function ComingSoonForm({ tab }: { tab: SearchTabKey }) {
+  const labels: Record<SearchTabKey, string> = {
+    flights: 'Авиабилеты',
+    hotels: 'Отели',
+    tours: 'Туры',
+    'car-rental': 'Аренда авто',
+    trains: 'Ж/Д билеты',
+    buses: 'Автобусы',
+    excursions: 'Экскурсии',
+    insurance: 'Страховка',
+  };
+  return (
+    <div className="py-10 text-center">
+      <div className="inline-flex items-center gap-2 text-brand-600 text-sm font-bold mb-2">
+        <Sparkles className="w-4 h-4" />
+        Скоро
+      </div>
+      <div className="font-display font-bold text-xl text-ink-900 mb-1">
+        {labels[tab]}
+      </div>
+      <div className="text-ink-500 text-sm">Раздел готовится к запуску — подключаем партнёров.</div>
     </div>
   );
 }
