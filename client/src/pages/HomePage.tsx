@@ -47,7 +47,7 @@ export function HomePage() {
               FreeStyle · с 2026
             </div>
 
-            <h1 className="font-display text-white font-extrabold leading-[1.05] tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4">
+            <h1 className="font-display text-white font-extrabold leading-[1.05] tracking-tight text-3xl md:text-[42px] lg:text-[50px] mb-4">
               Путешествие <em className="not-italic text-amber-500">без компромиссов</em>
               <br />
               начинается здесь
@@ -68,9 +68,7 @@ export function HomePage() {
           </div>
 
           <div className="p-3 md:p-4 pt-3">
-            {activeTab === 'flights' && <FlightSearchForm />}
-            {activeTab === 'hotels' && <HotelSearchForm />}
-            {activeTab !== 'flights' && activeTab !== 'hotels' && <ComingSoonForm tab={activeTab} />}
+            {activeTab === 'flights' ? <FlightSearchForm /> : <HotelSearchForm />}
           </div>
         </div>
 
@@ -137,26 +135,3 @@ export function HomePage() {
   );
 }
 
-// ─── Coming soon placeholder ───
-function ComingSoonForm({ tab }: { tab: SearchTabKey }) {
-  const labels: Record<SearchTabKey, string> = {
-    flights: 'Авиабилеты',
-    hotels: 'Отели',
-    tours: 'Туры',
-    'car-rental': 'Аренда авто',
-    trains: 'Ж/Д билеты',
-    buses: 'Автобусы',
-    excursions: 'Экскурсии',
-    insurance: 'Страховка',
-  };
-  return (
-    <div className="py-10 text-center">
-      <div className="inline-flex items-center gap-2 text-brand-600 text-sm font-bold mb-2">
-        <Sparkles className="w-4 h-4" />
-        Скоро
-      </div>
-      <div className="font-display font-bold text-xl text-ink-900 mb-1">{labels[tab]}</div>
-      <div className="text-ink-500 text-sm">Раздел готовится к запуску — подключаем партнёров.</div>
-    </div>
-  );
-}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Mail, Lock, User, Eye, EyeOff, Phone,
   Sparkles, ShieldCheck, Wallet, Gift, ArrowRight,
@@ -157,36 +157,25 @@ function Benefit({ Icon, title, text }: { Icon: typeof Wallet; title: string; te
 }
 
 // ─────────────────────────────────────────
-// TAB SWITCHER — slide indicator
+// TAB SWITCHER — CSS-only slide indicator (без useRef/offsetWidth)
 // ─────────────────────────────────────────
 function TabSwitcher({ active, onChange }: { active: Tab; onChange: (t: Tab) => void }) {
-  const tabsRef = useRef<Record<Tab, HTMLButtonElement | null>>({ login: null, register: null });
-  const [ind, setInd] = useState({ left: 0, width: 0 });
-
-  useEffect(() => {
-    const recalc = () => {
-      const el = tabsRef.current[active];
-      if (el) setInd({ left: el.offsetLeft, width: el.offsetWidth });
-    };
-    recalc();
-    window.addEventListener('resize', recalc);
-    return () => window.removeEventListener('resize', recalc);
-  }, [active]);
-
   return (
-    <div className="relative inline-flex bg-surface-2 rounded-2xl p-1.5">
+    <div className="relative inline-grid grid-cols-2 bg-surface-2 rounded-2xl p-1.5 w-fit">
       <div
-        className="absolute top-1.5 bottom-1.5 bg-white rounded-xl shadow-sm transition-all duration-[350ms] ease-[cubic-bezier(.2,.8,.2,1)]"
-        style={{ left: ind.left, width: ind.width }}
+        className="absolute top-1.5 bottom-1.5 bg-white rounded-xl shadow-sm pointer-events-none transition-all duration-[350ms] ease-[cubic-bezier(.2,.8,.2,1)]"
+        style={{
+          left: active === 'login' ? '0.375rem' : '50%',
+          width: 'calc(50% - 0.375rem)',
+        }}
       />
       {(['login', 'register'] as const).map((t) => (
         <button
           key={t}
-          ref={(el) => { tabsRef.current[t] = el; }}
           type="button"
           onClick={() => onChange(t)}
           className={cn(
-            'relative z-10 px-6 py-2.5 rounded-xl text-sm font-bold cursor-pointer transition-colors',
+            'relative z-10 px-7 py-2.5 rounded-xl text-sm font-bold cursor-pointer transition-colors',
             active === t ? 'text-brand-600' : 'text-ink-500 hover:text-ink-700',
           )}
         >
