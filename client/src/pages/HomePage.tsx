@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Search, CheckCircle2, Sparkles, Shield, Clock } from 'lucide-react';
+import { CheckCircle2, Sparkles, Shield, Clock } from 'lucide-react';
 import { SearchTabs, type SearchTabKey } from '@/components/search/SearchTabs';
 import { FlightSearchForm } from '@/components/search/FlightSearchForm';
 import { HotelSearchForm } from '@/components/search/HotelSearchForm';
 import { NavTiles } from '@/components/home/NavTiles';
 import { HotDeals } from '@/components/home/HotDeals';
+import { BlogPreview } from '@/components/home/BlogPreview';
 import { DestinationCard } from '@/components/cards/DestinationCard';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { destinationsApi } from '@/api/destinations.api';
@@ -23,22 +24,21 @@ export function HomePage() {
   }, []);
 
   return (
-    <div>
-      {/* ═══════════ HERO ═══════════ */}
-      <section className="relative min-h-[640px] hero-gradient overflow-hidden pt-28 pb-12 md:pt-32 md:pb-16">
-        {/* Background image overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-luminosity"
-          style={{ backgroundImage: 'url(/hero/main.webp)' }}
-        />
-        <div className="absolute inset-0 hero-overlay" />
+    <div className="bg-surface-1">
+      {/* ═══════════ HERO — rounded card на светлом фоне ═══════════ */}
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 pt-6 md:pt-8">
+        <div className="relative overflow-hidden rounded-[28px] hero-gradient min-h-[360px] md:min-h-[420px] flex items-center">
+          {/* Background image overlay (subtle) */}
+          <div
+            className="absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
+            style={{ backgroundImage: 'url(/hero/main.webp)' }}
+          />
+          <div className="absolute inset-0 hero-overlay" />
 
-        {/* Decorative big letter behind text */}
-        <div className="hero-deco hidden md:block">F</div>
+          {/* Big decorative letter behind */}
+          <div className="hero-deco hidden md:block">F</div>
 
-        <div className="relative z-10 max-w-[1320px] mx-auto px-4 md:px-8">
-          {/* Hero header */}
-          <div className="max-w-3xl mb-8 md:mb-10 animate-float-up">
+          <div className="relative z-10 w-full px-6 md:px-14 py-10 md:py-14 max-w-3xl animate-float-up">
             <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full glass-pill text-white text-[11px] font-mono font-medium tracking-[.15em] uppercase mb-5">
               <span className="relative flex w-1.5 h-1.5">
                 <span className="absolute inset-0 rounded-full bg-amber-500 animate-pulse-amber" />
@@ -47,7 +47,7 @@ export function HomePage() {
               FreeStyle · с 2026
             </div>
 
-            <h1 className="font-display text-white font-extrabold leading-[1.05] tracking-tight text-4xl md:text-6xl mb-4">
+            <h1 className="font-display text-white font-extrabold leading-[1.05] tracking-tight text-3xl md:text-5xl lg:text-6xl mb-4">
               Путешествие <em className="not-italic text-amber-500">без компромиссов</em>
               <br />
               начинается здесь
@@ -57,52 +57,48 @@ export function HomePage() {
               Сравните цены сотен авиакомпаний, тысячи отелей и готовых туров в одном поиске. Без накруток, без скрытых сборов.
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* ═══ GLASS SEARCH WIDGET ═══ */}
-          <div
-            className="glass rounded-[24px] p-2 shadow-[var(--shadow-hero)] max-w-[1180px] animate-float-up"
-            style={{ animationDelay: '120ms' }}
-          >
-            <div className="px-2 pt-2">
-              <SearchTabs active={activeTab} onChange={setActiveTab} />
-            </div>
-
-            <div className="p-3 md:p-4 pt-3">
-              {/* Динамическая форма по активному табу */}
-              {activeTab === 'flights' && <FlightSearchForm />}
-              {activeTab === 'hotels' && <HotelSearchForm />}
-              {activeTab !== 'flights' && activeTab !== 'hotels' && (
-                <ComingSoonForm tab={activeTab} />
-              )}
-            </div>
+      {/* ═══════════ SEARCH WIDGET — белая карточка на сером фоне, между hero и tiles ═══════════ */}
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 -mt-10 md:-mt-12 relative z-10">
+        <div className="bg-white rounded-[24px] p-2 shadow-[var(--shadow-hero)] animate-float-up" style={{ animationDelay: '120ms' }}>
+          <div className="px-2 pt-2 overflow-x-auto scrollbar-hide">
+            <SearchTabs active={activeTab} onChange={setActiveTab} />
           </div>
 
-          {/* Trust ribbon под формой */}
-          <div
-            className="flex flex-wrap gap-x-8 gap-y-3 mt-7 text-white/85 text-sm animate-float-up"
-            style={{ animationDelay: '220ms' }}
-          >
-            <div className="flex items-center gap-2">
-              <CheckCircle2 className="w-4 h-4 text-amber-500" />
-              <span>Цены без накруток</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Shield className="w-4 h-4 text-amber-500" />
-              <span>Безопасная оплата</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>Кэшбэк до 5%</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-amber-500" />
-              <span>Поддержка 24/7</span>
-            </div>
+          <div className="p-3 md:p-4 pt-3">
+            {activeTab === 'flights' && <FlightSearchForm />}
+            {activeTab === 'hotels' && <HotelSearchForm />}
+            {activeTab !== 'flights' && activeTab !== 'hotels' && <ComingSoonForm tab={activeTab} />}
+          </div>
+        </div>
+
+        {/* Trust ribbon */}
+        <div
+          className="flex flex-wrap gap-x-6 md:gap-x-8 gap-y-2.5 mt-5 md:mt-6 text-ink-700 text-sm font-medium animate-float-up"
+          style={{ animationDelay: '220ms' }}
+        >
+          <div className="flex items-center gap-1.5">
+            <CheckCircle2 className="w-4 h-4 text-brand-600" />
+            <span>Цены без накруток</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Shield className="w-4 h-4 text-brand-600" />
+            <span>Безопасная оплата</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="w-4 h-4 text-brand-600" />
+            <span>Кэшбэк до 5%</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <Clock className="w-4 h-4 text-brand-600" />
+            <span>Поддержка 24/7</span>
           </div>
         </div>
       </section>
 
-      {/* ═══ NAV TILES — 8 категорий ═══ */}
+      {/* ═══ NAV TILES — 10 категорий с 3D-иконками ═══ */}
       <NavTiles />
 
       {/* ═══ HOT DEALS ═══ */}
@@ -135,60 +131,13 @@ export function HomePage() {
         )}
       </section>
 
-      {/* ═══ WHY US ═══ */}
-      <section className="bg-white py-14 md:py-20">
-        <div className="max-w-[1320px] mx-auto px-4 md:px-8">
-          <div className="text-center mb-10 md:mb-14">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/10 text-amber-600 text-[11px] font-bold tracking-[.15em] uppercase mb-3">
-              Почему FreeStyle
-            </div>
-            <h2 className="font-display text-2xl md:text-4xl font-extrabold text-ink-900 tracking-tight">
-              Один поиск — <span className="text-brand-600">сотни вариантов</span>
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <FeatureCard
-              Icon={Search}
-              title="Лучшие цены"
-              text="Сравниваем цены десятков партнёров. Найдём то, что не найдёт никто другой."
-            />
-            <FeatureCard
-              Icon={Shield}
-              title="Безопасно"
-              text="Только проверенные партнёры. Эскроу-платежи, защита от мошенничества."
-            />
-            <FeatureCard
-              Icon={Sparkles}
-              title="Всё в одном"
-              text="От авиабилетов до экскурсий. Соберите идеальную поездку за минуту."
-            />
-          </div>
-        </div>
-      </section>
+      {/* ═══ BLOG PREVIEW ═══ */}
+      <BlogPreview />
     </div>
   );
 }
 
-// ─── Feature card ───
-interface FeatureCardProps {
-  Icon: typeof Search;
-  title: string;
-  text: string;
-}
-function FeatureCard({ Icon, title, text }: FeatureCardProps) {
-  return (
-    <div className="text-center p-6 rounded-2xl border border-ink-100 hover:border-brand-200 hover:shadow-[var(--shadow-hover)] transition-all">
-      <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-white grid place-items-center shadow-md">
-        <Icon className="w-7 h-7" />
-      </div>
-      <h3 className="font-display font-bold text-lg text-ink-900 mb-1.5">{title}</h3>
-      <p className="text-sm text-ink-500 leading-relaxed">{text}</p>
-    </div>
-  );
-}
-
-// ─── Coming soon placeholder для табов где формы ещё не готовы ───
+// ─── Coming soon placeholder ───
 function ComingSoonForm({ tab }: { tab: SearchTabKey }) {
   const labels: Record<SearchTabKey, string> = {
     flights: 'Авиабилеты',
@@ -206,9 +155,7 @@ function ComingSoonForm({ tab }: { tab: SearchTabKey }) {
         <Sparkles className="w-4 h-4" />
         Скоро
       </div>
-      <div className="font-display font-bold text-xl text-ink-900 mb-1">
-        {labels[tab]}
-      </div>
+      <div className="font-display font-bold text-xl text-ink-900 mb-1">{labels[tab]}</div>
       <div className="text-ink-500 text-sm">Раздел готовится к запуску — подключаем партнёров.</div>
     </div>
   );

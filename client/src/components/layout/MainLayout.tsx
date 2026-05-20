@@ -1,14 +1,11 @@
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
 export function MainLayout() {
-  const { pathname } = useLocation();
-  const isHome = pathname === '/';
-
   return (
     <>
-      <Header transparent={isHome} />
+      <Header />
       <main className="flex-1">
         <Outlet />
       </main>

@@ -1,64 +1,48 @@
 import { Link } from 'react-router-dom';
-import {
-  Plane, BedDouble, Map, Car, Train, Bus, Mountain, ShieldCheck,
-} from 'lucide-react';
 
 /**
- * NavTiles — сетка 8 категорий путешествий (как у Travelask + China v2).
- * Каждая карточка ведёт на свою страницу.
- * Используется ниже hero на главной.
+ * NavTiles — 10 категорий с 3D-иконками (PNG с china-ru.ru).
+ * Воздушный дизайн: белые карточки на светло-сером фоне страницы.
  */
 
+const CN_ICONS = 'https://china-ru.ru/upload/travel/icons';
+
 const tiles = [
-  { to: '/flights',    label: 'Авиабилеты',  desc: 'Дешёвые рейсы',   Icon: Plane,       hue: 'from-brand-500 to-brand-700' },
-  { to: '/hotels',     label: 'Отели',       desc: 'Отели и хостелы', Icon: BedDouble,   hue: 'from-amber-500 to-amber-600' },
-  { to: '/tours',      label: 'Туры',        desc: 'Готовые пакеты',  Icon: Map,         hue: 'from-mint-500 to-teal-600' },
-  { to: '/car-rental', label: 'Авто',        desc: 'Аренда машин',    Icon: Car,         hue: 'from-blue-500 to-indigo-600' },
-  { to: '/trains',     label: 'Ж/Д',         desc: 'Поезда РЖД',      Icon: Train,       hue: 'from-purple-500 to-pink-600' },
-  { to: '/buses',      label: 'Автобусы',    desc: 'Маршруты по РФ',  Icon: Bus,         hue: 'from-orange-500 to-red-600' },
-  { to: '/excursions', label: 'Экскурсии',   desc: 'С гидом',         Icon: Mountain,    hue: 'from-emerald-500 to-green-600' },
-  { to: '/insurance',  label: 'Страховка',   desc: 'Полис в дорогу',  Icon: ShieldCheck, hue: 'from-rose-500 to-pink-600' },
+  { to: '/flights',    label: 'Авиабилеты', icon: 'avia' },
+  { to: '/trains',     label: 'Ж/Д билеты', icon: 'train' },
+  { to: '/buses',      label: 'Автобусы',   icon: 'bus' },
+  { to: '/hotels',     label: 'Отели',      icon: 'hotel' },
+  { to: '/tours',      label: 'Туры',       icon: 'tour' },
+  { to: '/visa',       label: 'Визы',       icon: 'visa' },
+  { to: '/business',   label: 'Бизнес',     icon: 'business' },
+  { to: '/car-rental', label: 'Авто',       icon: 'auto' },
+  { to: '/insurance',  label: 'Страховки',  icon: 'insurance' },
+  { to: '/concierge',  label: 'Консьерж',   icon: 'concierge' },
 ];
 
 export function NavTiles() {
   return (
-    <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
-      <div className="mb-8 md:mb-10 text-center">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 text-brand-600 text-[11px] font-bold tracking-[.15em] uppercase mb-3">
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse-amber" />
-          Все услуги
-        </div>
-        <h2 className="font-display text-2xl md:text-4xl font-extrabold text-ink-900 tracking-tight">
-          Всё для путешествия <span className="text-brand-600">в одном месте</span>
-        </h2>
-        <p className="mt-3 text-ink-500 max-w-2xl mx-auto">
-          От авиабилетов до страховки — соберите идеальную поездку за минуту.
-        </p>
-      </div>
-
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-        {tiles.map(({ to, label, desc, Icon, hue }, i) => (
+    <section className="max-w-[1320px] mx-auto px-4 md:px-8 -mt-12 md:-mt-16 relative z-10">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-2.5 md:gap-3">
+        {tiles.map((t, i) => (
           <Link
-            key={to}
-            to={to}
-            className="group relative bg-white border border-ink-100 rounded-2xl p-5 md:p-6 transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-hover)] hover:border-brand-200 animate-float-up"
-            style={{ animationDelay: `${i * 60}ms` }}
+            key={t.to}
+            to={t.to}
+            className="group bg-white border border-ink-100 rounded-2xl p-3 md:p-4 flex flex-col items-center text-center transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-hover)] hover:border-brand-200 animate-float-up"
+            style={{ animationDelay: `${i * 50}ms` }}
           >
-            <div className={`w-12 h-12 md:w-14 md:h-14 rounded-2xl bg-gradient-to-br ${hue} text-white grid place-items-center mb-4 shadow-md group-hover:scale-110 transition-transform`}>
-              <Icon className="w-6 h-6 md:w-7 md:h-7" />
+            <div className="w-14 h-14 md:w-16 md:h-16 mb-2 flex items-center justify-center transition-transform group-hover:scale-110">
+              <img
+                src={`${CN_ICONS}/${t.icon}.png`}
+                alt={t.label}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-contain"
+                onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
             </div>
-            <div className="font-display font-bold text-base md:text-lg text-ink-900 mb-0.5">
-              {label}
-            </div>
-            <div className="text-xs md:text-sm text-ink-500">
-              {desc}
-            </div>
-            {/* стрелочка-индикатор */}
-            <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-surface-2 text-ink-400 grid place-items-center opacity-0 group-hover:opacity-100 group-hover:bg-brand-50 group-hover:text-brand-600 transition-all">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
+            <div className="text-xs md:text-sm font-bold text-ink-900 leading-tight">
+              {t.label}
             </div>
           </Link>
         ))}
