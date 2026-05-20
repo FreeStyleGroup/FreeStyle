@@ -49,9 +49,9 @@ export function FlightResultsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      {/* Search form (compact) */}
-      <div className="mb-8">
-        <FlightSearchForm compact />
+      {/* Search form */}
+      <div className="mb-8 bg-white rounded-2xl p-4 shadow-sm border border-ink-100">
+        <FlightSearchForm />
       </div>
 
       <div className="flex flex-col lg:flex-row gap-8">
