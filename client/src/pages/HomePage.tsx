@@ -27,13 +27,24 @@ export function HomePage() {
     <div className="bg-surface-1">
       {/* ═══════════ HERO — светлый баннер с персонажами справа ═══════════ */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 pt-6 md:pt-8">
-        <div className="relative overflow-hidden rounded-[28px] bg-[#faf6f0] min-h-[460px] md:min-h-[560px]">
-          {/* Картинка с персонажами — справа, помещается ЦЕЛИКОМ (object-contain) */}
+        <div className="relative overflow-hidden rounded-[28px] bg-[#faf6f0] min-h-[460px] md:min-h-[500px]">
+          {/* Картинка с персонажами — снизу-справа, полностью в кадре с котом */}
           <img
             src="https://freestyle.ru/images/17793208.png"
             alt=""
             aria-hidden="true"
-            className="absolute right-0 bottom-0 h-full md:h-[105%] w-auto max-w-[70%] md:max-w-[62%] object-contain object-bottom-right pointer-events-none select-none opacity-30 md:opacity-100"
+            style={{
+              position: 'absolute',
+              right: 0,
+              bottom: 0,
+              maxHeight: '100%',
+              height: 'auto',
+              maxWidth: '62%',
+              objectFit: 'contain',
+              objectPosition: 'right bottom',
+              pointerEvents: 'none',
+            }}
+            className="select-none opacity-30 md:opacity-100"
           />
 
           {/* Gradient fade — на десктопе перекрывает левую часть, чтобы текст был на чистом фоне */}

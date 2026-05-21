@@ -8,12 +8,15 @@
   font-family: inherit;
   margin: 0;
   color: #1e293b;
+  position: relative;
+  padding-top: 4px;
 }
 
 .rdp-months {
   display: flex;
   gap: 32px;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .rdp-month {
@@ -28,21 +31,28 @@
   color: #0f172a;
   text-transform: capitalize;
   text-align: center;
-  padding: 0 0 12px;
-  position: relative;
+  padding: 0 0 14px;
 }
 
+/* nav-кнопки: prev слева, next справа — на одной строке с самым верхним заголовком */
 .rdp-nav {
-  display: flex;
-  gap: 6px;
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
+  height: 32px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 1;
+}
+.rdp-nav > * {
+  pointer-events: auto;
 }
 .rdp-button_previous,
 .rdp-button_next {
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border: 0;
   border-radius: 10px;
   background: #f1f5f9;
@@ -51,6 +61,7 @@
   place-items: center;
   cursor: pointer;
   transition: all 0.2s;
+  flex-shrink: 0;
 }
 .rdp-button_previous:hover:not(:disabled),
 .rdp-button_next:hover:not(:disabled) {
