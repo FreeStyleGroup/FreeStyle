@@ -155,6 +155,35 @@ export function ContactsPage() {
           </InfoCard>
         </aside>
       </div>
+
+      {/* ─── Карта офиса в Дубае ─── */}
+      <section className="mt-16 md:mt-20">
+        <div className="text-center mb-8">
+          <div className="text-[11px] uppercase tracking-[.18em] font-bold text-brand-600 mb-3">Главный офис</div>
+          <h2 className="font-display font-extrabold text-3xl md:text-4xl text-ink-900 leading-tight tracking-tight">
+            Дубай · <em className="not-italic text-brand-600">DIFC</em>
+          </h2>
+          <p className="text-ink-500 mt-3 max-w-xl mx-auto">
+            Центральный офис команды в финансовом районе Дубая. Партнёры, юристы, поддержка ключевых клиентов.
+          </p>
+        </div>
+
+        <div className="rounded-3xl overflow-hidden border border-ink-100 shadow-sm">
+          <iframe
+            title="FreeStyle · офис в Дубае"
+            src="https://yandex.ru/map-widget/v1/?ll=55.2790%2C25.2138&z=14&pt=55.2790%2C25.2138%2Cpm2rdl"
+            width="100%"
+            height="460"
+            allowFullScreen
+            loading="lazy"
+            style={{ display: 'block', border: 0 }}
+          />
+        </div>
+
+        <p className="text-center text-[11.5px] text-ink-400 mt-3">
+          DIFC · Dubai International Financial Centre · UTC+4
+        </p>
+      </section>
     </div>
   );
 }

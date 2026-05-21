@@ -25,6 +25,9 @@ import { BlogPage } from '@/pages/BlogPage';
 import { BlogPostPage } from '@/pages/BlogPostPage';
 import { CountriesPage } from '@/pages/CountriesPage';
 import { CountryDetailPage } from '@/pages/CountryDetailPage';
+import { VisasPage } from '@/pages/VisasPage';
+import { ConciergePage } from '@/pages/ConciergePage';
+import { BusinessToursPage } from '@/pages/BusinessToursPage';
 
 import { AuthGuard } from '@/components/auth/AuthGuard';
 import { RoleGuard } from '@/components/auth/RoleGuard';
@@ -84,6 +87,9 @@ export default function App() {
         <Route path="blog/:slug" element={<BlogPostPage />} />
         <Route path="countries" element={<CountriesPage />} />
         <Route path="countries/:slug" element={<CountryDetailPage />} />
+        <Route path="visa" element={<VisasPage />} />
+        <Route path="concierge" element={<ConciergePage />} />
+        <Route path="business" element={<BusinessToursPage />} />
 
         {/* Личный кабинет — все авторизованные */}
         <Route path="cabinet" element={<AuthGuard><CabinetLayout /></AuthGuard>}>

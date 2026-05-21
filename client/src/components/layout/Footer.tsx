@@ -46,11 +46,14 @@ export function Footer() {
               <li><Link to="/flights" className="hover:text-white text-white/70 transition-colors">Авиабилеты</Link></li>
               <li><Link to="/hotels" className="hover:text-white text-white/70 transition-colors">Отели</Link></li>
               <li><Link to="/tours" className="hover:text-white text-white/70 transition-colors">Туры</Link></li>
+              <li><Link to="/visa" className="hover:text-white text-white/70 transition-colors">Визы</Link></li>
               <li><Link to="/car-rental" className="hover:text-white text-white/70 transition-colors">Авто</Link></li>
               <li><Link to="/insurance" className="hover:text-white text-white/70 transition-colors">Страховки</Link></li>
               <li><Link to="/excursions" className="hover:text-white text-white/70 transition-colors">Экскурсии</Link></li>
               <li><Link to="/trains" className="hover:text-white text-white/70 transition-colors">Поезда</Link></li>
               <li><Link to="/buses" className="hover:text-white text-white/70 transition-colors">Автобусы</Link></li>
+              <li className="pt-2 mt-2 border-t border-white/10"><Link to="/concierge" className="hover:text-white text-white/70 transition-colors">AI-консьерж Феликс</Link></li>
+              <li><Link to="/business" className="hover:text-white text-white/70 transition-colors">Для бизнеса</Link></li>
             </ul>
           </div>
 
