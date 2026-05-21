@@ -54,10 +54,15 @@ export function FlightSearchForm() {
         onChange={setOrigin}
         className="md:col-span-3"
         rightSlot={
+          /*
+           * Центрируем по середине gap'а между Откуда и Куда:
+           * gap-2.5 = 10px, ширина кнопки w-9 = 36px.
+           * right = -(gap/2 + width/2) = -(5 + 18) = -23px → центр кнопки точно на середине gap'а
+           */
           <button
             type="button"
             onClick={swapCities}
-            className="hidden md:grid absolute -right-4 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-ink-200 place-items-center text-ink-700 shadow-md hover:bg-brand-600 hover:border-brand-600 hover:text-white hover:rotate-180 transition-all duration-300 cursor-pointer"
+            className="hidden md:grid absolute -right-[23px] top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white border border-ink-200 place-items-center text-ink-700 shadow-md hover:bg-brand-600 hover:border-brand-600 hover:text-white hover:rotate-180 transition-all duration-300 cursor-pointer"
             aria-label="Поменять местами"
           >
             <ArrowLeftRight className="w-4 h-4" />
