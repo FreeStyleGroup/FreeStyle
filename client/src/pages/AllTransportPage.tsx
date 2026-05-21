@@ -1,22 +1,50 @@
-import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Plane, Train, Bus, Car, ArrowRight, Compass } from 'lucide-react';
 
+/**
+ * AllTransportPage — обзорная страница «Весь транспорт».
+ * Простая навигация по разделам перевозок.
+ */
 export function AllTransportPage() {
-  const { t } = useTranslation();
+  const modes = [
+    { Icon: Plane, name: 'Авиабилеты', text: 'Сравним 100+ авиакомпаний, найдём лучшую цену',  to: '/flights',    accent: 'from-brand-500 to-brand-700' },
+    { Icon: Train, name: 'Поезда',     text: 'РЖД и СНГ — электронный билет за 2 минуты',       to: '/trains',     accent: 'from-ink-700 to-ink-900' },
+    { Icon: Bus,   name: 'Автобусы',   text: 'Россия, Беларусь, Прибалтика, Польша, Турция',     to: '/buses',      accent: 'from-mint-600 to-brand-700' },
+    { Icon: Car,   name: 'Аренда авто', text: '900 000+ авто в 175 странах, бесплатная отмена', to: '/car-rental', accent: 'from-amber-500 to-amber-700' },
+  ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-16">
-      <h1 className="text-3xl font-bold text-gray-900 mb-4">{t('categories.allTransport')}</h1>
-      <p className="text-gray-500 mb-8">Все виды транспорта в одном месте</p>
-
-      <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 text-center">
-        <div className="w-20 h-20 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-          <svg className="w-10 h-10 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-          </svg>
+    <div className="min-h-screen">
+      <section className="relative overflow-hidden hero-gradient text-white">
+        <div className="absolute inset-0 hero-overlay opacity-60" />
+        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 py-16 md:py-24">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-6">
+            <Compass className="w-3 h-3 text-amber-500" /> Весь транспорт
+          </div>
+          <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
+            От самолёта до автобуса —<br />
+            <em className="not-italic text-amber-500">в одном месте</em>
+          </h1>
+          <p className="text-white/85 text-lg mt-5 max-w-2xl">
+            Все способы добраться куда нужно. Сравним цены, найдём пересадки, забронируем в пару кликов.
+          </p>
         </div>
-        <h2 className="text-xl font-bold text-gray-900 mb-2">Скоро здесь появится поиск транспорта</h2>
-        <p className="text-gray-500">Авиабилеты, поезда, автобусы — всё в одном поиске</p>
-      </div>
+      </section>
+
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-12 md:py-16">
+        <div className="grid sm:grid-cols-2 gap-5">
+          {modes.map((m) => (
+            <Link key={m.to} to={m.to} className={`relative group rounded-2xl overflow-hidden p-8 text-white bg-gradient-to-br ${m.accent} hover:-translate-y-0.5 transition-all shadow-md hover:shadow-xl`}>
+              <m.Icon className="w-10 h-10 mb-5 opacity-90" />
+              <div className="font-display font-extrabold text-3xl mb-2">{m.name}</div>
+              <p className="text-white/85 text-[14.5px] leading-relaxed mb-5 max-w-md">{m.text}</p>
+              <span className="inline-flex items-center gap-1.5 text-[13px] font-bold opacity-90 group-hover:opacity-100">
+                Открыть <ArrowRight className="w-3.5 h-3.5" />
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

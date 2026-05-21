@@ -1,20 +1,32 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import {
   Mail, Lock, User, Eye, EyeOff, Phone,
-  Sparkles, ShieldCheck, Wallet, Gift, ArrowRight,
+  Sparkles, ShieldCheck, Wallet, Gift, ArrowRight, Loader2,
 } from 'lucide-react';
 import { Modal } from '@/components/ui/Modal';
 import { cn } from '@/utils/cn';
+import { authApi } from '@/api/auth.api';
+import { useAuth } from '@/stores/auth';
+import { isAxiosError } from 'axios';
 
 /**
  * AuthModal — премиум двухколоночный модал входа/регистрации.
  * Уровень AAA travel-сервиса: боковая панель с benefits + soc-логины +
  * floating-поля с иконками + анимированный таб-индикатор.
  *
- * Backend пока не подключён (см. ADMIN_CMS_BLOG.md Фаза 4) — onSubmit
- * локально логирует и закрывает модал. После реализации /api/auth/*
- * подключаем через store/auth.store.ts.
+ * Подключён к /api/auth/{login,register} — после успеха обновляет
+ * useAuth().user и закрывает модал.
  */
+
+function extractError(err: unknown, fallback: string): string {
+  if (isAxiosError(err)) {
+    const data = err.response?.data as { error?: string; details?: { message: string }[] } | undefined;
+    if (data?.details?.[0]?.message) return data.details[0].message;
+    if (data?.error) return data.error;
+  }
+  return fallback;
+}
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -192,16 +204,27 @@ function TabSwitcher({ active, onChange }: { active: Tab; onChange: (t: Tab) => 
 interface FormProps { onClose: () => void }
 
 function LoginForm({ onClose }: FormProps) {
+  const { setUser } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
   const [remember, setRemember] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: подключить /api/auth/login после реализации Фазы 4
-    console.log({ email, password, remember });
-    onClose();
+    setError(null);
+    setLoading(true);
+    try {
+      const user = await authApi.login({ email, password });
+      setUser(user);
+      onClose();
+    } catch (err) {
+      setError(extractError(err, 'Не удалось войти. Проверьте email и пароль.'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -256,14 +279,23 @@ function LoginForm({ onClose }: FormProps) {
           />
           <span className="text-ink-700">Запомнить меня</span>
         </label>
-        <a href="#" className="text-brand-600 font-semibold hover:text-brand-700 transition-colors">
+        <Link
+          to="/forgot-password"
+          onClick={onClose}
+          className="text-brand-600 font-semibold hover:text-brand-700 transition-colors"
+        >
           Забыли пароль?
-        </a>
+        </Link>
       </div>
 
-      <SubmitBtn>
-        Войти
-        <ArrowRight className="w-4 h-4" />
+      {error && (
+        <div className="text-sm text-brand-700 bg-brand-50 border border-brand-200 rounded-xl px-4 py-3">
+          {error}
+        </div>
+      )}
+
+      <SubmitBtn disabled={loading}>
+        {loading ? <Loader2 className="w-4 h-4 animate-spin" /> : <>Войти <ArrowRight className="w-4 h-4" /></>}
       </SubmitBtn>
 
       <SocialAuth label="или войти через" />
@@ -272,18 +304,30 @@ function LoginForm({ onClose }: FormProps) {
 }
 
 function RegisterForm({ onClose }: FormProps) {
+  const { setUser } = useAuth();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [showPass, setShowPass] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!agreed) return;
-    console.log({ name, email, phone, password });
-    onClose();
+    setError(null);
+    setLoading(true);
+    try {
+      const user = await authApi.register({ name, email, password });
+      setUser(user);
+      onClose();
+    } catch (err) {
+      setError(extractError(err, 'Не удалось зарегистрироваться. Попробуйте ещё раз.'));
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -341,9 +385,16 @@ function RegisterForm({ onClose }: FormProps) {
         </span>
       </label>
 
-      <SubmitBtn disabled={!agreed}>
-        Создать аккаунт
-        <ArrowRight className="w-4 h-4" />
+      {error && (
+        <div className="text-sm text-brand-700 bg-brand-50 border border-brand-200 rounded-xl px-4 py-3">
+          {error}
+        </div>
+      )}
+
+      <SubmitBtn disabled={!agreed || loading}>
+        {loading
+          ? <Loader2 className="w-4 h-4 animate-spin" />
+          : <>Создать аккаунт <ArrowRight className="w-4 h-4" /></>}
       </SubmitBtn>
 
       <SocialAuth label="или зарегистрироваться через" />

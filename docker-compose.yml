@@ -1,0 +1,35 @@
+# ════════════════════════════════════════════════════════════════
+#  FreeStyle.ru — локальная разработка
+#
+#  Для прода используется docker-compose.prod.yml (создаётся в Phase 6
+#  при деплое на reg.ru VPS — там добавятся nginx, certbot и app-image).
+#
+#  Запуск:
+#    docker compose up -d         # поднять postgres
+#    docker compose down          # остановить
+#    docker compose logs -f       # хвост логов
+#    docker compose exec postgres psql -U freestyle -d freestyle
+# ════════════════════════════════════════════════════════════════
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: freestyle-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: freestyle
+      POSTGRES_USER: freestyle
+      POSTGRES_PASSWORD: freestyle
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - freestyle-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U freestyle -d freestyle"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  freestyle-pg-data:
+    name: freestyle-pg-data

@@ -1,176 +1,198 @@
-# Deploy · пошагово первый запуск на Vercel
+# Деплой FreeStyle.ru на reg.ru VPS
 
-Цель: разворачиваем **два независимых проекта Vercel** — `freestyle-client` (Vite SPA) и `freestyle-server` (Express serverless). Каждый деплоится своим CLI или авто-деплоем из GitHub, имеет свой preview URL на каждую feature-ветку.
+Полный гайд от подъёма пустого Ubuntu-VPS до работающего боевого сайта.
 
-## Что в итоге будет
+## 1. Заказ и первичная настройка VPS
 
-| Проект Vercel | Что | URL после деплоя |
-|---|---|---|
-| `freestyle-client` | React SPA, Vite | `https://freestyle-client.vercel.app` |
-| `freestyle-server` | Express API, serverless | `https://freestyle-server.vercel.app/api/*` |
-
-Клиент стучится в `VITE_API_BASE_URL` = домен server-проекта. На каждый PR в GitHub оба деплоятся параллельно, получаешь два preview-URL.
-
-## Подготовка
-
-1. Создать аккаунт https://vercel.com (привязать GitHub)
-2. Залить FreeStyle на GitHub в один репозиторий (если ещё не сделано)
-3. Получить актуальный `TP_API_TOKEN` из ЛК Travelpayouts
-4. Установить Vercel CLI локально:
+1. Закажи на reg.ru тариф **VPS** (НЕ shared-hosting). Минимум: 2 vCPU, 2 GB RAM, 30 GB SSD. ОС — **Ubuntu 24.04 LTS**.
+2. Открой SSH-доступ: получи IP, root-пароль (или сразу залей публичный ключ через панель reg.ru).
+3. Сразу после первого входа:
    ```bash
-   npm i -g vercel
-   vercel login
+   apt update && apt -y upgrade
+   apt -y install ufw fail2ban
+   adduser --disabled-password --gecos "" deploy
+   usermod -aG sudo deploy
+   mkdir -p /home/deploy/.ssh
+   cp ~/.ssh/authorized_keys /home/deploy/.ssh/
+   chown -R deploy:deploy /home/deploy/.ssh && chmod 700 /home/deploy/.ssh
+   ufw allow OpenSSH && ufw allow http && ufw allow https && ufw --force enable
+   ```
+4. Под `deploy` отдельный keypair (положи его публичный ключ в `~/.ssh/authorized_keys`).
+5. После проверки доступа под `deploy` — отключи root-логин:
+   ```bash
+   sudo sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
+   sudo systemctl restart ssh
    ```
 
-## Шаг 1 · Деплой backend (server)
-
-### 1.1. Импорт проекта в Vercel
-
-В Vercel dashboard:
-1. **Add New → Project**
-2. Выбрать GitHub-репозиторий FreeStyle
-3. **Configure project**:
-   - **Project Name:** `freestyle-server`
-   - **Framework Preset:** `Other`
-   - **Root Directory:** `server`  ← важно, указать вложенную папку
-   - **Build Command:** оставить из vercel.json (`npm run build`)
-   - **Output Directory:** оставить из vercel.json (`dist`)
-   - **Install Command:** оставить из vercel.json (`cd .. && npm install`)
-4. **Environment Variables** (добавить все из `server/.env.example`):
-   ```
-   NODE_ENV=production
-   TP_API_TOKEN=<реальный_токен>
-   TP_MARKER=<маркер>
-   TP_PROJECT_ID=<id>
-   TP_API_BASE_URL=https://api.travelpayouts.com
-   TP_AFFILIATE_BASE_URL=https://tp.media
-   CACHE_DEFAULT_TTL=900
-   CACHE_REFERENCE_TTL=86400
-   RATE_LIMIT_WINDOW_MS=900000
-   RATE_LIMIT_MAX_REQUESTS=100
-   DEFAULT_LOCALE=ru
-   DEFAULT_CURRENCY=rub
-   CLIENT_URL=https://freestyle-client.vercel.app
-   ```
-   > `CLIENT_URL` пока поставь предполагаемый — после деплоя client'а вернёмся и поправим на реальный
-5. **Deploy** → подождать ~1-2 минуты
-
-После сборки получишь URL вида `https://freestyle-server.vercel.app`. Проверь:
-```
-GET https://freestyle-server.vercel.app/api/health
-→ {"status":"ok","timestamp":"..."}
-```
-
-### 1.2. Деплой через CLI (альтернатива GitHub-импорта)
+## 2. Установка Docker
 
 ```bash
-cd server
-vercel link          # создаст проект freestyle-server
-vercel --prod        # сразу prod-деплой
+curl -fsSL https://get.docker.com | sudo sh
+sudo usermod -aG docker deploy
+# Перелогинься чтобы группа docker применилась
+sudo systemctl enable --now docker
+docker compose version   # должна быть v2+
 ```
 
-Env-переменные тоже можно через CLI:
+## 3. Клонирование репозитория
+
 ```bash
-vercel env add TP_API_TOKEN production
-# вставить значение
-vercel env add CLIENT_URL production
-# ...
+sudo mkdir -p /opt/freestyle
+sudo chown deploy:deploy /opt/freestyle
+cd /opt/freestyle
+git clone https://github.com/<org>/freestyle.git .
+# Если репо приватный — добавь deploy-key:
+#  cat ~/.ssh/id_ed25519.pub  → GitHub repo settings → Deploy keys
 ```
 
-## Шаг 2 · Деплой frontend (client)
+## 4. .env для прода
 
-### 2.1. Импорт в Vercel
+```bash
+cp .env.example .env
+nano .env
+```
 
-1. **Add New → Project**
-2. Выбрать тот же GitHub-репозиторий FreeStyle
-3. **Configure project**:
-   - **Project Name:** `freestyle-client`
-   - **Framework Preset:** Vercel сам распознает `vite` из `client/vercel.json`
-   - **Root Directory:** `client`
-   - Остальное из vercel.json
-4. **Environment Variables**:
-   ```
-   VITE_API_BASE_URL=https://freestyle-server.vercel.app/api
-   ```
-   > Подставь реальный URL server'а из шага 1
-5. **Deploy**
+Заполни критичные поля:
+- `NODE_ENV=production`
+- `CLIENT_URL=https://freestyle.ru`
+- `DATABASE_URL` — оставь `postgres://freestyle:<password>@postgres:5432/freestyle`
+- `POSTGRES_PASSWORD=<openssl rand -base64 24>`
+- `JWT_ACCESS_SECRET` + `JWT_REFRESH_SECRET` — каждый `openssl rand -base64 48`, разные
+- `COOKIE_DOMAIN=.freestyle.ru` (с точкой!)
+- `COOKIE_SECURE=true`
+- `AITUNNEL_API_KEY=...` — для контент-завода
+- `SMTP_HOST/USER/PASSWORD/MAIL_FROM` — SendPulse / Mailgun / Я.Mail для бизнеса
 
-Получишь URL вида `https://freestyle-client.vercel.app`. Открой — должна загрузиться главная.
+`.env` уже в `.gitignore` — никогда не коммить.
 
-### 2.2. Обновить CLIENT_URL в server'е
+## 5. Первый запуск
 
-Возвращаемся в **`freestyle-server`** → Settings → Environment Variables → редактируем `CLIENT_URL` на реальный URL клиента → **Redeploy** проекта (Deployments → latest → Redeploy).
+```bash
+cd /opt/freestyle
+docker compose -f docker-compose.prod.yml --env-file .env up -d --build
+docker compose -f docker-compose.prod.yml logs -f
+```
 
-Это критично для CORS: server разрешает запросы только с того origin, который указан в `CLIENT_URL`.
+Сервер сам прогонит миграции при старте (`docker-entrypoint.sh`). Проверь:
+```bash
+curl http://localhost/api/health
+# { "status": "ok", "checks": { "db": "ok" }, ... }
+```
 
-## Шаг 3 · Проверка
+Сайт доступен по `http://<IP-VPS>` на 80-м порту.
 
-Открой `https://freestyle-client.vercel.app`:
-- Главная отрисовалась с hero
-- DevTools Network: запросы `/api/destinations`, `/api/flights/popular?...` идут на `freestyle-server.vercel.app` и возвращают 200
-- Если CORS-ошибка — проверь что `CLIENT_URL` в env server-проекта **точно совпадает** с доменом клиента (с https://, без `/` в конце)
+## 6. DNS
 
-## Шаг 4 · Кастомный домен (опц.)
+В админке reg.ru:
+- A-запись `freestyle.ru` → IP VPS
+- A-запись `www.freestyle.ru` → тот же IP
 
-В каждом проекте Vercel → Settings → Domains → Add. Купить домен (например `freestyle.travel`) — Vercel DNS подскажет какие записи добавить у регистратора.
+Проверь: `dig +short freestyle.ru`.
 
-Стандарт:
-- `freestyle.travel` → `freestyle-client` (apex domain)
-- `api.freestyle.travel` → `freestyle-server`
+## 7. HTTPS через Let's Encrypt
 
-Не забудь обновить:
-- `VITE_API_BASE_URL` в client → `https://api.freestyle.travel/api`
-- `CLIENT_URL` в server → `https://freestyle.travel`
+Самый простой путь — **certbot на хосте**, сертификаты монтируются в client-контейнер.
 
-## Auto-deploy из GitHub
+```bash
+sudo apt -y install certbot
+docker compose -f docker-compose.prod.yml stop client
+sudo certbot certonly --standalone -d freestyle.ru -d www.freestyle.ru \
+   --agree-tos --email you@freestyle.ru --no-eff-email
+```
 
-После того как оба проекта импортированы из GitHub:
-- **Push в `main`** → автоматический prod-деплой обоих проектов
-- **Push в feature-ветку** → preview-деплой (свой URL для каждой ветки)
-- **PR в GitHub** → Vercel бот пишет в PR ссылки на preview обоих проектов
+В `docker-compose.prod.yml` раскомментируй `volumes: - /etc/letsencrypt:/etc/letsencrypt:ro` и порт `443:443`.
 
-Можно настроить **ignore unchanged folders**:
-- Project Settings → Git → Ignored Build Step
-- Указать команду: `git diff --quiet HEAD^ HEAD ./client` (для client-проекта)
-- Это пропустит build если client/ не менялся в коммите
+Добавь HTTPS server-block в `nginx/freestyle.conf`:
+```nginx
+server {
+    listen 443 ssl http2;
+    server_name freestyle.ru www.freestyle.ru;
+    ssl_certificate     /etc/letsencrypt/live/freestyle.ru/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/freestyle.ru/privkey.pem;
+    # …все локации из 80-го server-блока
+}
+server {
+    listen 80;
+    server_name freestyle.ru www.freestyle.ru;
+    return 301 https://$host$request_uri;
+}
+```
 
-## Локальная разработка остаётся как есть
+```bash
+docker compose -f docker-compose.prod.yml up -d --build client
+```
 
-`npm run dev` в корне поднимает:
-- client на http://localhost:5173
-- server на http://localhost:3001
+Авторенью раз в 12 часов:
+```bash
+echo "0 3 * * * certbot renew --pre-hook 'docker compose -f /opt/freestyle/docker-compose.prod.yml stop client' --post-hook 'docker compose -f /opt/freestyle/docker-compose.prod.yml start client'" | sudo tee /etc/cron.d/certbot
+```
 
-Vite-proxy перенаправляет `/api/*` на server. Vercel-конфиги при локальном dev игнорируются.
+## 8. Первый админ
 
-## Troubleshooting
+Зарегистрируй себя через UI на `/`, потом подними роль:
+```bash
+docker exec -it freestyle-postgres psql -U freestyle -d freestyle \
+  -c "UPDATE users SET role='admin' WHERE email='you@freestyle.ru';"
+```
 
-### CORS error на проде
-- Проверь `CLIENT_URL` в env server'а — должен быть **точно** `https://freestyle-client.vercel.app` (без слеша)
-- После правки — Redeploy server'а
+`/admin/*` теперь доступен.
 
-### 404 на /api/* у server
-- Проверь `server/vercel.json` rewrites
-- Проверь что `server/api/index.ts` экспортирует app как default
-- В Logs Vercel смотри что serverless function отрабатывает
+## 9. Бэкапы Postgres
 
-### 500 на /api/flights/*
-- `TP_API_TOKEN` не задан или неверный → проверь env
-- Logs покажут ответ от api.travelpayouts.com
+```bash
+sudo mkdir -p /backups/freestyle
+cat <<'CRON' | sudo tee /etc/cron.daily/freestyle-backup
+#!/bin/sh
+TS=$(date +%F-%H%M)
+docker exec freestyle-postgres pg_dump -U freestyle freestyle | gzip > /backups/freestyle/db-$TS.sql.gz
+find /backups/freestyle -name 'db-*.sql.gz' -mtime +30 -delete
+CRON
+sudo chmod +x /etc/cron.daily/freestyle-backup
+```
 
-### Vite не подтягивает env-переменную
-- Перезапусти dev-сервер после правки `.env.local`
-- Проверь что переменная начинается с `VITE_` — иначе Vite её игнорирует
+Раз в неделю — забираем дампы на отдельное хранилище (Yandex Object Storage / VK Cloud).
 
-### Сборка падает на `cd .. && npm install`
-- Vercel Build Logs → проверь что monorepo workspaces резолвятся
-- Иногда нужно убрать `installCommand` и оставить дефолтный `npm install` (Vercel сам поймёт)
+## 10. CI/CD (GitHub Actions)
 
-## Чек-лист первого деплоя
+Pushes в `main` → автодеплой через `.github/workflows/deploy.yml`. Добавь GitHub Secrets:
 
-- [ ] FreeStyle залит в GitHub
-- [ ] Vercel CLI установлен (`vercel login`)
-- [ ] `freestyle-server` импортирован, env заданы, `/api/health` отвечает
-- [ ] `freestyle-client` импортирован, `VITE_API_BASE_URL` задан, главная грузится
-- [ ] `CLIENT_URL` в server обновлён, redeploy сделан
-- [ ] CORS работает (нет ошибок в DevTools при запросах)
-- [ ] Preview URL открывается с другого устройства/из приватного окна
+| Секрет | Значение |
+|---|---|
+| `VPS_HOST` | IP-адрес VPS |
+| `VPS_USER` | `deploy` |
+| `VPS_PORT` | `22` (или нестандартный) |
+| `VPS_SSH_KEY` | приватная часть deploy-ключа целиком |
+| `VPS_APP_DIR` | `/opt/freestyle` |
+
+На VPS — публичная часть этого ключа в `/home/deploy/.ssh/authorized_keys`.
+
+## 11. Мониторинг
+
+Минимум на старте:
+- `docker compose logs -f` через SSH
+- `curl https://freestyle.ru/api/health` — статус БД
+- Внешний uptime-мониторинг (BetterStack/UptimeRobot), бьющий по `/api/health` каждые 30 сек
+
+Когда трафик подрастёт — Grafana + Prometheus.
+
+## Траблшутинг
+
+| Симптом | Что смотреть |
+|---|---|
+| `502 Bad Gateway` на `/api` | `docker compose logs server` — миграции прошли? `DATABASE_URL` верный? |
+| Cookies не ставятся | `COOKIE_SECURE=true` без HTTPS — браузер не пишет. Включи HTTPS. |
+| AI не отвечает | `AITUNNEL_API_KEY` пустой → возвращается stub. Заполни в `.env`. |
+| Письма не уходят | `SMTP_HOST` пустой → пишется в лог. Заполни SMTP. |
+| Server-контейнер в loop | `docker logs freestyle-server --tail 200` — почти всегда невалидный env (Zod-валидатор фейлится при старте). |
+
+## Чек-лист первого боевого деплоя
+
+- [ ] VPS заказан, ufw настроен, root-доступ закрыт
+- [ ] Docker установлен, compose v2 работает
+- [ ] Репо клонирован в `/opt/freestyle`, `.env` заполнен
+- [ ] Postgres + server + client поднялись, `/api/health` отдаёт `ok`
+- [ ] DNS A-запись смотрит на IP VPS
+- [ ] SSL-сертификат выпущен, HTTPS работает
+- [ ] Первый юзер зарегистрирован, повышен до `admin`
+- [ ] Cron-бэкап Postgres настроен
+- [ ] GitHub Actions деплой проходит по push в main

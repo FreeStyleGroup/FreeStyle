@@ -1,157 +1,75 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Bus, ArrowRight, Clock, Wallet } from 'lucide-react';
+import { tpRefLink } from '@/components/affiliate/TpWidget';
 
-const popularRoutes = [
-  { from: 'Москва', to: 'Санкт-Петербург', duration: '9ч 00м', price: 1000 },
-  { from: 'Москва', to: 'Владимир', duration: '3ч 30м', price: 500 },
-  { from: 'Санкт-Петербург', to: 'Хельсинки', duration: '6ч 30м', price: 1500 },
-  { from: 'Москва', to: 'Тула', duration: '2ч 40м', price: 400 },
-  { from: 'Краснодар', to: 'Сочи', duration: '5ч 00м', price: 600 },
-  { from: 'Москва', to: 'Рязань', duration: '3ч 00м', price: 450 },
-];
-
+/**
+ * BusesPage — автобусы через Busfor / Tutu (партнёр Travelpayouts).
+ */
 export function BusesPage() {
-  const { t } = useTranslation();
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
-  const [date, setDate] = useState('');
-  const [searched, setSearched] = useState(false);
+  const link = tpRefLink({
+    base: 'https://tp.media/r',
+    params: { p: '4115', u: 'https://busfor.ru' },
+    subId: 'buses_main',
+  });
 
-  const handleSearch = () => {
-    if (from && to && date) setSearched(true);
-  };
+  const routes = [
+    { from: 'Москва', to: 'Минск',          time: '11 ч', from_price: 2400 },
+    { from: 'СПб',    to: 'Хельсинки',      time: '7 ч',  from_price: 3200 },
+    { from: 'Москва', to: 'Киев',           time: '14 ч', from_price: 2900 },
+    { from: 'Москва', to: 'Воронеж',        time: '8 ч',  from_price: 1500 },
+    { from: 'Москва', to: 'Брест',          time: '15 ч', from_price: 3100 },
+    { from: 'СПб',    to: 'Таллин',         time: '8 ч',  from_price: 2800 },
+  ];
 
   return (
-    <div>
-      {/* Hero + Search */}
-      <section className="bg-gradient-to-br from-primary-600 to-primary-800 py-16">
-        <div className="max-w-5xl mx-auto px-4">
-          <h1 className="text-3xl font-bold text-white mb-2 text-center">
-            {t('categories.buses')}
-          </h1>
-          <p className="text-white/70 text-center mb-8">
-            Автобусные билеты по России и Европе
-          </p>
-
-          <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-              <div>
-                <input
-                  type="text"
-                  value={from}
-                  onChange={(e) => { setFrom(e.target.value); setSearched(false); }}
-                  placeholder="Откуда"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                />
-              </div>
-              <div>
-                <input
-                  type="text"
-                  value={to}
-                  onChange={(e) => { setTo(e.target.value); setSearched(false); }}
-                  placeholder="Куда"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                />
-              </div>
-              <div>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={(e) => { setDate(e.target.value); setSearched(false); }}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                />
-              </div>
-              <div>
-                <select className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all">
-                  <option>1 пассажир</option>
-                  <option>2 пассажира</option>
-                  <option>3 пассажира</option>
-                  <option>4 пассажира</option>
-                </select>
-              </div>
-              <button
-                onClick={handleSearch}
-                disabled={!from || !to || !date}
-                className="w-full px-4 py-3 bg-accent-500 hover:bg-accent-600 disabled:bg-gray-300 text-white font-semibold rounded-xl transition-colors cursor-pointer disabled:cursor-not-allowed"
-              >
-                {t('search.find')}
-              </button>
-            </div>
-
-            {searched && (
-              <div className="mt-4 p-4 bg-primary-50 rounded-xl text-center">
-                <p className="text-sm text-primary-700">
-                  Поиск автобусных билетов скоро будет доступен. Мы подключаем партнёров.
-                </p>
-              </div>
-            )}
+    <div className="min-h-screen">
+      <section className="relative overflow-hidden bg-gradient-to-br from-mint-700 to-brand-700 text-white">
+        <div className="absolute inset-0 hero-overlay opacity-50" />
+        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 py-16 md:py-24">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-6">
+            <Bus className="w-3 h-3 text-amber-400" /> Автобусы по СНГ и Европе
           </div>
+          <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
+            Автобусные рейсы <em className="not-italic text-amber-400">по 25+ странам</em>
+          </h1>
+          <p className="text-white/85 text-lg mt-5 max-w-2xl">
+            Россия, Беларусь, Украина, Прибалтика, Польша, Турция. Прямая покупка билетов через Busfor — крупнейший автобусный билетёр СНГ.
+          </p>
+          <a href={link} target="_blank" rel="noopener sponsored" className="inline-flex items-center gap-2 mt-8 px-6 py-3.5 rounded-xl bg-white text-brand-700 font-bold hover:-translate-y-0.5 transition-all">
+            Найти автобус <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
       </section>
 
-      {/* Popular Routes */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">Популярные маршруты</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {popularRoutes.map((route) => (
-            <div
-              key={`${route.from}-${route.to}`}
-              className="bg-white rounded-2xl p-5 border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <svg className="w-5 h-5 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 18v2m14-2v2M5 4h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2zm0 7h14M8 15h.01M16 15h.01" />
-                  </svg>
-                </div>
-                <div className="min-w-0">
-                  <p className="font-semibold text-gray-900 truncate">{route.from} → {route.to}</p>
-                  <p className="text-xs text-gray-400">В пути: {route.duration}</p>
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-12 md:py-16">
+        <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-2">Популярные маршруты</h2>
+        <p className="text-ink-500 mb-8">Цена от — в один конец</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {routes.map((r, i) => (
+            <a key={i} href={link} target="_blank" rel="noopener sponsored" className="group bg-white border border-ink-100 rounded-2xl p-5 hover:border-brand-300 hover:shadow-sm transition-all flex items-center gap-4">
+              <div className="w-11 h-11 rounded-xl bg-mint-500/15 text-mint-700 grid place-items-center shrink-0">
+                <Bus className="w-5 h-5" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="font-display font-extrabold text-lg text-ink-900 leading-tight">{r.from} → {r.to}</div>
+                <div className="text-[12.5px] text-ink-500 mt-0.5 inline-flex items-center gap-2">
+                  <Clock className="w-3 h-3" />{r.time}
+                  <span>·</span>
+                  <span>от {r.from_price.toLocaleString('ru-RU')} ₽</span>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-500">от</span>
-                <span className="text-lg font-bold text-primary-600">{route.price.toLocaleString('ru-RU')} ₽</span>
-              </div>
-            </div>
+              <ArrowRight className="w-4 h-4 text-ink-400 group-hover:text-brand-600 shrink-0" />
+            </a>
           ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Удобный поиск автобусов</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Все перевозчики</h3>
-              <p className="text-sm text-gray-500">Билеты от крупнейших автобусных компаний в одном месте</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Выгодные цены</h3>
-              <p className="text-sm text-gray-500">Автобус — самый бюджетный способ путешествовать</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Удобное расписание</h3>
-              <p className="text-sm text-gray-500">Рейсы в удобное время с комфортабельными автобусами</p>
-            </div>
-          </div>
-        </div>
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 text-center">
+        <Wallet className="w-10 h-10 mx-auto text-brand-600 mb-4" />
+        <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-3">Готовы купить билет?</h2>
+        <p className="text-ink-500 mb-6 max-w-xl mx-auto">Все автобусные перевозчики СНГ и Восточной Европы в одном поиске.</p>
+        <a href={link} target="_blank" rel="noopener sponsored" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold hover:-translate-y-0.5 transition-all shadow-md hover:shadow-lg">
+          Открыть Busfor <ArrowRight className="w-4 h-4" />
+        </a>
       </section>
     </div>
   );

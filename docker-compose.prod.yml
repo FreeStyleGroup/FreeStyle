@@ -1,0 +1,96 @@
+# ════════════════════════════════════════════════════════════════
+#  FreeStyle.ru — production stack для reg.ru VPS
+#
+#  Перед запуском:
+#    1) Положи /opt/freestyle/.env (см. .env.example)
+#    2) Положи /opt/freestyle/letsencrypt/ — если уже выпущен сертификат
+#    3) Поставь Docker + Docker Compose Plugin
+#
+#  Запуск:
+#    docker compose -f docker-compose.prod.yml --env-file .env up -d --build
+#    docker compose -f docker-compose.prod.yml logs -f
+#
+#  Обновление (после git pull):
+#    docker compose -f docker-compose.prod.yml up -d --build
+# ════════════════════════════════════════════════════════════════
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: freestyle-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-freestyle}
+      POSTGRES_USER: ${POSTGRES_USER:-freestyle}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?need POSTGRES_PASSWORD}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    volumes:
+      - freestyle-pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks: [freestyle-net]
+
+  server:
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    image: freestyle-server:latest
+    container_name: freestyle-server
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      NODE_ENV: production
+      PORT: 3001
+      CLIENT_URL: ${CLIENT_URL}
+      DATABASE_URL: postgres://${POSTGRES_USER:-freestyle}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-freestyle}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      COOKIE_DOMAIN: ${COOKIE_DOMAIN:-}
+      COOKIE_SECURE: ${COOKIE_SECURE:-true}
+      TP_API_TOKEN: ${TP_API_TOKEN:-}
+      TP_MARKER: ${TP_MARKER:-}
+      TP_PROJECT_ID: ${TP_PROJECT_ID:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      MAIL_FROM: ${MAIL_FROM:-FreeStyle.ru <no-reply@freestyle.ru>}
+      AITUNNEL_API_KEY: ${AITUNNEL_API_KEY:-}
+      AITUNNEL_BASE_URL: ${AITUNNEL_BASE_URL:-https://api.aitunnel.ru/v1}
+      AITUNNEL_MODEL: ${AITUNNEL_MODEL:-gpt-4o-mini}
+      SCHEDULER_ENABLED: ${SCHEDULER_ENABLED:-true}
+    networks: [freestyle-net]
+    # Порт НЕ публикуем наружу — server виден только через nginx
+
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+      args:
+        VITE_API_BASE_URL: ""
+    image: freestyle-client:latest
+    container_name: freestyle-client
+    restart: unless-stopped
+    depends_on:
+      - server
+    ports:
+      - "80:80"
+      # - "443:443"   ← раскомментировать после установки SSL-сертификата
+    # Для HTTPS — смонтировать сертификаты от certbot:
+    # volumes:
+    #   - /etc/letsencrypt:/etc/letsencrypt:ro
+    networks: [freestyle-net]
+
+networks:
+  freestyle-net:
+    driver: bridge
+
+volumes:
+  freestyle-pg-data:
+    name: freestyle-pg-data

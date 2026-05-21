@@ -1,165 +1,112 @@
-import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
+import { Sparkles, MapPin, Calendar, Users, Shield, Plane, ArrowRight } from 'lucide-react';
+import { tpRefLink } from '@/components/affiliate/TpWidget';
 
-const popularTours = [
-  { destination: 'Турция', type: 'Пляжный отдых', duration: '7 ночей', price: 25000, emoji: '🇹🇷' },
-  { destination: 'Египет', type: 'Всё включено', duration: '7 ночей', price: 30000, emoji: '🇪🇬' },
-  { destination: 'ОАЭ', type: 'Городской отдых', duration: '5 ночей', price: 45000, emoji: '🇦🇪' },
-  { destination: 'Таиланд', type: 'Экзотика', duration: '10 ночей', price: 50000, emoji: '🇹🇭' },
-  { destination: 'Мальдивы', type: 'Пляжный отдых', duration: '7 ночей', price: 80000, emoji: '🇲🇻' },
-  { destination: 'Шри-Ланка', type: 'Экзотика', duration: '10 ночей', price: 55000, emoji: '🇱🇰' },
-  { destination: 'Грузия', type: 'Гастротуры', duration: '5 ночей', price: 20000, emoji: '🇬🇪' },
-  { destination: 'Италия', type: 'Экскурсионный', duration: '7 ночей', price: 60000, emoji: '🇮🇹' },
-];
-
+/**
+ * ToursPage — туры через партнёрство Travelpayouts × Sletat.
+ * Прямой API туров TP не отдаёт публично; используем партнёрскую ссылку tp.media → sletat.ru.
+ */
 export function ToursPage() {
-  const { t } = useTranslation();
-  const [destination, setDestination] = useState('');
-  const [departDate, setDepartDate] = useState('');
-  const [nights, setNights] = useState('7');
-  const [tourists, setTourists] = useState('2');
-  const [searched, setSearched] = useState(false);
+  const slatLink = tpRefLink({
+    base: 'https://tp.media/r',
+    params: { p: '5258', u: 'https://sletat.ru' },
+    subId: 'tours_main',
+  });
 
-  const handleSearch = () => {
-    if (destination && departDate) setSearched(true);
-  };
+  const destinations = [
+    { name: 'Турция',   img: 'https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=800&q=80', from: 35000, slug: 'turkey' },
+    { name: 'Египет',   img: 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?w=800&q=80', from: 45000, slug: 'egypt' },
+    { name: 'ОАЭ',      img: 'https://images.unsplash.com/photo-1518684079-3c830dcef090?w=800&q=80', from: 65000, slug: 'uae' },
+    { name: 'Таиланд',  img: 'https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=800&q=80', from: 80000, slug: 'thailand' },
+  ];
 
   return (
-    <div>
-      {/* Hero + Search */}
-      <section className="bg-gradient-to-br from-primary-600 to-primary-800 py-16">
-        <div className="max-w-5xl mx-auto px-4">
-          <h1 className="text-3xl font-bold text-white mb-2 text-center">
-            {t('categories.tours')}
-          </h1>
-          <p className="text-white/70 text-center mb-8">
-            Готовые туры от лучших операторов по всему миру
-          </p>
-
-          <div className="bg-white rounded-2xl p-6 shadow-lg">
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
-              <div>
-                <input
-                  type="text"
-                  value={destination}
-                  onChange={(e) => { setDestination(e.target.value); setSearched(false); }}
-                  placeholder="Куда хотите поехать?"
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                />
-              </div>
-              <div>
-                <input
-                  type="date"
-                  value={departDate}
-                  onChange={(e) => { setDepartDate(e.target.value); setSearched(false); }}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                />
-              </div>
-              <div>
-                <select
-                  value={nights}
-                  onChange={(e) => setNights(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                >
-                  <option value="3">3 ночи</option>
-                  <option value="5">5 ночей</option>
-                  <option value="7">7 ночей</option>
-                  <option value="10">10 ночей</option>
-                  <option value="14">14 ночей</option>
-                </select>
-              </div>
-              <div>
-                <select
-                  value={tourists}
-                  onChange={(e) => setTourists(e.target.value)}
-                  className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none text-sm transition-all"
-                >
-                  <option value="1">1 турист</option>
-                  <option value="2">2 туриста</option>
-                  <option value="3">3 туриста</option>
-                  <option value="4">4 туриста</option>
-                </select>
-              </div>
-              <button
-                onClick={handleSearch}
-                disabled={!destination || !departDate}
-                className="w-full px-4 py-3 bg-accent-500 hover:bg-accent-600 disabled:bg-gray-300 text-white font-semibold rounded-xl transition-colors cursor-pointer disabled:cursor-not-allowed"
-              >
-                {t('search.find')}
-              </button>
-            </div>
-
-            {searched && (
-              <div className="mt-4 p-4 bg-primary-50 rounded-xl text-center">
-                <p className="text-sm text-primary-700">
-                  Поиск туров скоро будет доступен. Мы подключаем туроператоров.
-                </p>
-              </div>
-            )}
+    <div className="min-h-screen">
+      {/* HERO */}
+      <section className="relative overflow-hidden hero-gradient text-white">
+        <div className="absolute inset-0 hero-overlay opacity-60" />
+        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 py-16 md:py-24">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-6">
+            <Sparkles className="w-3 h-3 text-amber-500" /> Готовые туры
           </div>
+          <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] tracking-tight max-w-3xl">
+            Туры от ведущих <em className="not-italic text-amber-500">туроператоров</em>
+          </h1>
+          <p className="text-white/85 text-lg mt-5 max-w-2xl">
+            Перелёт + отель + трансфер + страховка одним пакетом. Сравниваем предложения 120+ туроператоров через систему Sletat.ru.
+          </p>
+          <a
+            href={slatLink}
+            target="_blank"
+            rel="noopener sponsored"
+            className="inline-flex items-center gap-2 mt-8 px-6 py-3.5 rounded-xl bg-white text-brand-700 font-bold hover:-translate-y-0.5 transition-all"
+          >
+            Подобрать тур <ArrowRight className="w-4 h-4" />
+          </a>
         </div>
       </section>
 
-      {/* Popular Tours */}
-      <section className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8">Популярные направления</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {popularTours.map((tour) => (
-            <div
-              key={tour.destination}
-              className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-md transition-shadow"
-            >
-              <div className="bg-gradient-to-br from-primary-50 to-primary-100 p-6 text-center">
-                <span className="text-4xl">{tour.emoji}</span>
+      {/* DESTINATIONS */}
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-12 md:py-16">
+        <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-2">Популярные направления</h2>
+        <p className="text-ink-500 mb-8">Цены от — за человека на 7 ночей с перелётом</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {destinations.map((d) => (
+            <Link key={d.slug} to={`/countries/${d.slug}`} className="group relative aspect-[3/4] rounded-2xl overflow-hidden">
+              <img src={d.img} alt={d.name} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+              <div className="absolute bottom-5 left-5 right-5 text-white">
+                <div className="font-display font-extrabold text-2xl mb-1">{d.name}</div>
+                <div className="text-[13px] opacity-90">от {d.from.toLocaleString('ru-RU')} ₽</div>
               </div>
-              <div className="p-5">
-                <h3 className="font-bold text-gray-900 mb-1">{tour.destination}</h3>
-                <p className="text-xs text-gray-400 mb-3">{tour.type} · {tour.duration}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-500">от</span>
-                  <span className="text-lg font-bold text-primary-600">{tour.price.toLocaleString('ru-RU')} ₽</span>
-                </div>
-              </div>
-            </div>
+            </Link>
           ))}
         </div>
       </section>
 
-      {/* Features */}
-      <section className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center">Почему туры с нами</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Проверенные операторы</h3>
-              <p className="text-sm text-gray-500">Работаем только с надёжными и лицензированными туроператорами</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Лучшие цены</h3>
-              <p className="text-sm text-gray-500">Сравниваем предложения десятков туроператоров</p>
-            </div>
-            <div className="text-center p-6">
-              <div className="w-14 h-14 bg-primary-50 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <svg className="w-7 h-7 text-primary-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-              </div>
-              <h3 className="font-bold text-gray-900 mb-2">Полный пакет</h3>
-              <p className="text-sm text-gray-500">Перелёт, отель, трансфер и страховка — всё включено</p>
-            </div>
+      {/* HOW IT WORKS */}
+      <section className="bg-surface-1 border-y border-ink-100">
+        <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
+          <h2 className="font-display font-extrabold text-3xl text-ink-900 text-center mb-12">Как купить тур</h2>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <Step n="01" Icon={MapPin}   title="Выберите направление" text="Любая страна, любой курорт" />
+            <Step n="02" Icon={Calendar} title="Укажите даты"          text="Гибкий поиск по неделям" />
+            <Step n="03" Icon={Users}    title="Туристы"               text="Сколько взрослых и детей" />
+            <Step n="04" Icon={Shield}   title="Бронируйте"            text="С защитой и кэшбэком" />
           </div>
         </div>
       </section>
+
+      {/* CTA */}
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20 text-center">
+        <Plane className="w-10 h-10 mx-auto text-brand-600 mb-4" />
+        <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-3">Готовы выбрать тур?</h2>
+        <p className="text-ink-500 mb-6 max-w-xl mx-auto">Откройте поиск Sletat — лидера российского рынка туров с базой 120+ операторов.</p>
+        <a
+          href={slatLink}
+          target="_blank"
+          rel="noopener sponsored"
+          className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold hover:-translate-y-0.5 transition-all shadow-md hover:shadow-lg"
+        >
+          Открыть подбор туров <ArrowRight className="w-4 h-4" />
+        </a>
+        <p className="text-[11.5px] text-ink-400 mt-5">
+          Партнёрская ссылка · оплата напрямую туроператору · кэшбэк 1-2% в Travel Wallet
+        </p>
+      </section>
+    </div>
+  );
+}
+
+function Step({ n, Icon, title, text }: { n: string; Icon: React.ComponentType<{ className?: string }>; title: string; text: string }) {
+  return (
+    <div className="bg-white border border-ink-100 rounded-2xl p-6 hover:border-brand-300 hover:shadow-sm transition-all">
+      <div className="flex items-center justify-between mb-4">
+        <div className="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 grid place-items-center"><Icon className="w-5 h-5" /></div>
+        <div className="text-[40px] font-display font-extrabold text-ink-100 leading-none">{n}</div>
+      </div>
+      <div className="font-display font-extrabold text-lg text-ink-900 mb-1">{title}</div>
+      <p className="text-sm text-ink-500">{text}</p>
     </div>
   );
 }

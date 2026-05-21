@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Phone, User2, Menu, X } from 'lucide-react';
+import { Phone, User2, Menu, X, LogOut } from 'lucide-react';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { AIChip } from '@/components/ai/AIChip';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { useAuth } from '@/stores/auth';
 import { cn } from '@/utils/cn';
 
 /**
@@ -23,6 +24,7 @@ interface HeaderProps {
 }
 
 export function Header({ transparent }: HeaderProps) {
+  const { user, isAuthenticated, logout } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
   const [authModalTab, setAuthModalTab] = useState<'login' | 'register'>('login');
@@ -97,27 +99,60 @@ export function Header({ transparent }: HeaderProps) {
             {/* Language switcher */}
             <LanguageSwitcher />
 
-            {/* Login */}
-            <button
-              type="button"
-              onClick={() => openAuth('login')}
-              className="flex items-center gap-2 px-4 py-2 ml-1 text-sm font-bold rounded-xl cursor-pointer transition-all bg-gradient-to-br from-brand-500 to-brand-600 text-white hover:from-brand-600 hover:to-brand-700 shadow-md hover:shadow-lg"
-            >
-              <User2 className="w-4 h-4" />
-              Войти
-            </button>
+            {/* Auth — Войти / профиль */}
+            {isAuthenticated && user ? (
+              <div className="flex items-center gap-2 ml-1">
+                <Link
+                  to="/cabinet"
+                  className="flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-bold text-ink-900 hover:bg-brand-50/50 transition-colors"
+                >
+                  <span className="w-7 h-7 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 text-white grid place-items-center text-xs font-extrabold">
+                    {user.name.charAt(0).toUpperCase()}
+                  </span>
+                  <span className="max-w-[120px] truncate">{user.name.split(' ')[0]}</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => void logout()}
+                  className="p-2 rounded-lg text-ink-500 hover:text-brand-600 hover:bg-brand-50/50 transition-colors cursor-pointer"
+                  title="Выйти"
+                  aria-label="Выйти"
+                >
+                  <LogOut className="w-4 h-4" />
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openAuth('login')}
+                className="flex items-center gap-2 px-4 py-2 ml-1 text-sm font-bold rounded-xl cursor-pointer transition-all bg-gradient-to-br from-brand-500 to-brand-600 text-white hover:from-brand-600 hover:to-brand-700 shadow-md hover:shadow-lg"
+              >
+                <User2 className="w-4 h-4" />
+                Войти
+              </button>
+            )}
           </div>
 
           {/* Mobile right */}
           <div className="flex lg:hidden items-center gap-1">
-            <button
-              type="button"
-              onClick={() => openAuth('login')}
-              className="p-2 rounded-lg text-ink-700 hover:bg-surface-2"
-              aria-label="Войти"
-            >
-              <User2 className="w-5 h-5" />
-            </button>
+            {isAuthenticated ? (
+              <Link
+                to="/cabinet"
+                className="p-2 rounded-lg text-ink-700 hover:bg-surface-2"
+                aria-label="Личный кабинет"
+              >
+                <User2 className="w-5 h-5" />
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={() => openAuth('login')}
+                className="p-2 rounded-lg text-ink-700 hover:bg-surface-2"
+                aria-label="Войти"
+              >
+                <User2 className="w-5 h-5" />
+              </button>
+            )}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
