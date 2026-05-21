@@ -45,23 +45,13 @@ export function Header({ transparent }: HeaderProps) {
       <div className="max-w-[1320px] mx-auto px-4 md:px-8">
         <div className="flex items-center justify-between h-18 py-3">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2.5 shrink-0">
-            <div
-              className={cn(
-                'w-11 h-11 rounded-xl grid place-items-center font-display font-extrabold text-lg shadow-md',
-                'bg-gradient-to-br from-brand-500 to-brand-700 text-white',
-              )}
-            >
-              FS
-            </div>
-            <div className="hidden sm:block leading-tight">
-              <div className="font-display font-extrabold text-xl tracking-tight text-ink-900">
-                FreeStyle
-              </div>
-              <div className="text-[10px] uppercase tracking-[.18em] font-semibold text-ink-500">
-                Travel · Hotels · Tours
-              </div>
-            </div>
+          <Link to="/" className="flex items-center shrink-0" aria-label="ФРИСТАЙЛ.РУ — главная">
+            <img
+              src="https://freestyle.ru/grey-fs.png"
+              alt="ФРИСТАЙЛ.РУ"
+              className="h-10 md:h-12 w-auto mix-blend-multiply select-none"
+              draggable={false}
+            />
           </Link>
 
           {/* Info nav + Right side — desktop */}
