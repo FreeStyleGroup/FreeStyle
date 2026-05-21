@@ -4,7 +4,6 @@ import { ru } from 'date-fns/locale';
 import { format } from 'date-fns';
 import { FieldCard } from './FieldCard';
 import { Popup } from './Popup';
-import 'react-day-picker/dist/style.css';
 import './date-field.css';
 
 /**
@@ -44,7 +43,7 @@ export function DateField({ range, onChange, fromClassName, toClassName }: DateF
           isOpen={open === 'from'}
           onClick={() => setOpen(open === 'from' ? null : 'from')}
         />
-        <Popup isOpen={open === 'from'} onClose={() => setOpen(null)} width="640px">
+        <Popup isOpen={open === 'from'} onClose={() => setOpen(null)} width="min(640px, calc(100vw - 40px))" align="center">
           <DayPicker
             mode="range"
             selected={range}
@@ -67,7 +66,7 @@ export function DateField({ range, onChange, fromClassName, toClassName }: DateF
           isOpen={open === 'to'}
           onClick={() => setOpen(open === 'to' ? null : 'to')}
         />
-        <Popup isOpen={open === 'to'} onClose={() => setOpen(null)} width="640px" align="right">
+        <Popup isOpen={open === 'to'} onClose={() => setOpen(null)} width="min(640px, calc(100vw - 40px))" align="right">
           <DayPicker
             mode="range"
             selected={range}

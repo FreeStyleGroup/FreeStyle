@@ -27,22 +27,19 @@ export function HomePage() {
     <div className="bg-surface-1">
       {/* ═══════════ HERO — светлый баннер с персонажами справа ═══════════ */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 pt-6 md:pt-8">
-        <div className="relative overflow-hidden rounded-[28px] bg-[#faf6f0] min-h-[440px] md:min-h-[520px]">
-          {/* Картинка с персонажами — справа, на ~60% ширины */}
-          <div
-            className="absolute right-0 top-0 bottom-0 w-full md:w-[62%] bg-no-repeat opacity-30 md:opacity-100"
-            style={{
-              backgroundImage: 'url(https://freestyle.ru/images/17793208.png)',
-              backgroundSize: 'contain',
-              backgroundPosition: 'right bottom',
-            }}
+        <div className="relative overflow-hidden rounded-[28px] bg-[#faf6f0] min-h-[460px] md:min-h-[560px]">
+          {/* Картинка с персонажами — справа, помещается ЦЕЛИКОМ (object-contain) */}
+          <img
+            src="https://freestyle.ru/images/17793208.png"
+            alt=""
             aria-hidden="true"
+            className="absolute right-0 bottom-0 h-full md:h-[105%] w-auto max-w-[70%] md:max-w-[62%] object-contain object-bottom-right pointer-events-none select-none opacity-30 md:opacity-100"
           />
 
           {/* Gradient fade — на десктопе перекрывает левую часть, чтобы текст был на чистом фоне */}
-          <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-[#faf6f0] from-25% via-[#faf6f0]/85 via-45% to-transparent to-60%" />
+          <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-[#faf6f0] from-25% via-[#faf6f0]/85 via-45% to-transparent to-60% pointer-events-none" />
           {/* На мобильном — мягкая засветка снизу для читаемости текста */}
-          <div className="absolute inset-0 md:hidden bg-gradient-to-b from-[#faf6f0] via-[#faf6f0]/85 via-50% to-[#faf6f0]/60" />
+          <div className="absolute inset-0 md:hidden bg-gradient-to-b from-[#faf6f0] via-[#faf6f0]/85 via-50% to-[#faf6f0]/60 pointer-events-none" />
 
           {/* Текст слева */}
           <div className="relative z-10 max-w-2xl px-6 md:px-14 py-10 md:py-16 animate-float-up">
