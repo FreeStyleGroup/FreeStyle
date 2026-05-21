@@ -36,10 +36,12 @@ export function HomePage() {
             style={{
               position: 'absolute',
               right: 0,
-              bottom: 0,
-              maxHeight: '100%',
+              /* поднимаем на высоту overlap'а search-виджета (-mt-12 = 48px) + 8px запаса,
+                 чтобы кот остался виден над выезжающей сверху формой поиска */
+              bottom: '56px',
+              maxHeight: 'calc(100% - 56px)',
               height: 'auto',
-              maxWidth: '62%',
+              maxWidth: '80%',
               objectFit: 'contain',
               objectPosition: 'right bottom',
               pointerEvents: 'none',
