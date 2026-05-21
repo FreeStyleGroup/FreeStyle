@@ -7,7 +7,14 @@ import { Link } from 'react-router-dom';
 
 const CN_ICONS = 'https://china-ru.ru/upload/travel/icons';
 
-const tiles = [
+interface Tile {
+  to: string;
+  label: string;
+  icon: string;
+  iconUrl?: string;   // override на свой хост (для брендированных иконок типа cat-concierge)
+}
+
+const tiles: Tile[] = [
   { to: '/flights',    label: 'Авиабилеты', icon: 'avia' },
   { to: '/trains',     label: 'Ж/Д билеты', icon: 'train' },
   { to: '/buses',      label: 'Автобусы',   icon: 'bus' },
@@ -17,7 +24,12 @@ const tiles = [
   { to: '/business',   label: 'Бизнес',     icon: 'business' },
   { to: '/car-rental', label: 'Авто',       icon: 'auto' },
   { to: '/insurance',  label: 'Страховки',  icon: 'insurance' },
-  { to: '/concierge',  label: 'Консьерж',   icon: 'concierge' },
+  {
+    to: '/concierge',
+    label: 'Консьерж',
+    icon: 'concierge',
+    iconUrl: 'https://freestyle.ru/images/cat-concierge.png',
+  },
 ];
 
 export function NavTiles() {
@@ -33,7 +45,7 @@ export function NavTiles() {
           >
             <div className="w-20 h-20 md:w-24 md:h-24 mb-3 flex items-center justify-center transition-transform group-hover:scale-110">
               <img
-                src={`${CN_ICONS}/${t.icon}.png`}
+                src={t.iconUrl ?? `${CN_ICONS}/${t.icon}.png`}
                 alt={t.label}
                 loading="lazy"
                 decoding="async"
