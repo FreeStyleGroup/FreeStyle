@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Phone, User2, Menu, X, Globe } from 'lucide-react';
+import { Phone, User2, Menu, X } from 'lucide-react';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { AIChip } from '@/components/ai/AIChip';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import { cn } from '@/utils/cn';
 
 /**
@@ -85,12 +86,14 @@ export function Header({ transparent }: HeaderProps) {
               ))}
             </nav>
 
-            <div className="w-px h-6 bg-ink-100" />
+            <div className="w-px h-6 bg-ink-100 ml-2" />
 
-            {/* AI chip */}
-            <AIChip />
+            {/* AI chip — больше воздуха слева и справа */}
+            <div className="mx-3">
+              <AIChip />
+            </div>
 
-            <div className="w-px h-6 bg-ink-100" />
+            <div className="w-px h-6 bg-ink-100 mr-2" />
 
             {/* Phone */}
             <a
@@ -101,14 +104,8 @@ export function Header({ transparent }: HeaderProps) {
               <span className="tabular-nums">+7 495 123-45-67</span>
             </a>
 
-            {/* Lang */}
-            <button
-              type="button"
-              className="p-2 rounded-lg text-ink-500 hover:text-ink-900 hover:bg-surface-2 transition-colors"
-              aria-label="Сменить язык"
-            >
-              <Globe className="w-5 h-5" />
-            </button>
+            {/* Language switcher */}
+            <LanguageSwitcher />
 
             {/* Login */}
             <button
