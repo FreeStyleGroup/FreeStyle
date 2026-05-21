@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { Phone, User2, Menu, X, Globe } from 'lucide-react';
 import { AuthModal } from '@/components/auth/AuthModal';
+import { AIChip } from '@/components/ai/AIChip';
 import { cn } from '@/utils/cn';
 
 /**
@@ -83,6 +84,11 @@ export function Header({ transparent }: HeaderProps) {
                 </NavLink>
               ))}
             </nav>
+
+            <div className="w-px h-6 bg-ink-100" />
+
+            {/* AI chip */}
+            <AIChip />
 
             <div className="w-px h-6 bg-ink-100" />
 
