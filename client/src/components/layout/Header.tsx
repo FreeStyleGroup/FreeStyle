@@ -49,7 +49,7 @@ export function Header({ transparent }: HeaderProps) {
             <img
               src="https://freestyle.ru/grey-fs.png"
               alt="ФРИСТАЙЛ.РУ"
-              className="h-10 md:h-12 w-auto mix-blend-multiply select-none"
+              className="h-10 md:h-12 w-auto select-none"
               draggable={false}
             />
           </Link>
