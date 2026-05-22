@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react';
 import { authApi } from '@/api/auth.api';
+import { isPreview, mockUser, previewRole } from '@/lib/preview';
 import type { UserDto } from '@freestyle/shared';
 
 /**
@@ -18,6 +19,10 @@ import type { UserDto } from '@freestyle/shared';
  *
  * isHydrated отделяет «ещё не проверили» от «гарантированно не залогинен» —
  * чтобы UI не моргал между «гость → юзер» при F5.
+ *
+ * Preview-режим (VITE_PREVIEW_AUTH=admin|editor|user) — сразу подставляет
+ * фейкового юзера без обращения к API. Нужен чтобы смотреть и полировать
+ * кабинет/админку до деплоя бэкенда.
  */
 
 interface AuthContextValue {
@@ -35,6 +40,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    /** В preview-режиме сразу подставляем фейкового юзера и не ходим в API */
+    const role = previewRole();
+    if (role) {
+      setUser(mockUser(role));
+      setIsHydrated(true);
+      return;
+    }
     let cancelled = false;
     (async () => {
       const me = await authApi.me();
@@ -53,6 +65,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isHydrated,
       setUser,
       logout: async () => {
+        if (isPreview()) {
+          /** В preview просто сбрасываем юзера, не ходим в API */
+          setUser(null);
+          return;
+        }
         try { await authApi.logout(); } catch { /* ignore */ }
         setUser(null);
       },
