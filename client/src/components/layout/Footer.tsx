@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, MessageCircle, Send } from 'lucide-react';
+import { Mail, Send } from 'lucide-react';
 
 /**
  * Footer — премиум, тёмный, на полную ширину.
@@ -29,9 +29,6 @@ export function Footer() {
             <div className="space-y-2 text-sm">
               <a href="mailto:hello@freestyle.ru" className="flex items-center gap-2 text-white/80 hover:text-white">
                 <Mail className="w-4 h-4" /> hello@freestyle.ru
-              </a>
-              <a href="tel:+74951234567" className="flex items-center gap-2 text-white/80 hover:text-white tabular-nums">
-                <Phone className="w-4 h-4" /> +7 495 123-45-67
               </a>
               <a href="https://t.me/freestyle_ru" target="_blank" rel="noopener" className="flex items-center gap-2 text-white/80 hover:text-white">
                 <Send className="w-4 h-4" /> @freestyle_ru
@@ -97,9 +94,6 @@ export function Footer() {
             </a>
             <a href="mailto:hello@freestyle.ru" aria-label="Email" className="hover:text-white transition-colors">
               <Mail className="w-4 h-4" />
-            </a>
-            <a href="https://wa.me/74951234567" target="_blank" rel="noopener" aria-label="WhatsApp" className="hover:text-white transition-colors">
-              <MessageCircle className="w-4 h-4" />
             </a>
           </div>
         </div>

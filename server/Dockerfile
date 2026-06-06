@@ -47,7 +47,7 @@ COPY server/drizzle server/drizzle
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=5s --start-period=20s --retries=3 \
-  CMD curl -fsS http://localhost:3001/api/health || exit 1
+  CMD curl -fsS http://127.0.0.1:3001/api/health || exit 1
 
 EXPOSE 3001
 

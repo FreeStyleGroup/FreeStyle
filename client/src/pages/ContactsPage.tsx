@@ -130,11 +130,6 @@ export function ContactsPage() {
             <div className="text-sm text-ink-500 mt-1">Ответим в течение 24 часов</div>
           </InfoCard>
 
-          <InfoCard Icon={Phone} title="Телефон">
-            <a href="tel:+74951234567" className="text-brand-600 font-bold hover:text-brand-700 tabular-nums">+7 495 123-45-67</a>
-            <div className="text-sm text-ink-500 mt-1">Пн-Пт · 9:00 — 21:00 МСК</div>
-          </InfoCard>
-
           <InfoCard Icon={MessageCircle} title="Telegram">
             <a href="https://t.me/freestyle_ru" target="_blank" rel="noopener" className="text-brand-600 font-bold hover:text-brand-700">@freestyle_ru</a>
             <div className="text-sm text-ink-500 mt-1">Быстрый канал поддержки</div>

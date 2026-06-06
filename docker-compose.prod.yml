@@ -74,6 +74,7 @@ services:
       dockerfile: client/Dockerfile
       args:
         VITE_API_BASE_URL: ""
+        VITE_DEV_NOTICE: ${VITE_DEV_NOTICE:-true}
     image: freestyle-client:latest
     container_name: freestyle-client
     restart: unless-stopped

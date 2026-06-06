@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Phone, User2, Menu, X, LogOut } from 'lucide-react';
+import { User2, Menu, X, LogOut } from 'lucide-react';
 import { AuthModal } from '@/components/auth/AuthModal';
 import { AIChip } from '@/components/ai/AIChip';
 import { LanguageSwitcher } from './LanguageSwitcher';
@@ -85,17 +85,6 @@ export function Header({ transparent }: HeaderProps) {
               <AIChip />
             </div>
 
-            <div className="w-px h-6 bg-ink-100 mr-2" />
-
-            {/* Phone */}
-            <a
-              href="tel:+74951234567"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold transition-colors text-ink-900 hover:text-brand-600 hover:bg-brand-50/50"
-            >
-              <Phone className="w-4 h-4 text-brand-600" />
-              <span className="tabular-nums">+7 495 123-45-67</span>
-            </a>
-
             {/* Language switcher */}
             <LanguageSwitcher />
 
@@ -167,14 +156,6 @@ export function Header({ transparent }: HeaderProps) {
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <nav className="lg:hidden py-3 border-t border-ink-100">
-            <a
-              href="tel:+74951234567"
-              className="flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-bold mb-2 text-brand-700"
-            >
-              <Phone className="w-4 h-4" />
-              <span className="tabular-nums">+7 495 123-45-67</span>
-            </a>
-
             <div className="flex flex-col gap-1">
               {infoLinks.map(({ to, label }) => (
                 <NavLink

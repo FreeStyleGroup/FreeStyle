@@ -17,7 +17,7 @@ const start = async (): Promise<void> => {
 
   startScheduler();
 
-  const server = app.listen(config.port, () => {
+  const server = app.listen(config.port, '0.0.0.0', () => {
     logger.info(`FreeStyle server running on port ${config.port}`);
     logger.info(`Environment: ${config.nodeEnv}`);
   });

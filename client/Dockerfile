@@ -26,6 +26,11 @@ COPY client/ client/
 ARG VITE_API_BASE_URL=
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
+# Баннер «режим разработки / тестовые данные». true (по умолчанию) — виден;
+# на боевом запуске задать VITE_DEV_NOTICE=false и пересобрать.
+ARG VITE_DEV_NOTICE=true
+ENV VITE_DEV_NOTICE=$VITE_DEV_NOTICE
+
 RUN npm run build --workspace=@freestyle/client
 
 
