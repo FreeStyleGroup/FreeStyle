@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Бегущая строка dev-notice (China-стиль): текст бежит влево бесконечно.
+   8 копий + translateX(-50%) = бесшовный цикл. */
+@keyframes fs-dev-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.fs-dev-marquee-track { animation: fs-dev-marquee 30s linear infinite; }
+
 /* ════════════════════════════════════════════════════════════════
    FreeStyle · Design tokens
    Источник: travelask.ru (UX, красная палитра) + China travel-v2

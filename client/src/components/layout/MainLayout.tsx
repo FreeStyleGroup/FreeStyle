@@ -10,10 +10,10 @@ import { AIChatModal } from '@/components/ai/AIChatModal';
 export function MainLayout() {
   return (
     <AIChatProvider>
-      <DevModeBanner />
       <PreviewBanner />
       <Header />
       <main className="flex-1">
+        <DevModeBanner />
         <Outlet />
       </main>
       <Footer />
