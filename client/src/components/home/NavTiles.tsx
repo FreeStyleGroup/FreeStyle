@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
  * Крупные плитки, фиксированная высота, без overlap с соседними секциями.
  */
 
-const CN_ICONS = 'https://china-ru.ru/upload/travel/icons';
+const CN_ICONS = '/images/icons';
 
 interface Tile {
   to: string;
