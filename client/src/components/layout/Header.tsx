@@ -49,7 +49,7 @@ export function Header({ transparent }: HeaderProps) {
           {/* Logo */}
           <Link to="/" className="flex items-center shrink-0" aria-label="ФРИСТАЙЛ.РУ — главная">
             <img
-              src="https://freestyle.ru/grey-fs.png"
+              src="/grey-fs.png"
               alt="ФРИСТАЙЛ.РУ"
               className="h-10 md:h-12 w-auto select-none"
               draggable={false}

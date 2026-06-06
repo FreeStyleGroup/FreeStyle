@@ -37,7 +37,7 @@ export function ConciergePage() {
             <div className="absolute inset-0 rounded-full bg-amber-500/30 blur-3xl animate-pulse-amber" />
             <div className="relative w-full h-full rounded-full bg-white/15 backdrop-blur-md border border-white/30 grid place-items-center overflow-hidden">
               <img
-                src="https://freestyle.ru/images/cat-concierge.png"
+                src="/images/cat-concierge.png"
                 alt="Феликс"
                 className="w-full h-full object-cover"
               />
@@ -158,7 +158,7 @@ export function ConciergePage() {
       {/* CTA */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 mb-5 overflow-hidden border-4 border-white shadow-lg">
-          <img src="https://freestyle.ru/images/cat-concierge.png" alt="Феликс" className="w-full h-full object-cover" />
+          <img src="/images/cat-concierge.png" alt="Феликс" className="w-full h-full object-cover" />
         </div>
         <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-3">Феликс ждёт</h2>
         <p className="text-ink-500 mb-6 max-w-xl mx-auto">Откройте чат и начните планировать поездку прямо сейчас.</p>

@@ -17,7 +17,7 @@ export function Footer() {
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="inline-block mb-5">
               <img
-                src="https://freestyle.ru/grey-fs.png"
+                src="/grey-fs.png"
                 alt="ФРИСТАЙЛ.РУ"
                 className="h-10 w-auto invert"
                 draggable={false}

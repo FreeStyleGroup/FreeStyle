@@ -31,6 +31,10 @@ ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 ARG VITE_DEV_NOTICE=true
 ENV VITE_DEV_NOTICE=$VITE_DEV_NOTICE
 
+# Регистрация новых пользователей. false (по умолчанию) — закрыта (режим разработки).
+ARG VITE_REGISTRATION_OPEN=false
+ENV VITE_REGISTRATION_OPEN=$VITE_REGISTRATION_OPEN
+
 RUN npm run build --workspace=@freestyle/client
 
 

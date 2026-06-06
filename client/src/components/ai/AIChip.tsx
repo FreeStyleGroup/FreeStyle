@@ -18,7 +18,7 @@ export function AIChip() {
       {/* Аватар маскота */}
       <span className="relative w-7 h-7 rounded-full bg-white border border-brand-200 overflow-hidden grid place-items-center shrink-0">
         <img
-          src="https://freestyle.ru/images/cat-concierge.png"
+          src="/images/cat-concierge.png"
           alt="Феликс"
           loading="lazy"
           className="w-full h-full object-cover"

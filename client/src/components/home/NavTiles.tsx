@@ -28,7 +28,7 @@ const tiles: Tile[] = [
     to: '/concierge',
     label: 'Консьерж',
     icon: 'concierge',
-    iconUrl: 'https://freestyle.ru/images/cat-concierge.png',
+    iconUrl: '/images/cat-concierge.png',
   },
 ];
 

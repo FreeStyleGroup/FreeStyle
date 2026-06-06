@@ -36,6 +36,10 @@ interface AuthModalProps {
 
 type Tab = 'login' | 'register';
 
+/** Регистрация открыта только при VITE_REGISTRATION_OPEN=true (по умолчанию закрыта на время разработки). */
+const REGISTRATION_OPEN =
+  (import.meta.env.VITE_REGISTRATION_OPEN ?? '').toString().trim().toLowerCase() === 'true';
+
 export function AuthModal({ isOpen, onClose, initialTab = 'login' }: AuthModalProps) {
   const [activeTab, setActiveTab] = useState<Tab>(initialTab);
 
@@ -56,7 +60,9 @@ export function AuthModal({ isOpen, onClose, initialTab = 'login' }: AuthModalPr
 
           {/* Form */}
           <div className="mt-8 flex-1">
-            {activeTab === 'login' ? <LoginForm onClose={onClose} /> : <RegisterForm onClose={onClose} />}
+            {activeTab === 'login'
+              ? <LoginForm onClose={onClose} />
+              : (REGISTRATION_OPEN ? <RegisterForm onClose={onClose} /> : <RegistrationClosed />)}
           </div>
 
           {/* Bottom: switch tab */}
@@ -442,6 +448,32 @@ function Input({ Icon, type, label, value, onChange, placeholder, required, auto
 // ─────────────────────────────────────────
 // SUBMIT BUTTON — premium red gradient
 // ─────────────────────────────────────────
+/** Заглушка вместо формы регистрации, пока она закрыта (режим разработки). */
+function RegistrationClosed() {
+  return (
+    <div className="space-y-5">
+      <div className="rounded-2xl border border-ink-200 bg-ink-50 p-6 text-center">
+        <div className="mx-auto mb-3 w-12 h-12 rounded-full bg-ink-200/70 flex items-center justify-center">
+          <Lock className="w-5 h-5 text-ink-500" />
+        </div>
+        <p className="text-ink-800 font-bold text-[15px] leading-snug">
+          Сайт находится в разработке
+        </p>
+        <p className="text-ink-500 text-sm mt-1.5 leading-snug">
+          Регистрация новых пользователей пока закрыта.
+        </p>
+      </div>
+      {/* серые недоступные поля — визуально форма есть, но выключена */}
+      <div className="space-y-4 opacity-50 pointer-events-none select-none" aria-hidden="true">
+        <div className="h-12 rounded-xl bg-ink-100 border border-ink-200" />
+        <div className="h-12 rounded-xl bg-ink-100 border border-ink-200" />
+        <div className="h-12 rounded-xl bg-ink-100 border border-ink-200" />
+        <div className="h-12 rounded-xl bg-ink-200/70" />
+      </div>
+    </div>
+  );
+}
+
 function SubmitBtn({ children, disabled }: { children: React.ReactNode; disabled?: boolean }) {
   return (
     <button

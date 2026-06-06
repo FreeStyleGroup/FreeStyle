@@ -30,7 +30,7 @@ export function HomePage() {
         <div className="relative overflow-hidden rounded-[28px] bg-[#faf6f0] min-h-[460px] md:min-h-[500px]">
           {/* Картинка с персонажами — снизу-справа, полностью в кадре с котом */}
           <img
-            src="https://freestyle.ru/images/17793208.png"
+            src="/images/17793208.png"
             alt=""
             aria-hidden="true"
             style={{

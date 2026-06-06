@@ -24,7 +24,7 @@ export function AIFAB() {
         {/* Аватар маскота */}
         <span className="relative w-12 h-12 rounded-full bg-gradient-to-br from-brand-50 to-amber-500/15 border border-brand-200 overflow-hidden grid place-items-center shrink-0">
           <img
-            src="https://freestyle.ru/images/cat-concierge.png"
+            src="/images/cat-concierge.png"
             alt="Феликс"
             loading="lazy"
             className="w-full h-full object-cover"

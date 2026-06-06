@@ -1,4 +1,5 @@
 import type { Request, Response } from 'express';
+import { config } from '../config/index.js';
 import { authService } from '../services/auth/auth.service.js';
 import { setAuthCookies, clearAuthCookies, REFRESH_COOKIE } from '../middleware/cookies.js';
 import {
@@ -20,6 +21,10 @@ function clientMeta(req: Request): { userAgent: string | null; ip: string | null
 
 export const authController = {
   async register(req: Request, res: Response): Promise<void> {
+    if (!config.registrationOpen) {
+      res.status(403).json({ success: false, error: 'Регистрация новых пользователей временно закрыта' });
+      return;
+    }
     const dto = registerSchema.parse(req.body);
     const meta = clientMeta(req);
     const { user, tokens } = await authService.register({ ...dto, ...meta });

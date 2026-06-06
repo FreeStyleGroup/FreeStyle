@@ -66,7 +66,7 @@ export function AIChatModal() {
 
           <div className="relative shrink-0 w-12 h-12 rounded-full bg-white/15 backdrop-blur-md border border-white/25 overflow-hidden grid place-items-center">
             <img
-              src="https://freestyle.ru/images/cat-concierge.png"
+              src="/images/cat-concierge.png"
               alt="Феликс"
               loading="lazy"
               className="w-full h-full object-cover"
@@ -165,7 +165,7 @@ function AssistantBubble({ text }: { text: string }) {
     <div className="flex items-start gap-2.5">
       <div className="shrink-0 w-8 h-8 rounded-full bg-white border border-brand-200 overflow-hidden grid place-items-center">
         <img
-          src="https://freestyle.ru/images/cat-concierge.png"
+          src="/images/cat-concierge.png"
           alt="Феликс"
           loading="lazy"
           className="w-full h-full object-cover"

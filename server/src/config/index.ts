@@ -73,6 +73,9 @@ const envSchema = z.object({
 
   /** Включить scheduler авто-публикации (отключать в тестах) */
   SCHEDULER_ENABLED: z.enum(['true', 'false']).default('true').transform((v) => v === 'true'),
+
+  /** Регистрация новых пользователей. На время разработки закрыта (false). */
+  REGISTRATION_OPEN: z.enum(['true', 'false']).default('false').transform((v) => v === 'true'),
 });
 
 const parsed = envSchema.safeParse(process.env);
@@ -132,6 +135,8 @@ export const config = {
   scheduler: {
     enabled: env.SCHEDULER_ENABLED,
   },
+
+  registrationOpen: env.REGISTRATION_OPEN,
 
   tp: {
     apiToken: env.TP_API_TOKEN,
