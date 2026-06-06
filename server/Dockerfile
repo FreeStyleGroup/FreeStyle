@@ -21,7 +21,9 @@ FROM deps AS build
 WORKDIR /app
 COPY shared/ shared/
 COPY server/ server/
-RUN npm run build --workspace=@freestyle/server
+# Сначала собираем shared (CommonJS dist) — сервер резолвит @freestyle/shared
+# в рантайме как готовый JS, а tsc сервера — по dist/index.d.ts (чистый emit в dist/).
+RUN npm run build -w shared && npm run build --workspace=@freestyle/server
 
 
 FROM node:22-alpine AS runner

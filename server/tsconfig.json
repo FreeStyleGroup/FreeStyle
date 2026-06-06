@@ -2,12 +2,10 @@
   "extends": "../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./dist",
+    "rootDir": "./src",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "target": "ES2022",
-    "paths": {
-      "@freestyle/shared": ["../shared/src/index.ts"]
-    }
+    "target": "ES2022"
   },
-  "include": ["src/**/*", "../shared/src/**/*"]
+  "include": ["src/**/*"]
 }

@@ -8,6 +8,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
+      // Клиент бандлит shared из исходников (Vite сам компилит TS) — не зависит
+      // от собранного dist пакета. Server же использует dist (CommonJS) в рантайме.
+      '@freestyle/shared': resolve(__dirname, '../shared/src/index.ts'),
     },
   },
   server: {
