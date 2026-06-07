@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Train, Clock, ArrowRight, LayoutGrid, ShieldCheck, Wallet, BellRing } from 'lucide-react';
+import { Train, Clock, ArrowRight, ArrowUpRight, MapPin, LayoutGrid, ShieldCheck, Wallet, BellRing } from 'lucide-react';
 import { RailSearchForm } from '@/features/rail/RailSearchForm';
 
 /**
@@ -21,16 +21,13 @@ export function TrainsPage() {
   return (
     <div className="min-h-screen">
       {/* HERO 40/60 — слева призыв и описание, справа золотой поезд */}
-      <section className="relative overflow-hidden hero-gradient text-white">
-        <div className="absolute inset-0 hero-overlay opacity-60" />
+      <section className="relative hero-gradient text-white">
+        <div className="absolute inset-0 hero-overlay opacity-60 pointer-events-none" />
 
-        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 pt-12 md:pt-16 pb-14 md:pb-16">
+        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 pt-12 md:pt-16 pb-12 md:pb-14">
           <div className="grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-10 items-center">
             {/* Левая колонка 40% — текст */}
             <div className="max-w-xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-5">
-                <Train className="w-3 h-3 text-amber-400" /> РЖД · поезда по России и СНГ
-              </div>
               <h1 className="font-display font-extrabold text-4xl md:text-5xl xl:text-6xl leading-[1.05] tracking-tight">
                 Билеты на поезд —<br />
                 <em className="not-italic text-amber-400">место у окна за пару минут</em>
@@ -43,8 +40,7 @@ export function TrainsPage() {
             </div>
 
             {/* Правая колонка 60% — золотой поезд (прозрачный PNG) */}
-            <div className="relative hidden lg:flex items-center justify-center min-h-[280px]">
-              <Train className="absolute w-44 h-44 text-amber-400/15" strokeWidth={1} />
+            <div className="relative hidden lg:flex items-center justify-center min-h-[260px]">
               <img
                 src="/images/hero-train.png"
                 alt="Российский скоростной поезд"
@@ -56,8 +52,9 @@ export function TrainsPage() {
           </div>
         </div>
 
-        {/* Табло поиска — на всю ширину контейнера, с отступом снизу */}
-        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 pb-14 md:pb-20">
+        {/* Табло поиска — на всю ширину контейнера, с отступом снизу.
+            z-30 + у секции нет overflow-hidden, чтобы календарь не обрезался. */}
+        <div className="relative z-30 max-w-[1320px] mx-auto px-4 md:px-8 pb-14 md:pb-20">
           <div className="bg-white rounded-3xl p-5 md:p-7 shadow-[var(--shadow-hero)] border border-ink-100">
             <RailSearchForm initial={{ date: today }} />
           </div>
@@ -97,6 +94,22 @@ export function TrainsPage() {
         </div>
       </section>
 
+      {/* ПУТЕШЕСТВИЯ ПО РОССИИ */}
+      <section className="bg-white border-t border-ink-100">
+        <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="text-[11px] uppercase tracking-[.18em] font-bold text-brand-600 mb-2">Куда поехать</div>
+            <h2 className="font-display font-extrabold text-3xl md:text-4xl text-ink-900 leading-tight">Путешествия по России</h2>
+            <p className="text-ink-500 mt-3">Города-столицы и маршруты Золотого кольца — добраться удобнее всего на поезде.</p>
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
+            {DESTINATIONS.map((d) => (
+              <DestinationCard key={d.city} dest={d} today={today} />
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* WHY */}
       <section className="bg-surface-1 border-y border-ink-100">
         <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
@@ -110,6 +123,56 @@ export function TrainsPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+/** Направления для блока «Путешествия по России». ring=Золотое кольцо. */
+interface Dest {
+  city: string;
+  tagline: string;
+  toCode?: string;   // если есть код станции — ведём в префилл-поиск (из Москвы)
+  fromCode?: string; // для самой Москвы — едем из Петербурга
+  ring?: boolean;
+}
+
+const DESTINATIONS: Dest[] = [
+  { city: 'Санкт-Петербург', tagline: 'Северная столица', toCode: '2004001' },
+  { city: 'Москва', tagline: 'Сердце России', toCode: '2006004', fromCode: '2004001' },
+  { city: 'Казань', tagline: 'Третья столица', toCode: '2060001' },
+  { city: 'Нижний Новгород', tagline: 'Столица закатов', toCode: '2064001' },
+  { city: 'Владимир', tagline: 'Древняя Русь', ring: true },
+  { city: 'Суздаль', tagline: 'Музей под открытым небом', ring: true },
+  { city: 'Ярославль', tagline: 'Столица Золотого кольца', ring: true },
+  { city: 'Кострома', tagline: 'Родина Снегурочки', ring: true },
+];
+
+function DestinationCard({ dest, today }: { dest: Dest; today: string }) {
+  const to = dest.toCode
+    ? `/trains/results?from=${dest.fromCode ?? '2006004'}&to=${dest.toCode}&date=${today}&pax=1`
+    : '/trains';
+  return (
+    <Link
+      to={to}
+      className={`group relative overflow-hidden rounded-2xl p-5 min-h-[150px] md:min-h-[170px] flex flex-col justify-between text-white transition-transform hover:-translate-y-1 ${
+        dest.ring
+          ? 'bg-gradient-to-br from-amber-500 via-amber-600 to-brand-700'
+          : 'bg-gradient-to-br from-brand-600 to-brand-900'
+      }`}
+    >
+      <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+      <div className="relative flex items-center justify-between">
+        {dest.ring ? (
+          <span className="text-[10px] font-bold uppercase tracking-wider bg-white/20 rounded-full px-2 py-0.5">Золотое кольцо</span>
+        ) : (
+          <MapPin className="w-5 h-5 text-white/70" />
+        )}
+        <ArrowUpRight className="w-5 h-5 text-white/60 group-hover:text-white transition-colors" />
+      </div>
+      <div className="relative">
+        <div className="font-display font-extrabold text-xl md:text-2xl leading-tight">{dest.city}</div>
+        <div className="text-white/80 text-[13px] mt-0.5">{dest.tagline}</div>
+      </div>
+    </Link>
   );
 }
 

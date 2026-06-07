@@ -84,10 +84,12 @@ services:
       - server
     ports:
       - "80:80"
-      # - "443:443"   ← раскомментировать после установки SSL-сертификата
-    # Для HTTPS — смонтировать сертификаты от certbot:
-    # volumes:
-    #   - /etc/letsencrypt:/etc/letsencrypt:ro
+      - "443:443"
+    volumes:
+      # Сертификат Let's Encrypt (выпущен на хосте: certbot certonly --standalone -d freestyle.ru)
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      # Webroot для продления сертификата без остановки контейнера
+      - /var/www/certbot:/var/www/certbot:ro
     networks: [freestyle-net]
 
 networks:

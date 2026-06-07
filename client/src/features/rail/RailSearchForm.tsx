@@ -41,7 +41,7 @@ export function RailSearchForm({ initial }: Props) {
 
   return (
     <form onSubmit={submit} className="space-y-3">
-      <div className="grid gap-2.5 lg:grid-cols-[minmax(0,1.5fr)_2.75rem_minmax(0,1.5fr)_minmax(0,1.1fr)_minmax(0,1.1fr)_minmax(0,1fr)] lg:items-end">
+      <div className="grid gap-2.5 lg:grid-cols-[minmax(0,1.6fr)_auto_minmax(0,1.6fr)_minmax(0,1fr)_minmax(0,1fr)_9.5rem] lg:items-end">
         <Field label="Откуда" icon={MapPin}>
           <select value={from} onChange={(e) => setFrom(e.target.value)} className="fs-rail-input">
             {RAIL_STATIONS.map((s) => <option key={s.code} value={s.code}>{s.name}</option>)}
@@ -97,26 +97,27 @@ function PassengerStepper({ value, onChange }: { value: number; onChange: (v: nu
   return (
     <div className="block">
       <span className="block text-[12px] font-semibold text-ink-500 mb-1.5">Пассажиры</span>
-      <div className="relative flex items-center h-[2.85rem] rounded-xl border border-ink-100 bg-white px-2">
-        <Users className="w-4 h-4 text-ink-400 shrink-0" />
+      <div className="flex items-center justify-between h-[2.85rem] rounded-xl border border-ink-100 bg-white px-2">
         <button
           type="button"
           onClick={() => set(value - 1)}
           disabled={value <= 1}
-          className="ml-auto w-7 h-7 grid place-items-center rounded-lg text-ink-500 hover:bg-surface-2 hover:text-brand-600 disabled:opacity-30 disabled:hover:bg-transparent"
+          className="w-8 h-8 grid place-items-center rounded-lg text-ink-500 hover:bg-surface-2 hover:text-brand-600 disabled:opacity-30 disabled:hover:bg-transparent"
           aria-label="Меньше пассажиров"
         >
-          <Minus className="w-3.5 h-3.5" />
+          <Minus className="w-4 h-4" />
         </button>
-        <span className="w-6 text-center font-bold text-ink-900 tabular-nums">{value}</span>
+        <span className="inline-flex items-center gap-1.5 font-bold text-ink-900 tabular-nums">
+          <Users className="w-4 h-4 text-ink-400" />{value}
+        </span>
         <button
           type="button"
           onClick={() => set(value + 1)}
           disabled={value >= 9}
-          className="w-7 h-7 grid place-items-center rounded-lg text-ink-500 hover:bg-surface-2 hover:text-brand-600 disabled:opacity-30 disabled:hover:bg-transparent"
+          className="w-8 h-8 grid place-items-center rounded-lg text-ink-500 hover:bg-surface-2 hover:text-brand-600 disabled:opacity-30 disabled:hover:bg-transparent"
           aria-label="Больше пассажиров"
         >
-          <Plus className="w-3.5 h-3.5" />
+          <Plus className="w-4 h-4" />
         </button>
       </div>
     </div>
