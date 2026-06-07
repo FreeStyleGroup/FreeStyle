@@ -162,3 +162,21 @@ body {
   user-select: none;
   font-family: var(--font-display);
 }
+
+/* ════ Rail · поля поиска ЖД ════ */
+.fs-rail-input {
+  width: 100%;
+  padding: 0.7rem 0.85rem 0.7rem 2.25rem;
+  border: 1px solid var(--color-ink-100);
+  border-radius: var(--radius-field);
+  background: #fff;
+  color: var(--color-ink-900);
+  font-size: 0.95rem;
+  appearance: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.fs-rail-input:focus {
+  outline: none;
+  border-color: var(--color-brand-500);
+  box-shadow: var(--shadow-glow);
+}

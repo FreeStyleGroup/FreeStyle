@@ -10,6 +10,9 @@ import { InsurancePage } from '@/pages/InsurancePage';
 import { DestinationsPage } from '@/pages/DestinationsPage';
 import { DestinationDetailPage } from '@/pages/DestinationDetailPage';
 import { TrainsPage } from '@/pages/TrainsPage';
+import { RailDemoPage } from '@/pages/rail/RailDemoPage';
+import { RailResultsPage } from '@/pages/rail/RailResultsPage';
+import { RailTrainPage } from '@/pages/rail/RailTrainPage';
 import { BusesPage } from '@/pages/BusesPage';
 import { AllTransportPage } from '@/pages/AllTransportPage';
 import { ExcursionsPage } from '@/pages/ExcursionsPage';
@@ -67,6 +70,9 @@ export default function App() {
         <Route path="tours" element={<ToursPage />} />
         <Route path="insurance" element={<InsurancePage />} />
         <Route path="trains" element={<TrainsPage />} />
+        <Route path="trains/results" element={<RailResultsPage />} />
+        <Route path="trains/train" element={<RailTrainPage />} />
+        <Route path="trains/demo" element={<RailDemoPage />} />
         <Route path="buses" element={<BusesPage />} />
         <Route path="all-transport" element={<AllTransportPage />} />
         <Route path="excursions" element={<ExcursionsPage />} />
