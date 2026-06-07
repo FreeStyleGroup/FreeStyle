@@ -46,7 +46,7 @@ export function TrainsPage() {
             <div className="relative hidden lg:flex items-center justify-center min-h-[280px]">
               <Train className="absolute w-44 h-44 text-amber-400/15" strokeWidth={1} />
               <img
-                src="/rail-hero-train.png"
+                src="/images/hero-train.png"
                 alt="Российский скоростной поезд"
                 className="relative w-full h-auto object-contain drop-shadow-[0_24px_48px_rgba(0,0,0,.45)] select-none"
                 draggable={false}
