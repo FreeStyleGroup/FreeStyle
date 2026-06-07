@@ -20,7 +20,7 @@ const tiles: Tile[] = [
   { to: '/buses',      label: 'Автобусы',   icon: 'bus' },
   { to: '/hotels',     label: 'Отели',      icon: 'hotel' },
   { to: '/tours',      label: 'Туры',       icon: 'tour' },
-  { to: '/visa',       label: 'Визы',       icon: 'visa' },
+  { to: '/excursions', label: 'Экскурсии',  icon: 'excursion' },
   { to: '/business',   label: 'Бизнес',     icon: 'business' },
   { to: '/car-rental', label: 'Авто',       icon: 'auto' },
   { to: '/insurance',  label: 'Страховки',  icon: 'insurance' },

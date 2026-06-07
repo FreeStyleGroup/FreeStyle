@@ -4,7 +4,7 @@
  */
 export function TermsPage() {
   return (
-    <div className="max-w-3xl mx-auto px-4 md:px-8 py-12 md:py-16">
+    <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-12 md:py-16">
       <header className="mb-10">
         <div className="text-[11px] uppercase tracking-[.18em] font-bold text-brand-600 mb-3">
           Правовая информация

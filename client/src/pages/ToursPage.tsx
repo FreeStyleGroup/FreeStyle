@@ -7,15 +7,13 @@ import {
 import { DatePicker } from '@/features/rail/DatePicker';
 
 /**
- * ToursPage (/tours) — единый раздел путешествий с переключателем:
- *   • Пакетные туры (перелёт+отель+трансфер+страховка)
- *   • Горящие туры (сниженные цены на ближайшие вылеты)
- *   • Экскурсии (авторские, с гидами)
- * UI-пилот на тест-данных. Боевой подбор — через провайдера туров (backend,
+ * ToursPage (/tours) — пакетные и горящие туры (перелёт+отель+трансфер+страховка).
+ * Экскурсии вынесены в отдельный раздел /excursions.
+ * UI-пилот на тест-данных; боевой подбор — через провайдера туров (backend,
  * после договора). Источники в UI не упоминаем — везде бренд FreeStyle.
  */
 
-type Tab = 'package' | 'hot' | 'excursion';
+type Tab = 'package' | 'hot';
 
 interface TourCard {
   id: string;
@@ -28,17 +26,6 @@ interface TourCard {
   dateText: string;
   price: number;
   oldPrice?: number;
-  img: string;
-}
-
-interface Excursion {
-  id: string;
-  title: string;
-  city: string;
-  durationText: string;
-  rating: number;
-  reviews: number;
-  price: number;
   img: string;
 }
 
@@ -56,54 +43,33 @@ const HOT: TourCard[] = [
   { id: 'h4', country: 'Турция', resort: 'Сиде', hotel: 'Saphir Resort & Spa', stars: 5, nights: 9, meal: 'Всё включено', dateText: 'вылет через 4 дня', price: 67400, oldPrice: 95000, img: 'https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?w=800&q=80' },
 ];
 
-const EXCURSIONS: Excursion[] = [
-  { id: 'e1', title: 'Сердце Петербурга: реки и каналы', city: 'Санкт-Петербург', durationText: '2 часа', rating: 4.9, reviews: 1280, price: 1200, img: 'https://images.unsplash.com/photo-1556610961-2fecc5927173?w=800&q=80' },
-  { id: 'e2', title: 'Казанский кремль и старая Татарская слобода', city: 'Казань', durationText: '3 часа', rating: 4.8, reviews: 642, price: 1500, img: 'https://images.unsplash.com/photo-1601574465779-76d6dbb88557?w=800&q=80' },
-  { id: 'e3', title: 'Золотое кольцо: Суздаль за один день', city: 'Суздаль', durationText: '8 часов', rating: 4.9, reviews: 389, price: 4200, img: 'https://images.unsplash.com/photo-1565008576549-57569a49371d?w=800&q=80' },
-  { id: 'e4', title: 'Сочи и Красная Поляна: горы и море', city: 'Сочи', durationText: '6 часов', rating: 4.8, reviews: 517, price: 3800, img: 'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?w=800&q=80' },
-  { id: 'e5', title: 'Москва вечерняя: огни столицы', city: 'Москва', durationText: '3 часа', rating: 4.9, reviews: 2104, price: 1800, img: 'https://images.unsplash.com/photo-1547448415-e9f5b28e570d?w=800&q=80' },
-  { id: 'e6', title: 'Байкал: Листвянка и Шаман-камень', city: 'Иркутск', durationText: '10 часов', rating: 5.0, reviews: 233, price: 5600, img: 'https://images.unsplash.com/photo-1548574505-5e239809ee19?w=800&q=80' },
-];
-
 const TABS: { key: Tab; label: string; Icon: React.ComponentType<{ className?: string }> }[] = [
   { key: 'package', label: 'Пакетные туры', Icon: Sparkles },
   { key: 'hot', label: 'Горящие туры', Icon: Flame },
-  { key: 'excursion', label: 'Экскурсии', Icon: Compass },
 ];
 
-const HERO: Record<Tab, { badge: string; title: React.ReactNode; text: string; img: string }> = {
+const HERO: Record<Tab, { badge: string; title: React.ReactNode; text: string }> = {
   package: {
     badge: 'Пакетные туры',
     title: <>Туры от ведущих <em className="not-italic text-amber-400">туроператоров</em></>,
     text: 'Перелёт, отель, трансфер и страховка — одним пакетом. Подбираем и сравниваем тысячи туров от проверенных операторов, с кэшбэком в Travel Wallet.',
-    img: '/images/hero-tours.png',
   },
   hot: {
     badge: 'Горящие туры',
     title: <>Горящие туры <em className="not-italic text-amber-400">со скидками</em></>,
-    text: 'Готовые вылеты в ближайшие дни по сниженным ценам. Те же отели и операторы — заметно дешевле, пока есть места.',
-    img: '/images/hero-tours.png',
-  },
-  excursion: {
-    badge: 'Экскурсии',
-    title: <>Экскурсии от <em className="not-italic text-amber-400">местных гидов</em></>,
-    text: 'Авторские экскурсии и активный отдых с проверенными гидами по всей России. Реальные отзывы путешественников, бронирование без предоплаты.',
-    img: '/images/hero-excursions.png',
+    text: 'Готовые вылеты в ближайшие дни по заметно сниженным ценам. Те же проверенные отели и операторы, что и в пакетных турах — дешевле, пока есть свободные места.',
   },
 };
 
 const COUNTRIES = ['Турция', 'Египет', 'ОАЭ', 'Таиланд', 'Абхазия', 'Россия', 'Мальдивы', 'Шри-Ланка'];
-const EXC_CITIES = ['Санкт-Петербург', 'Москва', 'Казань', 'Сочи', 'Суздаль', 'Иркутск'];
 
 export function ToursPage() {
   const [sp] = useSearchParams();
-  const initial = (['package', 'hot', 'excursion'] as Tab[]).includes(sp.get('tab') as Tab)
-    ? (sp.get('tab') as Tab)
-    : 'package';
+  const initial: Tab = sp.get('tab') === 'hot' ? 'hot' : 'package';
   const [tab, setTab] = useState<Tab>(initial);
   const today = new Date().toISOString().slice(0, 10);
   const hero = HERO[tab];
-  const isExc = tab === 'excursion';
+  const list = tab === 'hot' ? HOT : PACKAGES;
 
   return (
     <div className="min-h-screen">
@@ -117,17 +83,16 @@ export function ToursPage() {
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-5">
                 {tab === 'hot' ? <Flame className="w-3 h-3 text-amber-400" /> : <Sparkles className="w-3 h-3 text-amber-400" />} {hero.badge}
               </div>
-              <h1 className="font-display font-extrabold text-4xl md:text-5xl xl:text-6xl leading-[1.05] tracking-tight">
+              <h1 className="font-display font-extrabold text-4xl md:text-5xl xl:text-6xl leading-[1.05] tracking-tight lg:min-h-[7.5rem]">
                 {hero.title}
               </h1>
-              <p className="text-white/85 text-lg mt-5 leading-relaxed">{hero.text}</p>
+              <p className="text-white/85 text-lg mt-5 leading-relaxed lg:min-h-[5.5rem]">{hero.text}</p>
             </div>
 
             <div className="relative hidden lg:flex items-center justify-center min-h-[260px]">
               <img
-                key={hero.img}
-                src={hero.img}
-                alt={hero.badge}
+                src="/images/hero-tours.png"
+                alt="Туры"
                 className="relative w-full h-auto object-contain drop-shadow-[0_24px_48px_rgba(0,0,0,.45)] select-none"
                 draggable={false}
                 onError={(e) => { e.currentTarget.style.visibility = 'hidden'; }}
@@ -136,10 +101,9 @@ export function ToursPage() {
           </div>
         </div>
 
-        {/* Переключатель разделов + поиск */}
+        {/* Переключатель + поиск */}
         <div className="relative z-30 max-w-[1320px] mx-auto px-4 md:px-8 pb-14 md:pb-20">
           <div className="bg-white rounded-3xl shadow-[var(--shadow-hero)] border border-ink-100 overflow-hidden">
-            {/* Tabs */}
             <div className="flex border-b border-ink-100">
               {TABS.map(({ key, label, Icon }) => (
                 <button
@@ -156,9 +120,8 @@ export function ToursPage() {
                 </button>
               ))}
             </div>
-            {/* Search */}
             <div className="p-5 md:p-6">
-              {isExc ? <ExcursionSearch today={today} /> : <PackageSearch today={today} />}
+              <PackageSearch today={today} />
             </div>
           </div>
         </div>
@@ -166,28 +129,17 @@ export function ToursPage() {
 
       {/* RESULTS */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-12 md:py-16">
-        {isExc ? (
-          <>
-            <SectionHead title="Популярные экскурсии" subtitle="Авторские маршруты с проверенными гидами — рейтинг и реальные отзывы" />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {EXCURSIONS.map((e) => <ExcursionCardView key={e.id} e={e} />)}
-            </div>
-          </>
-        ) : tab === 'hot' ? (
-          <>
-            <SectionHead title="Горящие предложения" subtitle="Ближайшие вылеты по сниженным ценам — пока есть места" />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {HOT.map((t) => <TourCardView key={t.id} t={t} hot />)}
-            </div>
-          </>
-        ) : (
-          <>
-            <SectionHead title="Популярные туры" subtitle="Перелёт, отель и трансфер в одном пакете — цена за человека" />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {PACKAGES.map((t) => <TourCardView key={t.id} t={t} />)}
-            </div>
-          </>
-        )}
+        <div className="mb-8">
+          <h2 className="font-display font-extrabold text-3xl md:text-4xl text-ink-900 leading-tight">
+            {tab === 'hot' ? 'Горящие предложения' : 'Популярные туры'}
+          </h2>
+          <p className="text-ink-500 mt-2">
+            {tab === 'hot' ? 'Ближайшие вылеты по сниженным ценам — пока есть места' : 'Перелёт, отель и трансфер в одном пакете — цена за человека'}
+          </p>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {list.map((t) => <TourCardView key={t.id} t={t} hot={tab === 'hot'} />)}
+        </div>
       </section>
 
       {/* WHY */}
@@ -198,7 +150,7 @@ export function ToursPage() {
             <Feat Icon={BadgePercent} title="Честная цена" text="Сравниваем все доступные предложения и показываем лучшую цену без скрытых сборов" />
             <Feat Icon={ShieldCheck} title="Защита поездки" text="Страховка в пакете, поддержка 24/7 и помощь в любой ситуации" />
             <Feat Icon={Wallet} title="Кэшбэк в Wallet" text="Возвращаем процент с каждой брони на ваш Travel Wallet" />
-            <Feat Icon={Compass} title="Туры и экскурсии" text="Пакетный отдых, горящие вылеты и авторские экскурсии — в одном месте" />
+            <Feat Icon={Compass} title="Туры и экскурсии" text="Пакетный отдых, горящие вылеты и авторские экскурсии — рядом" />
           </div>
         </div>
       </section>
@@ -206,7 +158,6 @@ export function ToursPage() {
   );
 }
 
-/* ── Поиск пакетных/горящих туров ── */
 function PackageSearch({ today }: { today: string }) {
   const [from, setFrom] = useState('Москва');
   const [country, setCountry] = useState(COUNTRIES[0]);
@@ -235,26 +186,6 @@ function PackageSearch({ today }: { today: string }) {
       <Stepper label="Туристы" value={pax} onChange={setPax} />
       <button type="button" className="lg:col-span-5 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold hover:-translate-y-0.5 transition-all shadow-[var(--shadow-submit)] hover:shadow-[var(--shadow-submit-hover)]">
         <Search className="w-4 h-4" /> Подобрать тур
-      </button>
-    </div>
-  );
-}
-
-/* ── Поиск экскурсий ── */
-function ExcursionSearch({ today }: { today: string }) {
-  const [city, setCity] = useState(EXC_CITIES[0]);
-  const [date, setDate] = useState('');
-
-  return (
-    <div className="grid gap-2.5 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)_12rem] lg:items-end">
-      <Field label="Город" icon={MapPin}>
-        <select value={city} onChange={(e) => setCity(e.target.value)} className="fs-rail-input">
-          {EXC_CITIES.map((c) => <option key={c}>{c}</option>)}
-        </select>
-      </Field>
-      <DatePicker label="Дата" value={date} min={today} onChange={setDate} placeholder="Любая дата" clearable />
-      <button type="button" className="lg:col-span-3 w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold hover:-translate-y-0.5 transition-all shadow-[var(--shadow-submit)] hover:shadow-[var(--shadow-submit-hover)]">
-        <Search className="w-4 h-4" /> Найти экскурсии
       </button>
     </div>
   );
@@ -294,43 +225,6 @@ function TourCardView({ t, hot }: { t: TourCard; hot?: boolean }) {
         </div>
       </div>
     </Link>
-  );
-}
-
-function ExcursionCardView({ e }: { e: Excursion }) {
-  return (
-    <Link to="/tours" className="group bg-white border border-ink-100 rounded-2xl overflow-hidden hover:shadow-[var(--shadow-card)] hover:border-brand-200 transition-all">
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <img src={e.img} alt={e.city} className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
-        <span className="absolute top-3 left-3 inline-flex items-center gap-1 bg-white/90 text-ink-800 text-[12px] font-bold px-2.5 py-1 rounded-full">
-          <MapPin className="w-3 h-3 text-brand-600" /> {e.city}
-        </span>
-      </div>
-      <div className="p-4">
-        <div className="font-display font-extrabold text-[15px] text-ink-900 leading-snug min-h-[2.6em]">{e.title}</div>
-        <div className="text-[12.5px] text-ink-500 mt-2 flex items-center gap-3">
-          <span className="inline-flex items-center gap-1"><Clock className="w-3 h-3" />{e.durationText}</span>
-          <span className="inline-flex items-center gap-1"><Star className="w-3 h-3 fill-amber-400 stroke-amber-400" />{e.rating} · {e.reviews}</span>
-        </div>
-        <div className="flex items-end justify-between mt-3 pt-3 border-t border-ink-100">
-          <div>
-            <div className="text-[11.5px] text-ink-400">от</div>
-            <div className="font-display font-extrabold text-xl text-ink-900">{e.price.toLocaleString('ru-RU')} ₽</div>
-          </div>
-          <span className="inline-flex items-center gap-1 text-brand-600 font-bold text-sm group-hover:gap-2 transition-all">Подробнее <ArrowRight className="w-4 h-4" /></span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-function SectionHead({ title, subtitle }: { title: string; subtitle: string }) {
-  return (
-    <div className="mb-8">
-      <h2 className="font-display font-extrabold text-3xl md:text-4xl text-ink-900 leading-tight">{title}</h2>
-      <p className="text-ink-500 mt-2">{subtitle}</p>
-    </div>
   );
 }
 
