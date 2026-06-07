@@ -95,7 +95,7 @@ export function FlightsPage() {
             Почему FreeStyle
           </h2>
           <p className="text-ink-500 text-center mb-12 max-w-xl mx-auto">
-            Мы используем то же ядро что и Aviasales, плюс собственный кэшбэк и AI-подсказки
+            Метапоиск по 100+ авиакомпаниям, собственный кэшбэк и AI-подсказки
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <Feat Icon={Search}    title="Все авиакомпании"  text="100+ перевозчиков и лоукостеров в одном поиске" />

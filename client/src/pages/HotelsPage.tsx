@@ -33,7 +33,7 @@ export function HotelsPage() {
               Отели — <em className="not-italic text-amber-500">от хостелов до люкса</em>
             </h1>
             <p className="text-white/85 text-lg mt-5">
-              Сравниваем 70+ систем бронирования (Hotellook, Booking, Agoda, Ostrovok, Островок). Финальная цена с налогами, без скрытых комиссий.
+              Сравниваем десятки систем бронирования и показываем лучшую цену. Финальная стоимость с налогами, без скрытых комиссий.
             </p>
           </div>
         </div>
@@ -95,7 +95,7 @@ export function HotelsPage() {
             Почему здесь дешевле
           </h2>
           <p className="text-ink-500 text-center mb-12 max-w-xl mx-auto">
-            Hotellook сравнивает 70+ систем бронирования — часто цена ниже чем напрямую у отеля
+            Мы сравниваем десятки систем бронирования — часто цена ниже, чем напрямую у отеля
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <Feat Icon={Hotel}       title="900 000+ отелей"     text="От 5★ ресортов до бутик-отелей и хостелов" />

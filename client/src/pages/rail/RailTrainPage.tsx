@@ -130,7 +130,7 @@ export function RailTrainPage() {
       )}
 
       {step === 'passengers' && (
-        <div className="max-w-[900px] mx-auto px-4 md:px-8 py-6">
+        <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-6">
           <button type="button" onClick={() => setStep('seats')} className="inline-flex items-center gap-1.5 text-ink-500 hover:text-brand-600 text-sm font-semibold mb-4">
             <ArrowLeft className="w-4 h-4" /> Назад к выбору мест
           </button>

@@ -57,7 +57,7 @@ const resources = {
         noResults: 'Рейсов не найдено',
       },
       hotels: {
-        searchOnBooking: 'Найти на Booking.com',
+        searchOnBooking: 'Найти отель',
         perNight: 'за ночь',
       },
       destinations: {

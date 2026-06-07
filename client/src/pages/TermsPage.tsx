@@ -12,7 +12,7 @@ export function TermsPage() {
         <h1 className="font-display font-extrabold text-4xl text-ink-900 leading-tight tracking-tight mb-2">
           Условия использования
         </h1>
-        <p className="text-ink-500">Последнее обновление: 22 мая 2026 года</p>
+        <p className="text-ink-500">Последнее обновление: 7 июня 2026 года</p>
       </header>
 
       <div className="prose prose-ink max-w-none space-y-6 text-[15px] leading-relaxed text-ink-700">

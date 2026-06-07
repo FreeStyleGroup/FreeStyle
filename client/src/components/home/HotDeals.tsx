@@ -10,16 +10,16 @@ interface Deal {
   to: string;
   dates: string;
   price: string;       // отформатированная цена с пробелами
-  partner: string;     // Aviasales / Biletix
+  partner: string;     // тип рейса (без упоминания источника поиска)
   discount?: string;   // '-20%'
   imageUrl?: string;   // URL фото города
 }
 
 const dealsPlaceholder: Deal[] = [
-  { from: 'Москва', to: 'Стамбул',  dates: '12–19 мая',  price: '18 990', partner: 'Aviasales', discount: '-25%' },
-  { from: 'Москва', to: 'Дубай',    dates: '20–27 мая',  price: '24 500', partner: 'Aviasales' },
-  { from: 'Москва', to: 'Пекин',    dates: '01–07 июня', price: '32 200', partner: 'Biletix' },
-  { from: 'СПб',    to: 'Тбилиси',  dates: '15–25 июня', price: '14 800', partner: 'Aviasales', discount: '-15%' },
+  { from: 'Москва', to: 'Стамбул',  dates: '12–19 мая',  price: '18 990', partner: 'Прямой рейс', discount: '-25%' },
+  { from: 'Москва', to: 'Дубай',    dates: '20–27 мая',  price: '24 500', partner: 'Прямой рейс' },
+  { from: 'Москва', to: 'Пекин',    dates: '01–07 июня', price: '32 200', partner: 'С пересадкой' },
+  { from: 'СПб',    to: 'Тбилиси',  dates: '15–25 июня', price: '14 800', partner: 'Прямой рейс', discount: '-15%' },
 ];
 
 export function HotDeals() {
