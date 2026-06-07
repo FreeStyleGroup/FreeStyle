@@ -69,7 +69,7 @@ export function RailTrainPage() {
     <div className="min-h-screen bg-surface-1">
       {/* summary bar */}
       <div className="bg-white border-b border-ink-100">
-        <div className="max-w-[1100px] mx-auto px-4 md:px-8 py-4 flex items-center gap-4 flex-wrap">
+        <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-4 flex items-center gap-4 flex-wrap">
           <Link to={`/trains/results?from=${from}&to=${to}&date=${date}&pax=${pax}`} className="inline-flex items-center gap-1.5 text-ink-500 hover:text-brand-600 text-sm font-semibold">
             <ArrowLeft className="w-4 h-4" /> К поездам
           </Link>
@@ -87,7 +87,7 @@ export function RailTrainPage() {
       </div>
 
       {step === 'seats' && (
-        <div className="max-w-[1100px] mx-auto px-4 md:px-8 py-6 grid lg:grid-cols-[280px_1fr] gap-6">
+        <div className="max-w-[1320px] mx-auto px-4 md:px-8 py-6 grid lg:grid-cols-[300px_1fr] gap-6">
           {/* car list */}
           <aside className="space-y-2 h-max">
             <div className="text-[12px] uppercase tracking-wider font-bold text-ink-400 mb-1">Вагоны</div>

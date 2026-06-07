@@ -20,33 +20,52 @@ export function TrainsPage() {
 
   return (
     <div className="min-h-screen">
-      {/* HERO + SEARCH */}
+      {/* HERO 40/60 — слева призыв и описание, справа золотой поезд */}
       <section className="relative overflow-hidden hero-gradient text-white">
         <div className="absolute inset-0 hero-overlay opacity-60" />
-        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 pt-14 md:pt-20 pb-32">
-          <div className="text-center max-w-3xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-5">
-              <Train className="w-3 h-3 text-amber-400" /> РЖД · поезда по России и СНГ
+
+        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 pt-12 md:pt-16 pb-14 md:pb-16">
+          <div className="grid lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] gap-8 lg:gap-10 items-center">
+            {/* Левая колонка 40% — текст */}
+            <div className="max-w-xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full glass-pill text-[11px] font-mono font-medium uppercase tracking-[.18em] mb-5">
+                <Train className="w-3 h-3 text-amber-400" /> РЖД · поезда по России и СНГ
+              </div>
+              <h1 className="font-display font-extrabold text-4xl md:text-5xl xl:text-6xl leading-[1.05] tracking-tight">
+                Билеты на поезд —<br />
+                <em className="not-italic text-amber-400">место у окна за пару минут</em>
+              </h1>
+              <p className="text-white/85 text-lg mt-5 leading-relaxed">
+                Плацкарт, купе, СВ, Сапсан и Ласточка. Выбирайте место прямо на интерактивной
+                схеме вагона, добавляйте обратный билет в один заказ, проходите посадку по паспорту
+                с электронной регистрацией.
+              </p>
             </div>
-            <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              Билеты на поезд —<br />
-              <em className="not-italic text-amber-400">с выбором места на схеме</em>
-            </h1>
-            <p className="text-white/85 text-lg mt-5">
-              Плацкарт, купе, СВ, Сапсан и Ласточка. Интерактивные схемы вагонов, электронная регистрация, посадка по паспорту.
-            </p>
+
+            {/* Правая колонка 60% — золотой поезд (прозрачный PNG) */}
+            <div className="relative hidden lg:flex items-center justify-center min-h-[280px]">
+              <Train className="absolute w-44 h-44 text-amber-400/15" strokeWidth={1} />
+              <img
+                src="/rail-hero-train.png"
+                alt="Российский скоростной поезд"
+                className="relative w-full h-auto object-contain drop-shadow-[0_24px_48px_rgba(0,0,0,.45)] select-none"
+                draggable={false}
+                onError={(e) => { e.currentTarget.style.visibility = 'hidden'; }}
+              />
+            </div>
           </div>
         </div>
 
-        <div className="relative max-w-[1100px] mx-auto px-4 md:px-8 -mt-20">
-          <div className="bg-white rounded-3xl p-5 md:p-7 shadow-2xl border border-ink-100">
+        {/* Табло поиска — на всю ширину контейнера, с отступом снизу */}
+        <div className="relative max-w-[1320px] mx-auto px-4 md:px-8 pb-14 md:pb-20">
+          <div className="bg-white rounded-3xl p-5 md:p-7 shadow-[var(--shadow-hero)] border border-ink-100">
             <RailSearchForm initial={{ date: today }} />
           </div>
         </div>
       </section>
 
       {/* POPULAR */}
-      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20 mt-6">
+      <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
         <div className="flex items-end justify-between gap-3 mb-8 flex-wrap">
           <div>
             <div className="text-[11px] uppercase tracking-[.18em] font-bold text-brand-600 mb-2">Популярные направления</div>
