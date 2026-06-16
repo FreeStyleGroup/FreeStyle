@@ -1,4 +1,5 @@
-import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { MainLayout } from '@/components/layout/MainLayout';
 import { HomePage } from '@/pages/HomePage';
 import { FlightsPage } from '@/pages/FlightsPage';
@@ -59,6 +60,13 @@ import { AdminAuditLogPage } from '@/pages/admin/AdminAuditLogPage';
 import { AdminFactoryPage } from '@/pages/admin/AdminFactoryPage';
 
 export default function App() {
+  // Яндекс.Метрика: засчитываем просмотр при каждой смене маршрута (SPA).
+  const location = useLocation();
+  useEffect(() => {
+    const ym = (window as unknown as { ym?: (...a: unknown[]) => void }).ym;
+    if (typeof ym === 'function') ym(89917741, 'hit', window.location.href);
+  }, [location.pathname, location.search]);
+
   return (
     <Routes>
       <Route element={<MainLayout />}>
