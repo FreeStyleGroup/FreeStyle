@@ -26,10 +26,8 @@ export const localeEnum = pgEnum('locale', ['ru', 'en', 'zh']);
 export const currencyEnum = pgEnum('currency', ['rub', 'usd', 'eur', 'cny', 'aed']);
 
 export const oauthProviderEnum = pgEnum('oauth_provider', [
-  'google',
   'yandex',
   'vk',
-  'apple',
   'telegram',
 ]);
 
@@ -172,7 +170,7 @@ export const users = pgTable(
 );
 
 /* ─────────────────────────────────────────────────────────────
- * social_accounts — OAuth-привязки (Google/Yandex/VK/Apple/TG)
+ * social_accounts — OAuth-привязки (Yandex/VK/Telegram)
  * ────────────────────────────────────────────────────────────*/
 
 export const socialAccounts = pgTable(
