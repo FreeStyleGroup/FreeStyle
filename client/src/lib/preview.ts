@@ -128,8 +128,8 @@ export function mockReferral(): ReferralStatsDto {
 }
 
 export const mockSessions: SessionDto[] = [
-  { id: 's1', userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120', ip: '192.168.1.45', createdAt: '2026-05-22T09:00:00Z', expiresAt: '2026-06-21T09:00:00Z', isCurrent: true },
-  { id: 's2', userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_4) AppleWebKit/605.1.15 Safari/604.1',                       ip: '10.0.0.12',   createdAt: '2026-05-18T18:30:00Z', expiresAt: '2026-06-17T18:30:00Z', isCurrent: false },
+  { id: 's1', userAgent: 'Яндекс Браузер · Windows', ip: '192.168.1.45', createdAt: '2026-05-22T09:00:00Z', expiresAt: '2026-06-21T09:00:00Z', isCurrent: true },
+  { id: 's2', userAgent: 'Яндекс Браузер · Android', ip: '10.0.0.12',   createdAt: '2026-05-18T18:30:00Z', expiresAt: '2026-06-17T18:30:00Z', isCurrent: false },
 ];
 
 /* ─── Mock admin ─── */
@@ -166,7 +166,7 @@ export function mockAnalytics(): AdminAnalyticsResponse {
 export function mockAdminUsers(): AdminUsersListResponse {
   return {
     items: [
-      { ...mockUser('user'),   id: 'u1', name: 'Анна Петрова',   email: 'anna.petrova@gmail.com',  tier: 'silver',   milesBalance: 1200,  createdAt: '2026-05-20T10:00:00Z' },
+      { ...mockUser('user'),   id: 'u1', name: 'Анна Петрова',   email: 'anna.petrova@yandex.ru',  tier: 'silver',   milesBalance: 1200,  createdAt: '2026-05-20T10:00:00Z' },
       { ...mockUser('user'),   id: 'u2', name: 'Игорь Соколов',  email: 'isokolov@mail.ru',         tier: 'gold',     milesBalance: 8400,  createdAt: '2026-04-15T14:00:00Z' },
       { ...mockUser('user'),   id: 'u3', name: 'Елизавета Ким',   email: 'liza.kim@ya.ru',           tier: 'platinum', milesBalance: 24500, createdAt: '2025-12-08T09:30:00Z' },
       { ...mockUser('editor'), id: 'u4', name: 'Мария Редакторова', email: 'editor@freestyle.ru',  tier: 'bronze',   milesBalance: 0,     createdAt: '2025-09-01T08:00:00Z' },
@@ -182,7 +182,7 @@ export function mockAdminOrders(): AdminOrdersListResponse {
       ...b,
       userId: `u${i + 1}`,
       userName: ['Анна Петрова', 'Игорь Соколов', 'Елизавета Ким', 'Дмитрий Орлов'][i] ?? '—',
-      userEmail: ['anna@gmail.com', 'isokolov@mail.ru', 'liza@ya.ru', 'orlov@yandex.ru'][i] ?? '—',
+      userEmail: ['anna@yandex.ru', 'isokolov@mail.ru', 'liza@ya.ru', 'orlov@yandex.ru'][i] ?? '—',
     })),
     meta: { total: 863, page: 1, pageSize: 20 },
   };

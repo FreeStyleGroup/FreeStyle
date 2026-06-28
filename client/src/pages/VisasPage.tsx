@@ -153,7 +153,7 @@ export function VisasPage() {
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 text-center">
         <Sparkles className="w-10 h-10 mx-auto text-brand-600 mb-4" />
         <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-3">Не знаете нужна ли виза?</h2>
-        <p className="text-ink-500 mb-6 max-w-xl mx-auto">Спросите AI-консьержа Феликса — расскажет про визу для любой страны в чате справа внизу.</p>
+        <p className="text-ink-500 mb-6 max-w-xl mx-auto">Спросите AI-консьержа Ириску — расскажет про визу для любой страны в чате справа внизу.</p>
         <a href={ivisaLink} target="_blank" rel="noopener sponsored" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold hover:-translate-y-0.5 transition-all shadow-md hover:shadow-lg">
           <Globe2 className="w-4 h-4" /> Оформить визу онлайн
         </a>

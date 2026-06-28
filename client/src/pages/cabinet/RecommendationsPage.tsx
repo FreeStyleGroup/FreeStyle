@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 /**
  * AI Recommendations — после подключения RAG (Phase 5+) станет персональной
  * подборкой направлений/отелей на основе истории брони + AI-консьерж.
- * Сейчас — анонс-плашка и направление на чат Феликса.
+ * Сейчас — анонс-плашка и направление на чат Ириски.
  */
 export function RecommendationsPage() {
   return (
     <div className="space-y-6">
-      <h1 className="font-display font-extrabold text-3xl text-ink-900 tracking-tight">Рекомендации от Феликса</h1>
+      <h1 className="font-display font-extrabold text-3xl text-ink-900 tracking-tight">Рекомендации от Ириски</h1>
 
       <div className="relative overflow-hidden rounded-3xl p-8 md:p-10 hero-gradient text-white">
         <div className="absolute inset-0 hero-overlay opacity-50" />
@@ -22,14 +22,14 @@ export function RecommendationsPage() {
             Персональные подборки на основе вашей истории
           </h2>
           <p className="text-white/85 mt-3 leading-relaxed">
-            Феликс выучит ваши предпочтения по бронированиям, избранному и поиску — и будет
+            Ириска выучит ваши предпочтения по бронированиям, избранному и поиску — и будет
             предлагать направления, отели и сезонные сделки, которые вы точно полюбите.
           </p>
           <Link
             to="/"
             className="inline-flex items-center gap-2 mt-6 px-6 py-3 rounded-xl bg-white text-brand-700 font-bold text-sm hover:-translate-y-0.5 transition-all"
           >
-            Спросить Феликса сейчас <ArrowRight className="w-4 h-4" />
+            Спросить Ириску сейчас <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>
@@ -44,7 +44,7 @@ export function RecommendationsPage() {
           text="Учитывает, когда лучше всего лететь в каждое направление."
         />
         <FeatureTile
-          title="Сообщения Феликсу"
+          title="Сообщения Ириске"
           text="Понимает контекст из ваших диалогов с AI-консьержем."
         />
       </div>

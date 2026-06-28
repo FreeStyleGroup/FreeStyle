@@ -101,7 +101,7 @@ export function FlightsPage() {
             <Feat Icon={Search}    title="Все авиакомпании"  text="100+ перевозчиков и лоукостеров в одном поиске" />
             <Feat Icon={Wallet}    title="Кэшбэк 1-3%"        text="Возвращаем процент с каждой брони в ваш Wallet" />
             <Feat Icon={BellRing}  title="Алерт цены"         text="Подпишемся на маршрут — сообщим при падении цены" />
-            <Feat Icon={Sparkles}  title="AI-подсказки"       text="Феликс знает выгодные пересадки и сезоны" />
+            <Feat Icon={Sparkles}  title="AI-подсказки"       text="Ириска знает выгодные пересадки и сезоны" />
           </div>
         </div>
       </section>
@@ -112,7 +112,7 @@ export function FlightsPage() {
           <div>
             <div className="text-3xl md:text-4xl mb-3">🐈</div>
             <h2 className="font-display font-extrabold text-2xl md:text-3xl mb-2">Не знаете куда лететь?</h2>
-            <p className="text-white/85 max-w-xl">Спросите Феликса — AI-консьерж подскажет направления по бюджету, сезону и интересам. Бесплатно.</p>
+            <p className="text-white/85 max-w-xl">Спросите Ириску — AI-консьерж подскажет направления по бюджету, сезону и интересам. Бесплатно.</p>
           </div>
           <Link to="/concierge" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-brand-700 font-bold hover:-translate-y-0.5 transition-all whitespace-nowrap">
             Открыть чат <ArrowRight className="w-4 h-4" />

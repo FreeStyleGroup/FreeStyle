@@ -3,7 +3,7 @@ import { useAIChat } from './AIChatContext';
 
 /**
  * AIChip — компактная кликабельная плашка в Header.
- * Открывает чат с Феликсом-консьержем.
+ * Открывает чат с Ириской-консьержем.
  */
 export function AIChip() {
   const { open } = useAIChat();
@@ -13,13 +13,13 @@ export function AIChip() {
       type="button"
       onClick={open}
       className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full bg-gradient-to-r from-brand-50 to-amber-500/10 border border-brand-200 hover:border-brand-500 hover:from-brand-100 transition-all group cursor-pointer"
-      title="AI-консьерж Феликс"
+      title="AI-консьерж Ириска"
     >
       {/* Аватар маскота */}
       <span className="relative w-7 h-7 rounded-full bg-white border border-brand-200 overflow-hidden grid place-items-center shrink-0">
         <img
           src="/images/cat-concierge.png"
-          alt="Феликс"
+          alt="Ириска"
           loading="lazy"
           className="w-full h-full object-cover"
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -35,7 +35,7 @@ export function AIChip() {
           AI Ассистент
         </span>
         <span className="block text-[10px] text-ink-500 font-medium">
-          Феликс · онлайн
+          Ириска · онлайн
         </span>
       </span>
     </button>

@@ -67,7 +67,7 @@ export function AIChatModal() {
           <div className="relative shrink-0 w-12 h-12 rounded-full bg-white/15 backdrop-blur-md border border-white/25 overflow-hidden grid place-items-center">
             <img
               src="/images/cat-concierge.png"
-              alt="Феликс"
+              alt="Ириска"
               loading="lazy"
               className="w-full h-full object-cover"
               onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -76,7 +76,7 @@ export function AIChatModal() {
           </div>
 
           <div className="relative flex-1 min-w-0">
-            <div className="font-display font-extrabold text-[16px] leading-tight">Феликс</div>
+            <div className="font-display font-extrabold text-[16px] leading-tight">Ириска</div>
             <div className="text-[11px] text-white/80 flex items-center gap-1">
               <Sparkles className="w-2.5 h-2.5 text-amber-500" />
               AI-консьерж · онлайн
@@ -136,7 +136,7 @@ export function AIChatModal() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Спросите Феликса о путешествиях…"
+              placeholder="Спросите Ириску о путешествиях…"
               rows={1}
               className="flex-1 resize-none bg-transparent outline-none text-[14px] font-medium text-ink-900 placeholder:text-ink-400 py-2 max-h-[120px]"
             />
@@ -166,7 +166,7 @@ function AssistantBubble({ text }: { text: string }) {
       <div className="shrink-0 w-8 h-8 rounded-full bg-white border border-brand-200 overflow-hidden grid place-items-center">
         <img
           src="/images/cat-concierge.png"
-          alt="Феликс"
+          alt="Ириска"
           loading="lazy"
           className="w-full h-full object-cover"
           onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}

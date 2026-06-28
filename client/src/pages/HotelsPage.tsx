@@ -112,10 +112,10 @@ export function HotelsPage() {
           <div>
             <Sparkles className="w-8 h-8 text-amber-400 mb-3" />
             <h2 className="font-display font-extrabold text-2xl md:text-3xl mb-2">Подобрать отель?</h2>
-            <p className="text-white/85 max-w-xl">Феликс знает районы любого города и подскажет где остановиться по бюджету и для каких задач (пляж, шопинг, бизнес).</p>
+            <p className="text-white/85 max-w-xl">Ириска знает районы любого города и подскажет где остановиться по бюджету и для каких задач (пляж, шопинг, бизнес).</p>
           </div>
           <Link to="/concierge" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-brand-700 font-bold hover:-translate-y-0.5 transition-all whitespace-nowrap">
-            Спросить Феликса <ArrowRight className="w-4 h-4" />
+            Спросить Ириску <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </section>

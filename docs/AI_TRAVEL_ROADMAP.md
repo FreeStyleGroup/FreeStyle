@@ -3,21 +3,21 @@
 > Статус: план (стартуем позже). Документ — меню модулей: выбираем, что строим, по фазам.
 
 ## Context (зачем)
-FreeStyle.ru — не «ещё один агрегатор», а ультрасовременный AAA lifestyle-проект для свободных людей, которые **не переплачивают**. Северная звезда из концепта: **ИИ убирает «наценку за незнание»** (те 60–70%, что турист платит за незнание правильного дня вылета, нетуристического района, бесплатной альтернативы платному). Превращаем 5 шагов AI-travel-системы (подбор направления → дешёвые билеты → антитуристический маршрут → ИИ-гид/переводчик/консьерж → оптимизация бюджета в поездке) в реальные фичи продукта поверх уже готовой архитектуры, + 4 хайтек-решения (выбраны: индекс наценки, price-watch, режим «в поездке» PWA, мультимодальный/голосовой Феликс).
+FreeStyle.ru — не «ещё один агрегатор», а ультрасовременный AAA lifestyle-проект для свободных людей, которые **не переплачивают**. Северная звезда из концепта: **ИИ убирает «наценку за незнание»** (те 60–70%, что турист платит за незнание правильного дня вылета, нетуристического района, бесплатной альтернативы платному). Превращаем 5 шагов AI-travel-системы (подбор направления → дешёвые билеты → антитуристический маршрут → ИИ-гид/переводчик/консьерж → оптимизация бюджета в поездке) в реальные фичи продукта поверх уже готовой архитектуры, + 4 хайтек-решения (выбраны: индекс наценки, price-watch, режим «в поездке» PWA, мультимодальный/голосовой Ириска).
 
 Монетизация сквозная: любая рекомендация заканчивается партнёрской кнопкой «купить» (Travelpayouts marker **304805** через `tp.media`).
 
 ## Фундамент (что уже есть — строим на этом, не с нуля)
-- **AI-клиент**: `server/src/services/ai/client.ts` — `aiClient.chat()` / `chatJson()` (AITunnel, OpenAI-совместимый, gpt-4o-mini, graceful-stub без ключа). Сейчас используется только Content Factory. **Переиспользуем как мозг Феликса.**
+- **AI-клиент**: `server/src/services/ai/client.ts` — `aiClient.chat()` / `chatJson()` (AITunnel, OpenAI-совместимый, gpt-4o-mini, graceful-stub без ключа). Сейчас используется только Content Factory. **Переиспользуем как мозг Ириску.**
 - **Travelpayouts** (`server/src/services/travelpayouts/*`): рейсы wired — `getPricesForDates`, `getCheapTickets`, **`getPriceCalendar` (лучший день!)**, `getPopularDirections`; `reference.service` (аэропорты/города/автокомплит); `affiliate.service` (`buildFlightLink/Hotel/Car/Insurance/Tour` → marker 304805). Кеш через `cacheService`. Отели — пока только affiliate-ссылка (без данных).
 - **Кабинет/БД** (`server/src/db/schema.ts`, Drizzle): users (tier/miles/cashback), bookings, wallet_transactions, favorites, user_documents, referrals, posts/ideas/publish_jobs, audit_log, contact_messages. Кабинет и админка — реальные. **Content Factory** (idea→article→publish) — рабочий референс AI-пайплайна. Пустые слоты под фичи: `client/src/pages/cabinet/TimelinePage.tsx`, `RecommendationsPage.tsx`.
-- **Феликс UI готов, но заглушка**: `client/src/components/ai/{AIChip,AIFAB,AIChatModal,AIChatContext}.tsx`, `pages/ConciergePage.tsx` — есть чат, быстрые промпты, история в state; **нет бэкенда** (`AIChatContext.sendMessage` — `setTimeout`-заглушка), нет `/api/ai/chat`, нет инжекта travel-данных, нет стриминга/персистенции.
+- **Ириска UI готов, но заглушка**: `client/src/components/ai/{AIChip,AIFAB,AIChatModal,AIChatContext}.tsx`, `pages/ConciergePage.tsx` — есть чат, быстрые промпты, история в state; **нет бэкенда** (`AIChatContext.sendMessage` — `setTimeout`-заглушка), нет `/api/ai/chat`, нет инжекта travel-данных, нет стриминга/персистенции.
 
-## Ключевое архитектурное решение: Феликс = AI-агент с инструментами (function-calling)
+## Ключевое архитектурное решение: Ириска = AI-агент с инструментами (function-calling)
 Не «болталка», а агент, который **сам вызывает наши сервисы** и отвечает живыми ценами + готовой ссылкой «купить». AITunnel поддерживает tool-calling.
 
 - Новый `POST /api/ai/chat` (SSE-стриминг) → `chatController` → `chatService`:
-  - системный промпт «Феликс — консьерж, экономящий 60–70% наценки» (+ персона из ConciergePage);
+  - системный промпт «Ириска — консьерж, экономящий 60–70% наценки» (+ персона из ConciergePage);
   - инжект контекста: профиль/локаль/валюта юзера, его недавние поиски/избранное, активная поездка;
   - **TOOLS** (обёртки над существующим кодом — переиспользуем, не дублируем):
     - `search_flights` → `flightsService.getPricesForDates`
@@ -35,8 +35,8 @@ FreeStyle.ru — не «ещё один агрегатор», а ультрас�
 
 ## Модули (выбираем, что строим)
 
-### Module A — «Мозг Феликса» (AI-агент с инструментами) — ENABLER
-Оживляет ядро концепта: `/api/ai/chat` (SSE) + tool-calling над Travelpayouts + персистенция + клиентский стрим. После него Феликс реально подбирает и отвечает живыми ценами с кнопкой «купить».
+### Module A — «Мозг Ириску» (AI-агент с инструментами) — ENABLER
+Оживляет ядро концепта: `/api/ai/chat` (SSE) + tool-calling над Travelpayouts + персистенция + клиентский стрим. После него Ириска реально подбирает и отвечает живыми ценами с кнопкой «купить».
 - Новое: `server/src/services/ai/chat.service.ts`, `tools.ts`; `routes/ai.routes.ts`; `controllers/ai.controller.ts`; таблица `ai_conversations`; `client/src/api/ai.api.ts`; правка `AIChatContext`/`AIChatModal` (стрим + карточки).
 - Переиспуем: `aiClient`, все `flightsService`/`reference`/`affiliate`.
 
@@ -56,13 +56,13 @@ FreeStyle.ru — не «ещё один агрегатор», а ультрас�
 
 ### Module E — Price-watch + проактивные уведомления (выбрано)
 Следим за маршрутом/направлением, бьём письмом (SMTP уже в конфиге) / push когда цена ≤ цели. Возвращает юзеров на сайт.
-- Новое: таблица `price_watches` (userId, type, route, targetPrice, status, expiresAt); `priceWatch.service.ts` + фоновый чекер (паттерн `factory/scheduler.ts` — уже крутится каждую минуту); tool `watch_price` для Феликса; `cabinet/PriceWatchesPage.tsx`; email-шаблон.
+- Новое: таблица `price_watches` (userId, type, route, targetPrice, status, expiresAt); `priceWatch.service.ts` + фоновый чекер (паттерн `factory/scheduler.ts` — уже крутится каждую минуту); tool `watch_price` для Ириску; `cabinet/PriceWatchesPage.tsx`; email-шаблон.
 
 ### Module F — Режим «в поездке» (PWA / офлайн) (выбрано)
 Шаг 4+5 концепта в кармане: устанавливаемое PWA, AI-гид по гео («стою у X — 3 неочевидных факта и куда дальше пешком»), фразы для торга/врача на местном языке, ежевечерний разбор бюджета. Офлайн-кеш активной поездки (маршрут/смета/фразы) через service worker.
-- Новое: PWA-манифест + SW (`vite-plugin-pwa`), офлайн-кеш активного `ai_trip`, гео-tool в чате, режим «в поездке» в UI кабинета/Феликса.
+- Новое: PWA-манифест + SW (`vite-plugin-pwa`), офлайн-кеш активного `ai_trip`, гео-tool в чате, режим «в поездке» в UI кабинета/Ириску.
 
-### Module G — Мультимодальный / голосовой Феликс (выбрано)
+### Module G — Мультимодальный / голосовой Ириска (выбрано)
 Голосовой ввод (Web Speech API / Whisper через AITunnel) + фото места/меню/вывески → vision-модель → факты, перевод, советы. Хайтек-вау.
 - Новое: загрузка изображения в `/api/ai/chat` (vision-модель AITunnel), голос на клиенте, мультимодальные сообщения в `AIChatModal`.
 
@@ -71,26 +71,26 @@ FreeStyle.ru — не «ещё один агрегатор», а ультрас�
 - Новое: публичные `ai_trips` (share-флаг) + лента; переиспуем posts/Content Factory под user-generated.
 
 ## Монетизация (сквозная)
-Каждая рекомендация Феликса/планировщика/поиска заканчивается партнёрской кнопкой «купить» через `affiliateService` (marker 304805, sub_id по разделу для аналитики конверсий). Tool `buy_link` встраивает её прямо в ответы чата.
+Каждая рекомендация Ириску/планировщика/поиска заканчивается партнёрской кнопкой «купить» через `affiliateService` (marker 304805, sub_id по разделу для аналитики конверсий). Tool `buy_link` встраивает её прямо в ответы чата.
 
 ## Дополнения модели данных (Drizzle, по паттерну `server/src/db/schema.ts` + миграция `drizzle-kit generate`)
 `ai_conversations` (A) · `ai_trips` + `budget_lines` (B) · `price_watches` (E) · опц. `savings_log` (D) · share-флаг на `ai_trips` (H). FK `onDelete: cascade` к users, индексы на userId/status — как в существующих таблицах.
 
 ## Рекомендованная очередь фаз
-1. **Module A** (мозг Феликса) — enabler, максимальный «вау», оживляет весь концепт.
+1. **Module A** (мозг Ириску) — enabler, максимальный «вау», оживляет весь концепт.
 2. **Module B + D** (Trip Planner + индекс наценки) — ядро ценности «не переплачивай».
 3. **Module C + E** (дешёвые билеты + price-watch) — на готовых данных, быстрый ROI + удержание.
-4. **Module F + G** (PWA «в поездке» + мультимодальный Феликс) — хайтек-дифференциация.
+4. **Module F + G** (PWA «в поездке» + мультимодальный Ириска) — хайтек-дифференциация.
 5. **Module H** (community) — рост, когда ядро устоялось.
 
 ## Verification (по каждому модулю)
 - `npm run build -w shared && npm run typecheck -w server && npm run lint -w client` — зелёно перед пушем (CI это и гоняет).
-- Локально `npm run dev`: Феликс отвечает живыми ценами; tool-calls возвращают данные Travelpayouts; ответы содержат валидные affiliate-ссылки (marker 304805).
+- Локально `npm run dev`: Ириска отвечает живыми ценами; tool-calls возвращают данные Travelpayouts; ответы содержат валидные affiliate-ссылки (marker 304805).
 - Миграции применяются (`docker-entrypoint.sh` → `migrate.js`); новые таблицы видны.
 - Кабинетные страницы (Trips/PriceWatches) грузят реальные данные; price-watch шлёт письмо при срабатывании.
 - E2E на бою через CI-автодеплой; проверка с реальным `AITUNNEL_API_KEY` и `TP_API_TOKEN`.
 
 ## Открытые вопросы (решим перед стартом фазы)
-- Модель для Феликса: gpt-4o-mini (дёшево) vs более сильная для агента/vision — подберём по качеству tool-calling.
+- Модель для Ириску: gpt-4o-mini (дёшево) vs более сильная для агента/vision — подберём по качеству tool-calling.
 - Источник «нетуристического» контента: чистый AI vs курировать через Content Factory (надёжнее, SEO-бонус).
 - Push-канал для price-watch: email (готов) сразу; web-push/Telegram — позже.

@@ -136,7 +136,7 @@ export function ContactsPage() {
           </InfoCard>
 
           <InfoCard Icon={Sparkles} title="AI-консьерж">
-            <div className="text-ink-900 font-bold">Феликс · 24/7</div>
+            <div className="text-ink-900 font-bold">Ириска · 24/7</div>
             <div className="text-sm text-ink-500 mt-1">Кнопка чата справа внизу — спросите про любое направление</div>
           </InfoCard>
 

@@ -122,7 +122,7 @@ export function CountriesPage() {
       <div className="mt-12 rounded-3xl bg-gradient-to-br from-brand-500 to-brand-700 text-white p-8 md:p-12 text-center">
         <Plane className="w-10 h-10 mx-auto mb-4 text-white/90" />
         <h2 className="font-display font-extrabold text-2xl md:text-3xl mb-2">Не определились с направлением?</h2>
-        <p className="text-white/85 mb-6 max-w-xl mx-auto">Спросите AI-консьержа Феликса — он подскажет, куда лететь по бюджету, сезону и интересам.</p>
+        <p className="text-white/85 mb-6 max-w-xl mx-auto">Спросите AI-консьержа Ириску — она подскажет, куда лететь по бюджету, сезону и интересам.</p>
         <Link to="/" className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-brand-700 font-bold hover:-translate-y-0.5 transition-all">
           Открыть поиск рейсов
         </Link>

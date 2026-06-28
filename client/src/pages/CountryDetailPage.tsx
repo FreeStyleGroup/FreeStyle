@@ -172,7 +172,7 @@ export function CountryDetailPage() {
 
           <div className="rounded-2xl bg-white border border-ink-100 p-6">
             <Sparkles className="w-7 h-7 text-amber-500 mb-3" />
-            <div className="font-display font-extrabold text-lg mb-2 text-ink-900">Спросите Феликса</div>
+            <div className="font-display font-extrabold text-lg mb-2 text-ink-900">Спросите Ириску</div>
             <p className="text-[13.5px] text-ink-500">AI-консьерж знает {c.name} как местный — спросите про районы, рестораны, маршруты.</p>
           </div>
         </aside>

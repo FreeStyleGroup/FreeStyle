@@ -49,7 +49,7 @@ export function Footer() {
               <li><Link to="/excursions" className="hover:text-white text-white/70 transition-colors">Экскурсии</Link></li>
               <li><Link to="/trains" className="hover:text-white text-white/70 transition-colors">Поезда</Link></li>
               <li><Link to="/buses" className="hover:text-white text-white/70 transition-colors">Автобусы</Link></li>
-              <li className="pt-2 mt-2 border-t border-white/10"><Link to="/concierge" className="hover:text-white text-white/70 transition-colors">AI-консьерж Феликс</Link></li>
+              <li className="pt-2 mt-2 border-t border-white/10"><Link to="/concierge" className="hover:text-white text-white/70 transition-colors">AI-консьерж Ириска</Link></li>
               <li><Link to="/business" className="hover:text-white text-white/70 transition-colors">Для бизнеса</Link></li>
             </ul>
           </div>

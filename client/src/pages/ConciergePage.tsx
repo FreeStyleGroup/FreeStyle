@@ -3,7 +3,7 @@ import { useAIChat } from '@/components/ai/AIChatContext';
 
 /**
  * ConciergePage — премиум-сервис личного travel-консьержа.
- * Free-уровень — AI Феликс 24/7. Premium-уровень — живой консьерж (когда доступно).
+ * Free-уровень — AI Ириска 24/7. Premium-уровень — живой консьерж (когда доступно).
  */
 export function ConciergePage() {
   const { open } = useAIChat();
@@ -19,26 +19,26 @@ export function ConciergePage() {
               <Sparkles className="w-3 h-3 text-amber-500" /> AI-консьерж · 24/7 · бесплатно
             </div>
             <h1 className="font-display font-extrabold text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              Феликс — ваш <em className="not-italic text-amber-500">личный travel-помощник</em>
+              Ириска — ваша <em className="not-italic text-amber-500">личная travel-помощница</em>
             </h1>
             <p className="text-white/85 text-lg mt-5 max-w-2xl">
-              Спросите про любое направление, визу, бюджет или маршрут. Феликс знает FreeStyle и весь travel-мир: от лоукостеров до люксовых отелей.
+              Спросите про любое направление, визу, бюджет или маршрут. Ириска знает FreeStyle и весь travel-мир: от лоукостеров до люксовых отелей.
             </p>
             <button
               type="button"
               onClick={open}
               className="inline-flex items-center gap-2 mt-8 px-7 py-3.5 rounded-xl bg-white text-brand-700 font-bold hover:-translate-y-0.5 transition-all shadow-md"
             >
-              <MessageCircle className="w-4 h-4" /> Открыть чат с Феликсом
+              <MessageCircle className="w-4 h-4" /> Открыть чат с Ириской
             </button>
-            <p className="text-[12px] text-white/60 mt-4">Кнопка чата всегда справа внизу — Феликс отвечает мгновенно</p>
+            <p className="text-[12px] text-white/60 mt-4">Кнопка чата всегда справа внизу — Ириска отвечает мгновенно</p>
           </div>
           <div className="relative aspect-square max-w-[300px] mx-auto">
             <div className="absolute inset-0 rounded-full bg-amber-500/30 blur-3xl animate-pulse-amber" />
             <div className="relative w-full h-full rounded-full bg-white/15 backdrop-blur-md border border-white/30 grid place-items-center overflow-hidden">
               <img
                 src="/images/cat-concierge.png"
-                alt="Феликс"
+                alt="Ириска"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -53,7 +53,7 @@ export function ConciergePage() {
       {/* WHAT HE CAN DO */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="text-[11px] uppercase tracking-[.18em] font-bold text-brand-600 mb-3">Что умеет Феликс</div>
+          <div className="text-[11px] uppercase tracking-[.18em] font-bold text-brand-600 mb-3">Что умеет Ириска</div>
           <h2 className="font-display font-extrabold text-3xl md:text-4xl text-ink-900 leading-tight tracking-tight">
             Полноценный travel-консультант
           </h2>
@@ -84,7 +84,7 @@ export function ConciergePage() {
               <div className="font-display font-extrabold text-3xl text-ink-900 mb-1">Бесплатно</div>
               <p className="text-ink-500 mb-6">Доступ для всех зарегистрированных</p>
               <ul className="space-y-3 mb-6">
-                <Bullet>AI-консьерж Феликс 24/7</Bullet>
+                <Bullet>AI-консьерж Ириска 24/7</Bullet>
                 <Bullet>Любое количество вопросов</Bullet>
                 <Bullet>Поиск перелётов и отелей</Bullet>
                 <Bullet>Визовая информация по 220+ странам</Bullet>
@@ -129,7 +129,7 @@ export function ConciergePage() {
 
       {/* EXAMPLE QUESTIONS */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 md:py-20">
-        <h2 className="font-display font-extrabold text-3xl text-ink-900 text-center mb-3">О чём спросить Феликса</h2>
+        <h2 className="font-display font-extrabold text-3xl text-ink-900 text-center mb-3">О чём спросить Ириску</h2>
         <p className="text-ink-500 text-center mb-10">Примеры вопросов, на которые он отвечает быстро и по делу</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl mx-auto">
           {[
@@ -158,16 +158,16 @@ export function ConciergePage() {
       {/* CTA */}
       <section className="max-w-[1320px] mx-auto px-4 md:px-8 py-14 text-center">
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-brand-500 to-brand-700 mb-5 overflow-hidden border-4 border-white shadow-lg">
-          <img src="/images/cat-concierge.png" alt="Феликс" className="w-full h-full object-cover" />
+          <img src="/images/cat-concierge.png" alt="Ириска" className="w-full h-full object-cover" />
         </div>
-        <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-3">Феликс ждёт</h2>
+        <h2 className="font-display font-extrabold text-3xl text-ink-900 mb-3">Ириска ждёт</h2>
         <p className="text-ink-500 mb-6 max-w-xl mx-auto">Откройте чат и начните планировать поездку прямо сейчас.</p>
         <button
           type="button"
           onClick={open}
           className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-500 to-brand-700 text-white font-bold hover:-translate-y-0.5 transition-all shadow-md hover:shadow-lg"
         >
-          <MessageCircle className="w-4 h-4" /> Открыть чат с Феликсом <ArrowRight className="w-4 h-4" />
+          <MessageCircle className="w-4 h-4" /> Открыть чат с Ириской <ArrowRight className="w-4 h-4" />
         </button>
       </section>
     </div>

@@ -25,7 +25,7 @@ export function AIFAB() {
         <span className="relative w-12 h-12 rounded-full bg-gradient-to-br from-brand-50 to-amber-500/15 border border-brand-200 overflow-hidden grid place-items-center shrink-0">
           <img
             src="/images/cat-concierge.png"
-            alt="Феликс"
+            alt="Ириска"
             loading="lazy"
             className="w-full h-full object-cover"
             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
@@ -40,7 +40,7 @@ export function AIFAB() {
             AI · бесплатно
           </span>
           <span className="block font-display font-bold text-[14px] text-ink-900 mt-0.5">
-            Спросить Феликса
+            Спросить Ириску
           </span>
         </span>
       </span>

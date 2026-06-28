@@ -74,7 +74,7 @@ export function SettingsPage() {
           />
           <span className="text-sm text-ink-700 leading-snug">
             <strong className="text-ink-900">Email-рассылки и горящие предложения</strong><br />
-            Подборки от Феликса, sales-up to 70%, новости лоукостеров. Отписаться можно в любой момент.
+            Подборки от Ириски, sales-up to 70%, новости лоукостеров. Отписаться можно в любой момент.
           </span>
         </label>
 

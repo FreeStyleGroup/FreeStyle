@@ -24,7 +24,7 @@ export function AboutPage() {
           </h1>
           <p className="text-white/85 text-lg md:text-xl mt-6 max-w-2xl leading-relaxed">
             FreeStyle — российский travel-сервис нового поколения. Авиабилеты, отели, туры,
-            визы и страховки — в одном окне, с честной ценой, кэшбэком и личным AI-консьержем Феликсом.
+            визы и страховки — в одном окне, с честной ценой, кэшбэком и личным AI-консьержем Ириской.
           </p>
         </div>
       </section>
@@ -46,7 +46,7 @@ export function AboutPage() {
               экскурсии и страховки — в одном интерфейсе. Один аккаунт, одна корзина, один профиль путешественника.
             </p>
             <p>
-              Бонусом — Travel Wallet с кэшбэком до 5%, бонусные мили, AI-консьерж Феликс, который помнит ваши
+              Бонусом — Travel Wallet с кэшбэком до 5%, бонусные мили, AI-консьерж Ириска, которая помнит ваши
               предпочтения и подсказывает выгодные направления.
             </p>
           </div>
@@ -60,7 +60,7 @@ export function AboutPage() {
             <Stat value="220+"      label="стран и территорий"        Icon={Globe2} />
             <Stat value="900 000+"  label="отелей в базе"             Icon={Plane} />
             <Stat value="5%"        label="кэшбэк на все бронирования" Icon={Wallet} />
-            <Stat value="24/7"      label="AI-консьерж Феликс"         Icon={Sparkles} />
+            <Stat value="24/7"      label="AI-консьерж Ириска"         Icon={Sparkles} />
           </div>
         </div>
       </section>
@@ -77,7 +77,7 @@ export function AboutPage() {
         </div>
         <div className="grid md:grid-cols-3 gap-5">
           <Value Icon={ShieldCheck} title="Честная цена" text="Никаких скрытых комиссий. Цена в поиске — финальная." />
-          <Value Icon={Heart}       title="Личный подход" text="AI Феликс учится на ваших поездках и предлагает то, что нравится." />
+          <Value Icon={Heart}       title="Личный подход" text="AI Ириска учится на ваших поездках и предлагает то, что нравится." />
           <Value Icon={Gift}        title="Возвращаем деньги" text="Travel Wallet — мили и кэшбэк копятся автоматически." />
         </div>
       </section>
